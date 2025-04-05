@@ -1,0 +1,100 @@
+version: '3.8'
+
+services:
+  node1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: smartbft_node
+    environment:
+      - NODE_ID=1
+      - TOTAL_NODES=4
+      - NODE_ADDRESS=0.0.0.0:7050
+      - NODE_ADDRESSES=172.20.0.2:7050,172.20.0.3:7050,172.20.0.4:7050,172.20.0.5:7050
+    volumes:
+      - ./data/node1:/app/data
+    networks:
+      smartbft-net:
+        ipv4_address: 172.20.0.2
+    ports:
+      - "7050:7050"
+      - "7051:7051"
+    healthcheck:
+      test: ["CMD", "grpc_health_probe", "-addr=:7050"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+  node2:
+    image: smartbft_node
+    environment:
+      - NODE_ID=2
+      - TOTAL_NODES=4
+      - NODE_ADDRESS=0.0.0.0:7050
+      - NODE_ADDRESSES=172.20.0.2:7050,172.20.0.3:7050,172.20.0.4:7050,172.20.0.5:7050
+    volumes:
+      - ./data/node2:/app/data
+    networks:
+      smartbft-net:
+        ipv4_address: 172.20.0.3
+    ports:
+      - "7052:7050"
+      - "7053:7051"
+    healthcheck:
+      test: ["CMD", "grpc_health_probe", "-addr=:7050"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+  node3:
+    image: smartbft_node
+    environment:
+      - NODE_ID=3
+      - TOTAL_NODES=4
+      - NODE_ADDRESS=0.0.0.0:7050
+      - NODE_ADDRESSES=172.20.0.2:7050,172.20.0.3:7050,172.20.0.4:7050,172.20.0.5:7050
+    volumes:
+      - ./data/node3:/app/data
+    networks:
+      smartbft-net:
+        ipv4_address: 172.20.0.4
+    ports:
+      - "7054:7050"
+      - "7055:7051"
+    healthcheck:
+      test: ["CMD", "grpc_health_probe", "-addr=:7050"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+  node4:
+    image: smartbft_node
+    environment:
+      - NODE_ID=4
+      - TOTAL_NODES=4
+      - NODE_ADDRESS=0.0.0.0:7050
+      - NODE_ADDRESSES=172.20.0.2:7050,172.20.0.3:7050,172.20.0.4:7050,172.20.0.5:7050
+    volumes:
+      - ./data/node4:/app/data
+    networks:
+      smartbft-net:
+        ipv4_address: 172.20.0.5
+    ports:
+      - "7056:7050"
+      - "7057:7051"
+    healthcheck:
+      test: ["CMD", "grpc_health_probe", "-addr=:7050"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+networks:
+  smartbft-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16 

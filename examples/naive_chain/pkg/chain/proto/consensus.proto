@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package consensus;
-option go_package = "github.com/hyperledger-labs/SmartBFT/examples/naive_chain/pkg/chain/proto";
+option go_package = "github.com/nastya-biran/SmartBFT/examples/naive_chain/pkg/chain/proto";
 
 // Импортируем существующие протобафы из SmartBFT
 import "smartbftprotos/messages.proto";

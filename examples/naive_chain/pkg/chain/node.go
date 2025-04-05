@@ -20,7 +20,7 @@ import (
 	bft "github.com/hyperledger-labs/SmartBFT/pkg/types"
 	"github.com/hyperledger-labs/SmartBFT/pkg/wal"
 	"github.com/hyperledger-labs/SmartBFT/smartbftprotos"
-	pb "github.com/hyperledger-labs/SmartBFT/examples/naive_chain/pkg/chain/proto"
+	pb "github.com/nastya-biran/SmartBFT/examples/naive_chain/pkg/chain/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/proto"
 )

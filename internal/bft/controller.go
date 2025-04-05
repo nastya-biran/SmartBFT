@@ -268,7 +268,7 @@ func (c *Controller) addRequest(info types.RequestInfo, request []byte) error {
 func (c *Controller) OnRequestTimeout(request []byte, info types.RequestInfo) {
 	iAm, leaderID := c.iAmTheLeader()
 	if iAm {
-		c.Logger.Infof("Request %s timeout expired, this node is the leader, nothing to do", info)
+		c.Logger.Infof("Request %s %s timeout expired, this node is the leader, nothing to do", c.RequestInspector.RequestID(request), info)
 		return
 	}
 

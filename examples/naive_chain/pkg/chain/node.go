@@ -89,7 +89,7 @@ func (*Node) VerifyProposal(proposal bft.Proposal) ([]bft.RequestInfo, error) {
 	
 	for _, t := range blockData.Transactions {
 		tx := TransactionFromBytes(t)
-		fmt.Printf("Verifying transaction in proposal: client %s, ID %s\n", tx.ClientID, tx.ID)
+		fmt.Printf("Verifying transaction in proposal: client %s, ID %s tx%v t%v\n", tx.ClientID, tx.ID, tx, t)
 		if tx.ClientID == "" || tx.ID == "" {
 			fmt.Errorf("invalid transaction in proposal: missing ClientID or ID")
 			os.Exit(123)
@@ -243,10 +243,13 @@ func (n *Node) SendTransaction(targetID uint64, request []byte) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
+	tx := TransactionFromBytes(request)
+
 	req := &pb.TransactionRequest{
 		FromNode: n.id,
 		ToNode:   targetID,
-		Payload:  request,
+		ClientId: tx.ClientID,
+		Id: tx.ID,
 	}
 
 	_, err := client.SendTransaction(ctx, req)
@@ -255,7 +258,7 @@ func (n *Node) SendTransaction(targetID uint64, request []byte) {
 		return
 	}
 
-	fmt.Printf("Node %d успешно отправил транзакцию узлу %d\n", n.id, targetID)
+	fmt.Printf("Node %d успешно отправил транзакцию узлу %d %s\n", n.id, targetID, n.RequestID(request))
 }
 
 func (n *Node) MembershipChange() bool {

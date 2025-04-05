@@ -138,7 +138,6 @@ type TransactionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	FromNode      uint64                 `protobuf:"varint,1,opt,name=from_node,json=fromNode,proto3" json:"from_node,omitempty"`
 	ToNode        uint64                 `protobuf:"varint,2,opt,name=to_node,json=toNode,proto3" json:"to_node,omitempty"`
-	Payload       []byte                 `protobuf:"bytes,3,opt,name=payload,proto3" json:"payload,omitempty"`
 	ClientId      string                 `protobuf:"bytes,4,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
 	Id            string                 `protobuf:"bytes,5,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -189,13 +188,6 @@ func (x *TransactionRequest) GetToNode() uint64 {
 	return 0
 }
 
-func (x *TransactionRequest) GetPayload() []byte {
-	if x != nil {
-		return x.Payload
-	}
-	return nil
-}
-
 func (x *TransactionRequest) GetClientId() string {
 	if x != nil {
 		return x.ClientId
@@ -214,7 +206,6 @@ type ClientTransactionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ClientId      string                 `protobuf:"bytes,1,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
 	Id            string                 `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
-	Text          string                 `protobuf:"bytes,3,opt,name=text,proto3" json:"text,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -259,13 +250,6 @@ func (x *ClientTransactionRequest) GetClientId() string {
 func (x *ClientTransactionRequest) GetId() string {
 	if x != nil {
 		return x.Id
-	}
-	return ""
-}
-
-func (x *ClientTransactionRequest) GetText() string {
-	if x != nil {
-		return x.Text
 	}
 	return ""
 }
@@ -333,17 +317,15 @@ const file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDesc = "" +
 	"\amessage\x18\x03 \x01(\v2\x17.smartbftprotos.MessageR\amessage\"J\n" +
 	"\x18ConsensusMessageResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x14\n" +
-	"\x05error\x18\x02 \x01(\tR\x05error\"\x91\x01\n" +
+	"\x05error\x18\x02 \x01(\tR\x05error\"w\n" +
 	"\x12TransactionRequest\x12\x1b\n" +
 	"\tfrom_node\x18\x01 \x01(\x04R\bfromNode\x12\x17\n" +
-	"\ato_node\x18\x02 \x01(\x04R\x06toNode\x12\x18\n" +
-	"\apayload\x18\x03 \x01(\fR\apayload\x12\x1b\n" +
+	"\ato_node\x18\x02 \x01(\x04R\x06toNode\x12\x1b\n" +
 	"\tclient_id\x18\x04 \x01(\tR\bclientId\x12\x0e\n" +
-	"\x02id\x18\x05 \x01(\tR\x02id\"[\n" +
+	"\x02id\x18\x05 \x01(\tR\x02id\"G\n" +
 	"\x18ClientTransactionRequest\x12\x1b\n" +
 	"\tclient_id\x18\x01 \x01(\tR\bclientId\x12\x0e\n" +
-	"\x02id\x18\x02 \x01(\tR\x02id\x12\x12\n" +
-	"\x04text\x18\x03 \x01(\tR\x04text\"E\n" +
+	"\x02id\x18\x02 \x01(\tR\x02id\"E\n" +
 	"\x13TransactionResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x14\n" +
 	"\x05error\x18\x02 \x01(\tR\x05error2\xc9\x01\n" +

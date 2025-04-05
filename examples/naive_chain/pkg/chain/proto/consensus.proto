@@ -31,18 +31,19 @@ message ConsensusMessageResponse {
   string error = 2;
 }
 
+message Transaction {
+  string client_id = 1;
+  string id = 2;
+}
+
 message TransactionRequest {
   uint64 from_node = 1;
   uint64 to_node = 2;
-  bytes payload = 3;
-  string client_id = 4;
-  string id = 5;
+  Transaction tx = 3;
 }
 
 message ClientTransactionRequest {
-  string client_id = 1;
-  string id = 2;
-  string text = 3;
+  Transaction tx = 1;
 }
 
 message TransactionResponse {

@@ -1,7 +1,7 @@
 package chain
 
 import (
-	"encoding/json"
+	"encoding/asn1"
 )
 
 type Transaction struct {
@@ -26,49 +26,43 @@ type BlockData struct {
 }
 
 func (t Transaction) ToBytes() []byte {
-	bytes, err := json.Marshal(t)
+	rawTxn, err := asn1.Marshal(t)
 	if err != nil {
 		panic(err)
 	}
-	return bytes
+	return rawTxn
 }
 
-func TransactionFromBytes(bytes []byte) Transaction {
-	var t Transaction
-	if err := json.Unmarshal(bytes, &t); err != nil {
-		panic(err)
-	}
-	return t
+func TransactionFromBytes(bytes []byte) *Transaction {
+	var txn Transaction
+	asn1.Unmarshal(bytes, &txn)
+	return &txn
 }
 
 func (b BlockHeader) ToBytes() []byte {
-	bytes, err := json.Marshal(b)
+	rawHeader, err := asn1.Marshal(b)
 	if err != nil {
 		panic(err)
 	}
-	return bytes
+	return rawHeader
 }
 
-func BlockHeaderFromBytes(bytes []byte) BlockHeader {
-	var h BlockHeader
-	if err := json.Unmarshal(bytes, &h); err != nil {
-		panic(err)
-	}
-	return h
+func BlockHeaderFromBytes(bytes []byte) *BlockHeader {
+	var header BlockHeader
+	asn1.Unmarshal(bytes, &header)
+	return &header
 }
 
 func (b BlockData) ToBytes() []byte {
-	bytes, err := json.Marshal(b)
+	rawBlock, err := asn1.Marshal(b)
 	if err != nil {
 		panic(err)
 	}
-	return bytes
+	return rawBlock
 }
 
-func BlockDataFromBytes(bytes []byte) BlockData {
-	var d BlockData
-	if err := json.Unmarshal(bytes, &d); err != nil {
-		panic(err)
-	}
-	return d
+func BlockDataFromBytes(bytes []byte) *BlockData {
+	var block BlockData
+	asn1.Unmarshal(bytes, &block)
+	return &block
 } 

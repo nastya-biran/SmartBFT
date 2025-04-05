@@ -44,6 +44,7 @@ func (s *consensusServer) SendConsensusMessage(ctx context.Context, req *pb.Cons
 
 func (s *consensusServer) SendTransaction(ctx context.Context, req *pb.TransactionRequest) (*pb.TransactionResponse, error) {
 	// Пока просто пересылаем транзакцию в цепочку
+	fmt.Printf("Send transaction in main %d %s %s\n", req.FromNode, req.Id, req.ClientId)
 	err := s.chain.Order(chain.Transaction{
 		ClientID: req.ClientId,
 		ID:       req.Id,

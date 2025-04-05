@@ -1,15 +1,14 @@
-module github.com/hyperledger-labs/SmartBFT
+module github.com/nastya-biran/SmartBFT
 
 go 1.24.1
 
 require (
+	github.com/hyperledger-labs/SmartBFT v0.0.0-00010101000000-000000000000
 	github.com/stretchr/testify v1.10.0
 	go.uber.org/zap v1.27.0
 	golang.org/x/sync v0.12.0
-	google.golang.org/protobuf v1.36.6
-	golang.org/x/sync v0.11.0
 	google.golang.org/grpc v1.71.0
-	google.golang.org/protobuf v1.36.5
+	google.golang.org/protobuf v1.36.6
 )
 
 require (
@@ -24,5 +23,4 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace github.com/hyperledger-labs/SmartBFT => github.com/nastya-biran/SmartBFT ddos-attack
-
+replace github.com/hyperledger-labs/SmartBFT => github.com/nastya-biran/SmartBFT v0.0.0-20250405134819-d5d6b119cc8b

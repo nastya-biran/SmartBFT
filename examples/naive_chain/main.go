@@ -13,8 +13,8 @@ import (
 	"github.com/hyperledger-labs/SmartBFT/pkg/metrics/disabled"
 	"github.com/hyperledger-labs/SmartBFT/pkg/wal"
 	smart "github.com/hyperledger-labs/SmartBFT/pkg/api"
-	"github.com/hyperledger-labs/SmartBFT/examples/naive_chain/pkg/chain"
-	pb "github.com/hyperledger-labs/SmartBFT/examples/naive_chain/pkg/chain/proto"
+	"github.com/nastya-biran/SmartBFT/examples/naive_chain/pkg/chain"
+	pb "github.com/nastya-biran/SmartBFT/examples/naive_chain/pkg/chain/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )

@@ -7,7 +7,7 @@ syntax = "proto3";
 
 package chain;
 
-option go_package = "github.com/hyperledger-labs/SmartBFT/examples/naive_chain/pkg/chain";
+option go_package = "github.com/nastya-biran/SmartBFT/examples/naive_chain/pkg/chain";
 
 message FwdMessage {
     bytes payload = 1;

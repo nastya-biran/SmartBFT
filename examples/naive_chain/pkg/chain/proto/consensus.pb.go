@@ -351,7 +351,7 @@ const file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDesc = "" +
 	"\x14SendConsensusMessage\x12\".consensus.ConsensusMessageRequest\x1a#.consensus.ConsensusMessageResponse\"\x00\x12R\n" +
 	"\x0fSendTransaction\x12\x1d.consensus.TransactionRequest\x1a\x1e.consensus.TransactionResponse\"\x002p\n" +
 	"\x12TransactionService\x12Z\n" +
-	"\x11SubmitTransaction\x12#.consensus.ClientTransactionRequest\x1a\x1e.consensus.TransactionResponse\"\x00BKZIgithub.com/hyperledger-labs/SmartBFT/examples/naive_chain/pkg/chain/protob\x06proto3"
+	"\x11SubmitTransaction\x12#.consensus.ClientTransactionRequest\x1a\x1e.consensus.TransactionResponse\"\x00BGZEgithub.com/nastya-biran/SmartBFT/examples/naive_chain/pkg/chain/protob\x06proto3"
 
 var (
 	file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDescOnce sync.Once

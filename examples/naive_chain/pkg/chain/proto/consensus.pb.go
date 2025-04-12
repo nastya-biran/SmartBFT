@@ -134,19 +134,70 @@ func (x *ConsensusMessageResponse) GetError() string {
 	return ""
 }
 
+type Transaction struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ClientId      string                 `protobuf:"bytes,1,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
+	Id            string                 `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Transaction) Reset() {
+	*x = Transaction{}
+	mi := &file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Transaction) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Transaction) ProtoMessage() {}
+
+func (x *Transaction) ProtoReflect() protoreflect.Message {
+	mi := &file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Transaction.ProtoReflect.Descriptor instead.
+func (*Transaction) Descriptor() ([]byte, []int) {
+	return file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *Transaction) GetClientId() string {
+	if x != nil {
+		return x.ClientId
+	}
+	return ""
+}
+
+func (x *Transaction) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
 type TransactionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	FromNode      uint64                 `protobuf:"varint,1,opt,name=from_node,json=fromNode,proto3" json:"from_node,omitempty"`
 	ToNode        uint64                 `protobuf:"varint,2,opt,name=to_node,json=toNode,proto3" json:"to_node,omitempty"`
-	ClientId      string                 `protobuf:"bytes,4,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
-	Id            string                 `protobuf:"bytes,5,opt,name=id,proto3" json:"id,omitempty"`
+	Tx            *Transaction           `protobuf:"bytes,3,opt,name=tx,proto3" json:"tx,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *TransactionRequest) Reset() {
 	*x = TransactionRequest{}
-	mi := &file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes[2]
+	mi := &file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -158,7 +209,7 @@ func (x *TransactionRequest) String() string {
 func (*TransactionRequest) ProtoMessage() {}
 
 func (x *TransactionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes[2]
+	mi := &file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -171,7 +222,7 @@ func (x *TransactionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TransactionRequest.ProtoReflect.Descriptor instead.
 func (*TransactionRequest) Descriptor() ([]byte, []int) {
-	return file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDescGZIP(), []int{2}
+	return file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *TransactionRequest) GetFromNode() uint64 {
@@ -188,31 +239,23 @@ func (x *TransactionRequest) GetToNode() uint64 {
 	return 0
 }
 
-func (x *TransactionRequest) GetClientId() string {
+func (x *TransactionRequest) GetTx() *Transaction {
 	if x != nil {
-		return x.ClientId
+		return x.Tx
 	}
-	return ""
-}
-
-func (x *TransactionRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
+	return nil
 }
 
 type ClientTransactionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ClientId      string                 `protobuf:"bytes,1,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
-	Id            string                 `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	Tx            *Transaction           `protobuf:"bytes,1,opt,name=tx,proto3" json:"tx,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ClientTransactionRequest) Reset() {
 	*x = ClientTransactionRequest{}
-	mi := &file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes[3]
+	mi := &file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -224,7 +267,7 @@ func (x *ClientTransactionRequest) String() string {
 func (*ClientTransactionRequest) ProtoMessage() {}
 
 func (x *ClientTransactionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes[3]
+	mi := &file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -237,21 +280,14 @@ func (x *ClientTransactionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ClientTransactionRequest.ProtoReflect.Descriptor instead.
 func (*ClientTransactionRequest) Descriptor() ([]byte, []int) {
-	return file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDescGZIP(), []int{3}
+	return file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *ClientTransactionRequest) GetClientId() string {
+func (x *ClientTransactionRequest) GetTx() *Transaction {
 	if x != nil {
-		return x.ClientId
+		return x.Tx
 	}
-	return ""
-}
-
-func (x *ClientTransactionRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
+	return nil
 }
 
 type TransactionResponse struct {
@@ -264,7 +300,7 @@ type TransactionResponse struct {
 
 func (x *TransactionResponse) Reset() {
 	*x = TransactionResponse{}
-	mi := &file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes[4]
+	mi := &file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -276,7 +312,7 @@ func (x *TransactionResponse) String() string {
 func (*TransactionResponse) ProtoMessage() {}
 
 func (x *TransactionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes[4]
+	mi := &file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -289,7 +325,7 @@ func (x *TransactionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TransactionResponse.ProtoReflect.Descriptor instead.
 func (*TransactionResponse) Descriptor() ([]byte, []int) {
-	return file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDescGZIP(), []int{4}
+	return file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *TransactionResponse) GetSuccess() bool {
@@ -317,15 +353,16 @@ const file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDesc = "" +
 	"\amessage\x18\x03 \x01(\v2\x17.smartbftprotos.MessageR\amessage\"J\n" +
 	"\x18ConsensusMessageResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x14\n" +
-	"\x05error\x18\x02 \x01(\tR\x05error\"w\n" +
+	"\x05error\x18\x02 \x01(\tR\x05error\":\n" +
+	"\vTransaction\x12\x1b\n" +
+	"\tclient_id\x18\x01 \x01(\tR\bclientId\x12\x0e\n" +
+	"\x02id\x18\x02 \x01(\tR\x02id\"r\n" +
 	"\x12TransactionRequest\x12\x1b\n" +
 	"\tfrom_node\x18\x01 \x01(\x04R\bfromNode\x12\x17\n" +
-	"\ato_node\x18\x02 \x01(\x04R\x06toNode\x12\x1b\n" +
-	"\tclient_id\x18\x04 \x01(\tR\bclientId\x12\x0e\n" +
-	"\x02id\x18\x05 \x01(\tR\x02id\"G\n" +
-	"\x18ClientTransactionRequest\x12\x1b\n" +
-	"\tclient_id\x18\x01 \x01(\tR\bclientId\x12\x0e\n" +
-	"\x02id\x18\x02 \x01(\tR\x02id\"E\n" +
+	"\ato_node\x18\x02 \x01(\x04R\x06toNode\x12&\n" +
+	"\x02tx\x18\x03 \x01(\v2\x16.consensus.TransactionR\x02tx\"B\n" +
+	"\x18ClientTransactionRequest\x12&\n" +
+	"\x02tx\x18\x01 \x01(\v2\x16.consensus.TransactionR\x02tx\"E\n" +
 	"\x13TransactionResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x14\n" +
 	"\x05error\x18\x02 \x01(\tR\x05error2\xc9\x01\n" +
@@ -347,28 +384,31 @@ func file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDescGZIP() []b
 	return file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDescData
 }
 
-var file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_examples_naive_chain_pkg_chain_proto_consensus_proto_goTypes = []any{
 	(*ConsensusMessageRequest)(nil),  // 0: consensus.ConsensusMessageRequest
 	(*ConsensusMessageResponse)(nil), // 1: consensus.ConsensusMessageResponse
-	(*TransactionRequest)(nil),       // 2: consensus.TransactionRequest
-	(*ClientTransactionRequest)(nil), // 3: consensus.ClientTransactionRequest
-	(*TransactionResponse)(nil),      // 4: consensus.TransactionResponse
-	(*smartbftprotos.Message)(nil),   // 5: smartbftprotos.Message
+	(*Transaction)(nil),              // 2: consensus.Transaction
+	(*TransactionRequest)(nil),       // 3: consensus.TransactionRequest
+	(*ClientTransactionRequest)(nil), // 4: consensus.ClientTransactionRequest
+	(*TransactionResponse)(nil),      // 5: consensus.TransactionResponse
+	(*smartbftprotos.Message)(nil),   // 6: smartbftprotos.Message
 }
 var file_examples_naive_chain_pkg_chain_proto_consensus_proto_depIdxs = []int32{
-	5, // 0: consensus.ConsensusMessageRequest.message:type_name -> smartbftprotos.Message
-	0, // 1: consensus.ConsensusService.SendConsensusMessage:input_type -> consensus.ConsensusMessageRequest
-	2, // 2: consensus.ConsensusService.SendTransaction:input_type -> consensus.TransactionRequest
-	3, // 3: consensus.TransactionService.SubmitTransaction:input_type -> consensus.ClientTransactionRequest
-	1, // 4: consensus.ConsensusService.SendConsensusMessage:output_type -> consensus.ConsensusMessageResponse
-	4, // 5: consensus.ConsensusService.SendTransaction:output_type -> consensus.TransactionResponse
-	4, // 6: consensus.TransactionService.SubmitTransaction:output_type -> consensus.TransactionResponse
-	4, // [4:7] is the sub-list for method output_type
-	1, // [1:4] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	6, // 0: consensus.ConsensusMessageRequest.message:type_name -> smartbftprotos.Message
+	2, // 1: consensus.TransactionRequest.tx:type_name -> consensus.Transaction
+	2, // 2: consensus.ClientTransactionRequest.tx:type_name -> consensus.Transaction
+	0, // 3: consensus.ConsensusService.SendConsensusMessage:input_type -> consensus.ConsensusMessageRequest
+	3, // 4: consensus.ConsensusService.SendTransaction:input_type -> consensus.TransactionRequest
+	4, // 5: consensus.TransactionService.SubmitTransaction:input_type -> consensus.ClientTransactionRequest
+	1, // 6: consensus.ConsensusService.SendConsensusMessage:output_type -> consensus.ConsensusMessageResponse
+	5, // 7: consensus.ConsensusService.SendTransaction:output_type -> consensus.TransactionResponse
+	5, // 8: consensus.TransactionService.SubmitTransaction:output_type -> consensus.TransactionResponse
+	6, // [6:9] is the sub-list for method output_type
+	3, // [3:6] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_examples_naive_chain_pkg_chain_proto_consensus_proto_init() }
@@ -382,7 +422,7 @@ func file_examples_naive_chain_pkg_chain_proto_consensus_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDesc), len(file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   2,
 		},

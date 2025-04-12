@@ -44,10 +44,10 @@ func (s *consensusServer) SendConsensusMessage(ctx context.Context, req *pb.Cons
 
 func (s *consensusServer) SendTransaction(ctx context.Context, req *pb.TransactionRequest) (*pb.TransactionResponse, error) {
 	// Пока просто пересылаем транзакцию в цепочку
-	fmt.Printf("Send transaction in main %d %s %s\n", req.FromNode, req.Id, req.ClientId)
+	fmt.Printf("Send transaction in main %d %s %s\n", req.FromNode, req.Tx.Id, req.Tx.ClientId)
 	err := s.chain.Order(chain.Transaction{
-		ClientID: req.ClientId,
-		ID:       req.Id,
+		ClientID: req.Tx.ClientId,
+		ID:       req.Tx.Id,
 	})
 
 	if err != nil {
@@ -65,8 +65,8 @@ func (s *consensusServer) SendTransaction(ctx context.Context, req *pb.Transacti
 func (s *transactionServer) SubmitTransaction(ctx context.Context, req *pb.ClientTransactionRequest) (*pb.TransactionResponse, error) {
 	// Пока просто пересылаем транзакцию в цепочку
 	err := s.chain.Order(chain.Transaction{
-		ClientID: req.ClientId,
-		ID:       req.Id,
+		ClientID: req.Tx.ClientId,
+		ID:       req.Tx.Id,
 	})
 
 	if err != nil {
@@ -195,9 +195,35 @@ func main() {
 	}
 	sugar.Info("Successfully connected to other nodes")
 
-	// Слушаем блоки
-	for {
-		block := c.Listen()
-		sugar.Infof("Node %d received block: %+v", nodeID, block)
+	is_byzantine, err := strconv.ParseBool(os.Getenv("IS_BYZANTINE"))
+	if err != nil {
+		panic(fmt.Sprintf("Invalid IS_BYZANTINE: %v", err))
 	}
+
+	if is_byzantine {
+		period, err := strconv.ParseUint(os.Getenv("SPAM_MESSAGE_PERIOD"), 10, 64)
+		if err != nil {
+			panic(fmt.Sprintf("Invalid SPAM_MESSAGE_PERIOD: %v", err))
+		}
+
+		ticker := time.NewTicker(time.Duration(period) * time.Millisecond)
+
+		for {
+			select {
+			case block := <-c.Listen():
+				sugar.Infof("Node %d received block: %+v", nodeID, block)
+			case <-ticker.C:
+				sugar.Infof("Ticker")
+				c.BroadcastSpamMessage()
+			}
+		}
+	} else {
+			// Слушаем блоки
+		for {
+			block := <-c.Listen()
+			sugar.Infof("Node %d received block: %+v", nodeID, block)
+		}
+	}
+
+	
 } 

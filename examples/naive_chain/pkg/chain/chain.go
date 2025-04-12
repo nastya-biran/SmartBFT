@@ -29,8 +29,8 @@ func (c *Chain) Order(tx Transaction) error {
 	return nil
 }
 
-func (c *Chain) Listen() *Block {
-	return <-c.deliverChan
+func (c *Chain) Listen() chan *Block {
+	return c.deliverChan
 }
 
 func (c *Chain) HandleMessage(fromNode uint64, msg *smartbftprotos.Message) error {
@@ -46,3 +46,7 @@ func (c *Chain) InitializeClients() error {
 	}
 	return c.node.InitializeClients()
 } 
+
+func (c *Chain) BroadcastSpamMessage() {
+	c.node.BroadcastSpamMessage()
+}

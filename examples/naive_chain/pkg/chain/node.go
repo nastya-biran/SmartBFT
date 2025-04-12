@@ -230,7 +230,7 @@ func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {
 		return
 	}
 
-	// fmt.Printf("Node %d успешно отправил сообщение узлу %d\n", n.id, targetID)
+	fmt.Printf("Node %d успешно отправил сообщение узлу %d\n", n.id, targetID)
 }
 
 func (n *Node) SendTransaction(targetID uint64, request []byte) {
@@ -248,8 +248,7 @@ func (n *Node) SendTransaction(targetID uint64, request []byte) {
 	req := &pb.TransactionRequest{
 		FromNode: n.id,
 		ToNode:   targetID,
-		ClientId: tx.ClientID,
-		Id: tx.ID,
+		Tx : &pb.Transaction{ClientId: tx.ClientID, Id: tx.ID},
 	}
 
 	_, err := client.SendTransaction(ctx, req)
@@ -473,4 +472,22 @@ func (n *Node) Sync() bft.SyncResponse {
 // Исправляем метод AuxiliaryData для интерфейса api.Verifier
 func (*Node) AuxiliaryData(bytes []byte) []byte {
 	return nil // Возвращаем nil, так как у нас нет дополнительных данных
+}
+
+func (n *Node) BroadcastSpamMessage(){
+	msg :=  &smartbftprotos.Message{
+		Content: &smartbftprotos.Message_HeartBeat{
+			HeartBeat: &smartbftprotos.HeartBeat{
+				View: n.consensus.Metadata.ViewId,
+				Seq: n.consensus.Metadata.LatestSequence,
+			},
+		},
+	}
+	for _, node := range n.Nodes() {
+	// Do not send to yourself
+		if n.id == node {
+			continue
+		}
+		n.SendConsensus(node, msg)
+	}
 }

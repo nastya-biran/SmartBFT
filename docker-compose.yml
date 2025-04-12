@@ -11,6 +11,7 @@ services:
       - TOTAL_NODES=4
       - NODE_ADDRESS=0.0.0.0:7050
       - NODE_ADDRESSES=172.20.0.2:7050,172.20.0.3:7050,172.20.0.4:7050,172.20.0.5:7050
+      - IS_BYZANTINE=false
     volumes:
       - ./data/node1:/app/data
     networks:
@@ -33,6 +34,8 @@ services:
       - TOTAL_NODES=4
       - NODE_ADDRESS=0.0.0.0:7050
       - NODE_ADDRESSES=172.20.0.2:7050,172.20.0.3:7050,172.20.0.4:7050,172.20.0.5:7050
+      - IS_BYZANTINE=true
+      - SPAM_MESSAGE_PERIOD=100
     volumes:
       - ./data/node2:/app/data
     networks:
@@ -55,6 +58,7 @@ services:
       - TOTAL_NODES=4
       - NODE_ADDRESS=0.0.0.0:7050
       - NODE_ADDRESSES=172.20.0.2:7050,172.20.0.3:7050,172.20.0.4:7050,172.20.0.5:7050
+      - IS_BYZANTINE=false
     volumes:
       - ./data/node3:/app/data
     networks:
@@ -77,6 +81,7 @@ services:
       - TOTAL_NODES=4
       - NODE_ADDRESS=0.0.0.0:7050
       - NODE_ADDRESSES=172.20.0.2:7050,172.20.0.3:7050,172.20.0.4:7050,172.20.0.5:7050
+      - IS_BYZANTINE=false
     volumes:
       - ./data/node4:/app/data
     networks:

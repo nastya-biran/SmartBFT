@@ -8,11 +8,11 @@ package bft_test
 import (
 	"testing"
 
-	"github.com/hyperledger-labs/SmartBFT/internal/bft"
 	"github.com/hyperledger-labs/SmartBFT/pkg/api"
 	"github.com/hyperledger-labs/SmartBFT/pkg/metrics/disabled"
 	"github.com/hyperledger-labs/SmartBFT/pkg/types"
 	protos "github.com/hyperledger-labs/SmartBFT/smartbftprotos"
+	"github.com/nastya-biran/SmartBFT/internal/bft"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 )

@@ -230,7 +230,7 @@ func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {
 		return
 	}
 
-	fmt.Printf("Node %d успешно отправил сообщение узлу %d\n", n.id, targetID)
+	//fmt.Printf("Node %d успешно отправил сообщение узлу %d\n", n.id, targetID)
 }
 
 func (n *Node) SendTransaction(targetID uint64, request []byte) {

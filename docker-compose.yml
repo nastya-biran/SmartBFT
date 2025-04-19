@@ -35,7 +35,7 @@ services:
       - NODE_ADDRESS=0.0.0.0:7050
       - NODE_ADDRESSES=172.20.0.2:7050,172.20.0.3:7050,172.20.0.4:7050,172.20.0.5:7050
       - IS_BYZANTINE=true
-      - SPAM_MESSAGE_PERIOD=100
+      - SPAM_MESSAGE_PERIOD=1000
     volumes:
       - ./data/node2:/app/data
     networks:

@@ -15,7 +15,6 @@ import (
 	smart "github.com/hyperledger-labs/SmartBFT/pkg/api"
 	"github.com/nastya-biran/SmartBFT/examples/naive_chain/pkg/chain"
 	pb "github.com/nastya-biran/SmartBFT/examples/naive_chain/pkg/chain/proto"
-	prometheus_metrics "github.com/nastya-biran/SmartBFT/examples/naive_chain/pkg/prometheus_metrics"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )

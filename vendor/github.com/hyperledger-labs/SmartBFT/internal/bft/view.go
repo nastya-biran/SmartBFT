@@ -144,7 +144,7 @@ func (v *View) Start() {
 			panic(fmt.Sprintf("Failed to create data directory: %v", err))
 		}
     }
-	file, err := os.OpenFile(fmt.Sprintf("/app/metrics/%d", v.SelfID), os.O_CREATE|os.O_WRONLY, 0644)
+	file, err := os.OpenFile(fmt.Sprintf("/app/metrics/%d", v.SelfID), os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
     if err != nil {
         fmt.Println("Ошибка открытия файла:", err)
         return

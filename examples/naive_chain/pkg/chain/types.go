@@ -16,6 +16,7 @@ type Block struct {
 }
 
 type BlockHeader struct {
+	ViewId int64
 	Sequence int64
 	PrevHash string
 	DataHash string

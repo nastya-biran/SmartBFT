@@ -118,7 +118,7 @@ func main() {
 
 	// Настраиваем логгер
 	logConfig := zap.NewDevelopmentConfig()
-	// logConfig.Level = zap.NewAtomicLevelAt(zap.InfoLevel)
+	logConfig.Level = zap.NewAtomicLevelAt(zap.InfoLevel)
 	logger, _ := logConfig.Build()
 	sugar := logger.Sugar()
 
@@ -213,7 +213,6 @@ func main() {
 			case block := <-c.Listen():
 				sugar.Infof("Node %d received block: %+v", nodeID, block)
 			case <-ticker.C:
-				sugar.Infof("Ticker")
 				c.BroadcastSpamMessage()
 			}
 		}

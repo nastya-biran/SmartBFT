@@ -13,7 +13,6 @@ import (
 	"path/filepath"
 	"sync"
 	"time"
-	"os"
 
 	smart "github.com/hyperledger-labs/SmartBFT/pkg/api"
 	smartbft "github.com/hyperledger-labs/SmartBFT/pkg/consensus"
@@ -92,7 +91,7 @@ func (*Node) VerifyProposal(proposal bft.Proposal) ([]bft.RequestInfo, error) {
 		fmt.Printf("Verifying transaction in proposal: client %s, ID %s tx%v t%v\n", tx.ClientID, tx.ID, tx, t)
 		if tx.ClientID == "" || tx.ID == "" {
 			fmt.Errorf("invalid transaction in proposal: missing ClientID or ID")
-			os.Exit(123)
+			return nil, fmt.Errorf("invalid transaction in proposal: missing ClientID or ID")
 		}
 		reqInfo := bft.RequestInfo{ID: tx.ID, ClientID: tx.ClientID}
 		requests = append(requests, reqInfo)
@@ -103,6 +102,7 @@ func (*Node) VerifyProposal(proposal bft.Proposal) ([]bft.RequestInfo, error) {
 	}
 	
 	fmt.Printf("Proposal verification successful: %d transactions\n", len(requests))
+	// time.Sleep(1 * time.Second)
 	return requests, nil
 }
 
@@ -148,6 +148,7 @@ func (*Node) VerifyConsenterSig(sig bft.Signature, proposal bft.Proposal) ([]byt
         }
         return aux, nil
 	}
+	// time.Sleep(1 * time.Second)
 	return nil, fmt.Errorf("invalid signature: ID must be positive")
 }
 
@@ -156,6 +157,7 @@ func (*Node) VerifySignature(signature bft.Signature) error {
 	if signature.ID > 0 {
 		return nil
 	}
+	// time.Sleep(1 * time.Second)
 	return fmt.Errorf("invalid signature: ID must be positive")
 }
 
@@ -164,12 +166,14 @@ func (*Node) VerificationSequence() uint64 {
 }
 
 func (*Node) Sign(msg []byte) []byte {
+	//time.Sleep(1 * time.Second)
 	return msg
 }
 
 func (n *Node) SignProposal(proposal bft.Proposal, _ []byte) *bft.Signature {
 	header := BlockHeaderFromBytes(proposal.Header)
 	fmt.Printf("Node %d signing proposal with sequence %d\n", n.id, header.Sequence)
+	//time.Sleep(1 * time.Second)
 	
 	return &bft.Signature{
 		ID:    n.id,
@@ -192,6 +196,7 @@ func (n *Node) AssembleProposal(metadata []byte, requests [][]byte) bft.Proposal
 		PrevHash: n.prevHash,
 		DataHash: computeDigest(blockDataBytes),
 		Sequence: int64(md.LatestSequence),
+		ViewId:  int64(md.ViewId),
 	}
 	headerBytes := header.ToBytes()
 	
@@ -224,6 +229,7 @@ func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {
 		Message:  message,
 	}
 
+	//time.Sleep(1 * time.Second)
 	_, err := client.SendConsensusMessage(ctx, req)
 	if err != nil {
 		fmt.Printf("Node %d: ошибка отправки сообщения узлу %d: %v\n", n.id, targetID, err)
@@ -251,6 +257,7 @@ func (n *Node) SendTransaction(targetID uint64, request []byte) {
 		Tx : &pb.Transaction{ClientId: tx.ClientID, Id: tx.ID},
 	}
 
+	//time.Sleep(1 * time.Second)
 	_, err := client.SendTransaction(ctx, req)
 	if err != nil {
 		fmt.Printf("Node %d: ошибка отправки транзакции узлу %d: %v\n", n.id, targetID, err)
@@ -446,6 +453,7 @@ func (n *Node) Sync() bft.SyncResponse {
 	header := BlockHeader{
 		Sequence: 1, // Начинаем с 1
 		PrevHash: n.prevHash,
+		ViewId: 0,
 	}
 	
 	metadata := &smartbftprotos.ViewMetadata{
@@ -475,14 +483,23 @@ func (*Node) AuxiliaryData(bytes []byte) []byte {
 }
 
 func (n *Node) BroadcastSpamMessage(){
+	header := BlockHeaderFromBytes(n.consensus.LastProposal.Header)
+	fmt.Printf("Spam %d %d \n", header.Sequence, header.ViewId)
 	msg :=  &smartbftprotos.Message{
-		Content: &smartbftprotos.Message_HeartBeat{
-			HeartBeat: &smartbftprotos.HeartBeat{
-				View: n.consensus.Metadata.ViewId,
-				Seq: n.consensus.Metadata.LatestSequence,
-			},
+		Content: &smartbftprotos.Message_PrePrepare{
+			PrePrepare : &smartbftprotos.PrePrepare{
+				View: uint64(header.ViewId),
+				Seq:  uint64(header.Sequence),
+				Proposal: &smartbftprotos.Proposal{
+					Header:  []byte{0},
+					Payload: []byte{1},
+					Metadata: []byte{0},
+					VerificationSequence: 0,
+				},
+			}, 
 		},
 	}
+	
 	for _, node := range n.Nodes() {
 	// Do not send to yourself
 		if n.id == node {

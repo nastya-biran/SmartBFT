@@ -21,6 +21,7 @@ check_container() {
 echo "Cleaning up previous data..."
 docker-compose down --volumes --remove-orphans
 rm -rf data/node*
+rm -rf metrics/*
 
 echo "Creating data directories..."
 mkdir -p data/node{1,2,3,4}
@@ -60,7 +61,7 @@ for i in $(seq -f "%03g" 1 10); do
   
   echo "-----------------------------------------"
   # Small delay between requests to avoid overwhelming the server
-  sleep 0.5
+  sleep 0.01
 done
 
 echo "All transactions submitted successfully!"

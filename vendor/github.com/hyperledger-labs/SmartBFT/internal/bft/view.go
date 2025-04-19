@@ -6,6 +6,7 @@
 package bft
 
 import (
+	"os"
 	"bytes"
 	"errors"
 	"fmt"
@@ -121,6 +122,8 @@ type View struct {
 	viewEnded          sync.WaitGroup
 
 	ViewSequences *atomic.Value
+
+	metrics_file       *os.File
 }
 
 // Start starts the view
@@ -133,6 +136,19 @@ func (v *View) Start() {
 
 	v.prePrepare = make(chan *protos.Message, 1)
 	v.nextPrePrepare = make(chan *protos.Message, 1)
+
+	metricsDir := "/app/data/metrics"
+	if err := os.MkdirAll(metricsDir, 0755); err != nil {
+		panic(fmt.Sprintf("Failed to create data directory: %v", err))
+	}
+	file, err := os.OpenFile(fmt.Sprintf("/app/data/metrics/%d", v.SelfID), os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
+    if err != nil {
+        fmt.Println("Ошибка открытия файла:", err)
+        return
+    } else {
+		fmt.Println("Файл открыт", err)
+	}
+	v.metrics_file = file
 
 	v.setupVotes()
 
@@ -343,6 +359,11 @@ func (v *View) prepared() Phase {
 	}
 	v.MetricsView.SizeOfBatch.Add(float64(size))
 	v.MetricsView.LatencyBatchProcessing.Observe(time.Since(v.beginPrePrepare).Seconds())
+	_, err := v.metrics_file.WriteString(fmt.Sprintf("LatencyBatchProcessing %.6f\n", time.Since(v.beginPrePrepare).Seconds()))
+    if err != nil {
+        fmt.Println("Ошибка записи строки:", err)
+    }
+
 
 	v.decide(proposal, signatures, v.inFlightRequests)
 	return COMMITTED

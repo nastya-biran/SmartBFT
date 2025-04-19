@@ -118,7 +118,7 @@ func main() {
 
 	// Настраиваем логгер
 	logConfig := zap.NewDevelopmentConfig()
-	logConfig.Level = zap.NewAtomicLevelAt(zap.InfoLevel)
+	// logConfig.Level = zap.NewAtomicLevelAt(zap.InfoLevel)
 	logger, _ := logConfig.Build()
 	sugar := logger.Sugar()
 

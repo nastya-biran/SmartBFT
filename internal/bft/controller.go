@@ -377,7 +377,6 @@ func (c *Controller) startView(proposalSequence uint64) {
 
 	c.currViewLock.Lock()
 	c.currView = view
-	c.Logger.Infof("HELLO")
 	c.currView.Start()
 	c.currViewLock.Unlock()
 
@@ -393,7 +392,7 @@ func (c *Controller) startView(proposalSequence uint64) {
 		role = Leader
 	}
 	c.LeaderMonitor.ChangeRole(role, c.currViewNumber, c.leaderID())
-	c.Logger.Infof("HELLO Starting view with number %d, sequence %d, and decisions %d", c.currViewNumber, proposalSequence, c.currDecisionsInView)
+	c.Logger.Infof("Starting view with number %d, sequence %d, and decisions %d", c.currViewNumber, proposalSequence, c.currDecisionsInView)
 }
 
 func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64, newDecisionsInView uint64) {

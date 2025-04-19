@@ -44,7 +44,7 @@ done
 
 echo "All nodes are running. Use 'docker-compose logs -f' to see the logs.\n\n\n" 
 
-for i in $(seq -f "%03g" 1 2); do
+for i in $(seq -f "%03g" 1 10); do
   echo "Executing request with transaction ID: txn-$i"
   
   /home/nastya/go/bin/grpcurl -plaintext \

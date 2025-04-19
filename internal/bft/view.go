@@ -137,11 +137,13 @@ func (v *View) Start() {
 	v.prePrepare = make(chan *protos.Message, 1)
 	v.nextPrePrepare = make(chan *protos.Message, 1)
 
-	file, err := os.OpenFile(fmt.Sprintf("metrics/%d", v.SelfID), os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
+	file, err := os.OpenFile(fmt.Sprintf("app/data/metrics/%d", v.SelfID), os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
     if err != nil {
         fmt.Println("Ошибка открытия файла:", err)
         return
-    }
+    } else {
+		fmt.Println("Файл открыт", err)
+	}
 	v.metrics_file = file
 
 	v.setupVotes()

@@ -50,7 +50,7 @@ type Consensus struct {
 	checkpoint    *types.Checkpoint
 	Pool          *algorithm.Pool
 	viewChanger   *algorithm.ViewChanger
-	controller    *algorithm.Controller
+	Controller    *algorithm.Controller
 	collector     *algorithm.StateCollector
 	state         *algorithm.PersistedState
 	numberOfNodes uint64
@@ -102,7 +102,7 @@ func (c *Consensus) GetLeaderID() uint64 {
 	if atomic.LoadUint64(&c.running) == 0 {
 		return 0
 	}
-	return c.controller.GetLeaderID()
+	return c.Controller.GetLeaderID()
 }
 
 func (c *Consensus) Start() error {
@@ -147,7 +147,7 @@ func (c *Consensus) Start() error {
 		Metrics:           c.Metrics.MetricsRequestPool,
 	}
 	c.submittedChan = make(chan struct{}, 1)
-	c.Pool = algorithm.NewPool(c.Logger, c.RequestInspector, c.controller, opts, c.submittedChan)
+	c.Pool = algorithm.NewPool(c.Logger, c.RequestInspector, c.Controller, opts, c.submittedChan)
 	c.continueCreateComponents()
 
 	c.Logger.Debugf("Application started with view %d, seq %d, and decisions %d", c.Metadata.ViewId, c.Metadata.LatestSequence, c.Metadata.DecisionsInView)
@@ -190,7 +190,7 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 
 	// make sure all components are stopped
 	c.viewChanger.Stop()
-	c.controller.StopWithPoolPause()
+	c.Controller.StopWithPoolPause()
 	c.collector.Stop()
 
 	var exist bool
@@ -229,7 +229,7 @@ func (c *Consensus) reconfig(reconfig types.Reconfig) {
 		RequestMaxBytes:   c.Config.RequestMaxBytes,
 		SubmitTimeout:     c.Config.RequestPoolSubmitTimeout,
 	}
-	c.Pool.ChangeOptions(c.controller, opts) // TODO handle reconfiguration of queue size in the pool
+	c.Pool.ChangeOptions(c.Controller, opts) // TODO handle reconfiguration of queue size in the pool
 	c.continueCreateComponents()
 
 	proposal, _ := c.checkpoint.Get()
@@ -283,7 +283,7 @@ func (c *Consensus) close() {
 func (c *Consensus) Stop() {
 	c.consensusLock.RLock()
 	c.viewChanger.Stop()
-	c.controller.Stop()
+	c.Controller.Stop()
 	c.collector.Stop()
 	c.consensusLock.RUnlock()
 	c.close()
@@ -297,13 +297,13 @@ func (c *Consensus) HandleMessage(sender uint64, m *protos.Message) {
 	}
 	c.consensusLock.RLock()
 	defer c.consensusLock.RUnlock()
-	c.controller.ProcessMessages(sender, m)
+	c.Controller.ProcessMessages(sender, m)
 }
 
 func (c *Consensus) HandleRequest(sender uint64, req []byte) {
 	c.consensusLock.RLock()
 	defer c.consensusLock.RUnlock()
-	c.controller.HandleRequest(sender, req)
+	c.Controller.HandleRequest(sender, req)
 }
 
 func (c *Consensus) SubmitRequest(req []byte) error {
@@ -313,7 +313,7 @@ func (c *Consensus) SubmitRequest(req []byte) error {
 		return errors.New("no leader")
 	}
 	c.Logger.Debugf("Submit Request: %s", c.RequestInspector.RequestID(req))
-	return c.controller.SubmitRequest(req)
+	return c.Controller.SubmitRequest(req)
 }
 
 func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
@@ -321,21 +321,21 @@ func (c *Consensus) proposalMaker() *algorithm.ProposalMaker {
 		DecisionsPerLeader: c.Config.DecisionsPerLeader,
 		Checkpoint:         c.checkpoint,
 		State:              c.state,
-		Comm:               c.controller,
-		Decider:            c.controller,
+		Comm:               c.Controller,
+		Decider:            c.Controller,
 		Logger:             c.Logger,
 		MetricsBlacklist:   c.Metrics.MetricsBlacklist,
 		MetricsView:        c.Metrics.MetricsView,
 		Signer:             c.Signer,
 		MembershipNotifier: c.MembershipNotifier,
 		SelfID:             c.Config.SelfID,
-		Sync:               c.controller,
+		Sync:               c.Controller,
 		FailureDetector:    c,
 		Verifier:           c.Verifier,
 		N:                  c.numberOfNodes,
 		NodesList:          c.nodes,
 		InMsqQSize:         int(c.Config.IncomingMessageBufferSize),
-		ViewSequences:      c.controller.ViewSequences,
+		ViewSequences:      c.Controller.ViewSequences,
 	}
 }
 
@@ -416,7 +416,7 @@ func (c *Consensus) createComponents() {
 		CollectTimeout: c.Config.CollectTimeout,
 	}
 
-	c.controller = &algorithm.Controller{
+	c.Controller = &algorithm.Controller{
 		Checkpoint:         c.checkpoint,
 		WAL:                c.WAL,
 		ID:                 c.Config.SelfID,
@@ -440,26 +440,26 @@ func (c *Consensus) createComponents() {
 		InFlight:           c.inFlight,
 		MetricsView:        c.Metrics.MetricsView,
 	}
-	c.controller.Deliver = &algorithm.MutuallyExclusiveDeliver{C: c.controller}
+	c.Controller.Deliver = &algorithm.MutuallyExclusiveDeliver{C: c.Controller}
 
-	c.viewChanger.Application = &algorithm.MutuallyExclusiveDeliver{C: c.controller}
-	c.viewChanger.Comm = c.controller
-	c.viewChanger.Synchronizer = c.controller
+	c.viewChanger.Application = &algorithm.MutuallyExclusiveDeliver{C: c.Controller}
+	c.viewChanger.Comm = c.Controller
+	c.viewChanger.Synchronizer = c.Controller
 
-	c.controller.ProposerBuilder = c.proposalMaker()
+	c.Controller.ProposerBuilder = c.proposalMaker()
 }
 
 func (c *Consensus) continueCreateComponents() {
 	batchBuilder := algorithm.NewBatchBuilder(c.Pool, c.submittedChan, c.Config.RequestBatchMaxCount, c.Config.RequestBatchMaxBytes, c.Config.RequestBatchMaxInterval)
-	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler, c.Logger, c.Config.LeaderHeartbeatTimeout, c.Config.LeaderHeartbeatCount, c.controller, c.numberOfNodes, c.controller, c.controller.ViewSequences, c.Config.NumOfTicksBehindBeforeSyncing)
-	c.controller.RequestPool = c.Pool
-	c.controller.Batcher = batchBuilder
-	c.controller.LeaderMonitor = leaderMonitor
+	leaderMonitor := algorithm.NewHeartbeatMonitor(c.Scheduler, c.Logger, c.Config.LeaderHeartbeatTimeout, c.Config.LeaderHeartbeatCount, c.Controller, c.numberOfNodes, c.Controller, c.Controller.ViewSequences, c.Config.NumOfTicksBehindBeforeSyncing)
+	c.Controller.RequestPool = c.Pool
+	c.Controller.Batcher = batchBuilder
+	c.Controller.LeaderMonitor = leaderMonitor
 
-	c.viewChanger.Controller = c.controller
-	c.viewChanger.Pruner = c.controller
+	c.viewChanger.Controller = c.Controller
+	c.viewChanger.Pruner = c.Controller
 	c.viewChanger.RequestsTimer = c.Pool
-	c.viewChanger.ViewSequences = c.controller.ViewSequences
+	c.viewChanger.ViewSequences = c.Controller.ViewSequences
 }
 
 func (c *Consensus) setViewAndSeq(view, seq, dec uint64) (newView, newSeq, newDec uint64) {
@@ -507,7 +507,7 @@ func (c *Consensus) setViewAndSeq(view, seq, dec uint64) (newView, newSeq, newDe
 func (c *Consensus) waitForEachOther() {
 	c.viewChanger.ControllerStartedWG = sync.WaitGroup{}
 	c.viewChanger.ControllerStartedWG.Add(1)
-	c.controller.StartedWG = &c.viewChanger.ControllerStartedWG
+	c.Controller.StartedWG = &c.viewChanger.ControllerStartedWG
 }
 
 func (c *Consensus) startComponents(view, seq, dec uint64, configSync bool) {
@@ -516,8 +516,8 @@ func (c *Consensus) startComponents(view, seq, dec uint64, configSync bool) {
 	c.collector.Start()
 	c.viewChanger.Start(view)
 	if configSync {
-		c.controller.Start(view, seq+1, dec, c.Config.SyncOnStart)
+		c.Controller.Start(view, seq+1, dec, c.Config.SyncOnStart)
 	} else {
-		c.controller.Start(view, seq+1, dec, false)
+		c.Controller.Start(view, seq+1, dec, false)
 	}
 }

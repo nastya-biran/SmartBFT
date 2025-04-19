@@ -1,0 +1,10 @@
+LatencyBatchProcessing 0.014963
+LatencyBatchProcessing 0.013902
+LatencyBatchProcessing 0.008531
+LatencyBatchProcessing 0.008618
+LatencyBatchProcessing 0.023601
+LatencyBatchProcessing 0.027267
+LatencyBatchProcessing 0.010491
+LatencyBatchProcessing 0.034522
+LatencyBatchProcessing 0.012221
+LatencyBatchProcessing 0.050802

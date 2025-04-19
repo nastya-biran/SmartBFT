@@ -115,7 +115,7 @@ type Controller struct {
 	MetricsView        *api.MetricsView
 	quorum             int
 
-	currView Proposer
+	CurrView Proposer
 
 	currViewLock   sync.RWMutex
 	currViewNumber uint64
@@ -165,7 +165,7 @@ func (c *Controller) latestSeq() uint64 {
 
 func (c *Controller) currentViewStopped() bool {
 	c.currViewLock.RLock()
-	view := c.currView
+	view := c.CurrView
 	c.currViewLock.RUnlock()
 
 	return view.Stopped()
@@ -173,7 +173,7 @@ func (c *Controller) currentViewStopped() bool {
 
 func (c *Controller) currentViewLeader() uint64 {
 	c.currViewLock.RLock()
-	view := c.currView
+	view := c.CurrView
 	c.currViewLock.RUnlock()
 
 	return view.GetLeaderID()
@@ -323,7 +323,7 @@ func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
 	switch m.GetContent().(type) {
 	case *protos.Message_PrePrepare, *protos.Message_Prepare, *protos.Message_Commit:
 		c.currViewLock.RLock()
-		view := c.currView
+		view := c.CurrView
 		c.currViewLock.RUnlock()
 		view.HandleMessage(sender, m)
 		c.ViewChanger.HandleViewMessage(sender, m)
@@ -376,8 +376,8 @@ func (c *Controller) startView(proposalSequence uint64) {
 	view, initPhase := c.ProposerBuilder.NewProposer(c.leaderID(), proposalSequence, c.currViewNumber, c.currDecisionsInView, c.quorum)
 
 	c.currViewLock.Lock()
-	c.currView = view
-	c.currView.Start()
+	c.CurrView = view
+	c.CurrView.Start()
 	c.currViewLock.Unlock()
 
 	role := Follower
@@ -426,11 +426,11 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 }
 
 func (c *Controller) abortView(view uint64) bool {
-	currView := c.getCurrentViewNumber()
-	c.Logger.Debugf("view for abort %d, current view %d", view, currView)
+	CurrView := c.getCurrentViewNumber()
+	c.Logger.Debugf("view for abort %d, current view %d", view, CurrView)
 
-	if view < currView {
-		c.Logger.Debugf("Was asked to abort view %d but the current view with number %d", view, currView)
+	if view < CurrView {
+		c.Logger.Debugf("Was asked to abort view %d but the current view with number %d", view, CurrView)
 		return false
 	}
 
@@ -440,7 +440,7 @@ func (c *Controller) abortView(view uint64) bool {
 
 	// Kill current view
 	c.Logger.Debugf("Aborting current view with number %d", c.currViewNumber)
-	c.currView.Abort()
+	c.CurrView.Abort()
 
 	return true
 }
@@ -481,9 +481,9 @@ func (c *Controller) propose() {
 		c.acquireLeaderToken() // try again later
 		return
 	}
-	metadata := c.currView.GetMetadata()
+	metadata := c.CurrView.GetMetadata()
 	proposal := c.Assembler.AssembleProposal(metadata, nextBatch)
-	c.currView.Propose(proposal)
+	c.CurrView.Propose(proposal)
 }
 
 func (c *Controller) run() {
@@ -491,7 +491,7 @@ func (c *Controller) run() {
 	// and wait for it to finish.
 	defer func() {
 		c.Logger.Infof("Exiting")
-		c.currView.Abort()
+		c.CurrView.Abort()
 	}()
 
 	for {

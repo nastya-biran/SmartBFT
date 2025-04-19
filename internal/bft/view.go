@@ -137,7 +137,11 @@ func (v *View) Start() {
 	v.prePrepare = make(chan *protos.Message, 1)
 	v.nextPrePrepare = make(chan *protos.Message, 1)
 
-	file, err := os.OpenFile(fmt.Sprintf("app/data/metrics/%d", v.SelfID), os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
+	metricsDir := "/app/data/metrics"
+	if err := os.MkdirAll(metricsDir, 0755); err != nil {
+		panic(fmt.Sprintf("Failed to create data directory: %v", err))
+	}
+	file, err := os.OpenFile(fmt.Sprintf("/app/data/metrics/%d", v.SelfID), os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
     if err != nil {
         fmt.Println("Ошибка открытия файла:", err)
         return

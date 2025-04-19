@@ -37,8 +37,7 @@ RUN protoc \
 RUN go mod download
 
 # Собираем приложение
-RUN go build ./internal/bft
-RUN CGO_ENABLED=0 GOOS=linux go build -mod=mod -o /usr/local/bin/smartbft-node ./examples/naive_chain/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -mod=mod -a -v -o /usr/local/bin/smartbft-node ./examples/naive_chain/main.go
 
 FROM debian:bookworm-slim
 

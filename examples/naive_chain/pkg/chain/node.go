@@ -488,7 +488,7 @@ func (n *Node) BroadcastSpamMessage(){
 	msg :=  &smartbftprotos.Message{
 		Content: &smartbftprotos.Message_PrePrepare{
 			PrePrepare : &smartbftprotos.PrePrepare{
-				View: n.consensus.Controller.cu
+				View: uint64(n.consensus.Controller.ge)
 				Seq:  uint64(header.Sequence),
 				Proposal: &smartbftprotos.Proposal{
 					Header:  []byte{0},

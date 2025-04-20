@@ -179,11 +179,19 @@ func (c *Controller) currentViewLeader() uint64 {
 	return view.GetLeaderID()
 }
 
-func (c *Controller) getCurrentViewNumber() uint64 {
+func (c *Controller) GetCurrentViewNumber() uint64 {
 	c.currViewLock.RLock()
 	defer c.currViewLock.RUnlock()
 
 	return c.currViewNumber
+}
+
+func (c *Controller) GetCurrentSequence() uint64 {
+	vs := c.ViewSequences.Load()
+	if vs == nil {
+		c.Logger.Panicf("ViewSequences is nil")
+	}
+	return vs.(ViewSequence).ProposalSeq
 }
 
 func (c *Controller) setCurrentViewNumber(viewNumber uint64) {
@@ -222,7 +230,7 @@ func (c *Controller) iAmTheLeader() (bool, uint64) {
 
 // thread safe
 func (c *Controller) leaderID() uint64 {
-	return getLeaderID(c.getCurrentViewNumber(), c.N, c.NodesList, c.LeaderRotation, c.getCurrentDecisionsInView(), c.DecisionsPerLeader, c.blacklist())
+	return getLeaderID(c.GetCurrentViewNumber(), c.N, c.NodesList, c.LeaderRotation, c.getCurrentDecisionsInView(), c.DecisionsPerLeader, c.blacklist())
 }
 
 func (c *Controller) GetLeaderID() uint64 {
@@ -287,7 +295,7 @@ func (c *Controller) OnLeaderFwdRequestTimeout(request []byte, info types.Reques
 	}
 
 	c.Logger.Warnf("Request %s leader-forwarding timeout expired, complaining about leader: %d", info, leaderID)
-	c.FailureDetector.Complain(c.getCurrentViewNumber(), true)
+	c.FailureDetector.Complain(c.GetCurrentViewNumber(), true)
 }
 
 // OnAutoRemoveTimeout is called when the auto-remove timeout expires.
@@ -304,7 +312,7 @@ func (c *Controller) OnHeartbeatTimeout(view uint64, leaderID uint64) {
 	iAm, currentLeaderID := c.iAmTheLeader()
 	if iAm {
 		c.Logger.Debugf("Heartbeat timeout expired, this node is the leader, nothing to do; current-view: %d, current-leader: %d",
-			c.getCurrentViewNumber(), currentLeaderID)
+			c.GetCurrentViewNumber(), currentLeaderID)
 		return
 	}
 
@@ -314,7 +322,7 @@ func (c *Controller) OnHeartbeatTimeout(view uint64, leaderID uint64) {
 	}
 
 	c.Logger.Warnf("Heartbeat timeout expired, complaining about leader: %d", leaderID)
-	c.FailureDetector.Complain(c.getCurrentViewNumber(), true)
+	c.FailureDetector.Complain(c.GetCurrentViewNumber(), true)
 }
 
 // ProcessMessages dispatches the incoming message to the required component
@@ -351,7 +359,7 @@ func (c *Controller) respondToStateTransferRequest(sender uint64) {
 	msg := &protos.Message{
 		Content: &protos.Message_StateTransferResponse{
 			StateTransferResponse: &protos.StateTransferResponse{
-				ViewNum:  c.getCurrentViewNumber(),
+				ViewNum:  c.GetCurrentViewNumber(),
 				Sequence: vs.(ViewSequence).ProposalSeq,
 			},
 		},
@@ -396,7 +404,7 @@ func (c *Controller) startView(proposalSequence uint64) {
 }
 
 func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64, newDecisionsInView uint64) {
-	latestView := c.getCurrentViewNumber()
+	latestView := c.GetCurrentViewNumber()
 	if latestView > newViewNumber {
 		c.Logger.Debugf("Got view change to %d but already at %d", newViewNumber, latestView)
 		return
@@ -426,7 +434,7 @@ func (c *Controller) changeView(newViewNumber uint64, newProposalSequence uint64
 }
 
 func (c *Controller) abortView(view uint64) bool {
-	CurrView := c.getCurrentViewNumber()
+	CurrView := c.GetCurrentViewNumber()
 	c.Logger.Debugf("view for abort %d, current view %d", view, CurrView)
 
 	if view < CurrView {
@@ -455,7 +463,7 @@ func (c *Controller) Sync() {
 
 // AbortView makes the controller abort the current view
 func (c *Controller) AbortView(view uint64) {
-	c.Logger.Debugf("AbortView, the current view num is %d", c.getCurrentViewNumber())
+	c.Logger.Debugf("AbortView, the current view num is %d", c.GetCurrentViewNumber())
 
 	c.Batcher.Close()
 
@@ -519,7 +527,7 @@ func (c *Controller) run() {
 				if vs == nil {
 					c.Logger.Panicf("ViewSequences is nil")
 				}
-				c.changeView(c.getCurrentViewNumber(), vs.(ViewSequence).ProposalSeq, c.getCurrentDecisionsInView())
+				c.changeView(c.GetCurrentViewNumber(), vs.(ViewSequence).ProposalSeq, c.getCurrentDecisionsInView())
 			}
 		}
 	}
@@ -547,7 +555,7 @@ func (c *Controller) decide(d decision) {
 
 	if c.checkIfRotate(md.BlackList) {
 		c.Logger.Debugf("Restarting view to rotate the leader")
-		c.changeView(c.getCurrentViewNumber(), md.LatestSequence+1, c.getCurrentDecisionsInView())
+		c.changeView(c.GetCurrentViewNumber(), md.LatestSequence+1, c.getCurrentDecisionsInView())
 		c.Logger.Debugf("Restarting timers in request pool due to leader rotation")
 		c.RequestPool.RestartTimers()
 	}
@@ -558,7 +566,7 @@ func (c *Controller) decide(d decision) {
 }
 
 func (c *Controller) checkIfRotate(blacklist []uint64) bool {
-	view := c.getCurrentViewNumber()
+	view := c.GetCurrentViewNumber()
 	decisionsInView := c.getCurrentDecisionsInView()
 	c.Logger.Debugf("view(%d) + (decisionsInView(%d) / decisionsPerLeader(%d)), N(%d), blacklist(%v)",
 		view, decisionsInView, c.DecisionsPerLeader, c.N, blacklist)

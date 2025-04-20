@@ -59,6 +59,8 @@ type consensusServer struct {
 	node *Node
 }
 
+const SleepDuration = 1000
+
 func (s *consensusServer) SendConsensusMessage(ctx context.Context, req *pb.ConsensusMessageRequest) (*pb.ConsensusMessageResponse, error) {
 	fmt.Printf("Node %d получил консенсус-сообщение от %d типа %T\n", 
 		s.node.id, req.FromNode, req.Message.GetContent())
@@ -79,9 +81,22 @@ func (*Node) RequestID(req []byte) bft.RequestInfo {
 	}
 }
 
+func Delay() {
+	done := make(chan bool)
+    go func() {
+        time.Sleep(SleepDuration * time.Millisecond)
+        done <- true
+    }()
+    
+    fmt.Println("Sleeping")
+    <-done
+}
+
 func (*Node) VerifyProposal(proposal bft.Proposal) ([]bft.RequestInfo, error) {
 	header := BlockHeaderFromBytes(proposal.Header)
 	fmt.Printf("Verifying proposal with sequence %d\n", header.Sequence)
+
+	Delay()
 	
 	blockData := BlockDataFromBytes(proposal.Payload)
 	requests := make([]bft.RequestInfo, 0)
@@ -100,9 +115,6 @@ func (*Node) VerifyProposal(proposal bft.Proposal) ([]bft.RequestInfo, error) {
 	if len(requests) == 0 {
 		return nil, fmt.Errorf("empty proposal: no transactions")
 	}
-	
-	fmt.Printf("Proposal verification successful: %d transactions\n", len(requests))
-	// time.Sleep(1 * time.Second)
 	return requests, nil
 }
 
@@ -124,6 +136,7 @@ func (*Node) RequestsFromProposal(proposal bft.Proposal) []bft.RequestInfo {
 func (*Node) VerifyRequest(val []byte) (bft.RequestInfo, error) {
 	txn := TransactionFromBytes(val)
 	fmt.Printf("Verifying request from client %s with ID %s\n", txn.ClientID, txn.ID)
+	Delay()
 	if txn.ClientID == "" || txn.ID == "" {
 		return bft.RequestInfo{}, fmt.Errorf("invalid transaction: missing ClientID or ID")
 	}
@@ -135,6 +148,7 @@ func (*Node) VerifyRequest(val []byte) (bft.RequestInfo, error) {
 
 func (*Node) VerifyConsenterSig(sig bft.Signature, proposal bft.Proposal) ([]byte, error) {
 	fmt.Printf("Verifying consenter signature from node %d\n", sig.ID)
+	Delay()
 	if sig.ID > 0 {
 		header := BlockHeaderFromBytes(proposal.Header)
 		fmt.Printf("Signature verified for proposal with sequence %d\n", header.Sequence)
@@ -148,16 +162,15 @@ func (*Node) VerifyConsenterSig(sig bft.Signature, proposal bft.Proposal) ([]byt
         }
         return aux, nil
 	}
-	// time.Sleep(1 * time.Second)
 	return nil, fmt.Errorf("invalid signature: ID must be positive")
 }
 
 func (*Node) VerifySignature(signature bft.Signature) error {
 	fmt.Printf("Verifying signature from node %d\n", signature.ID)
+	Delay()
 	if signature.ID > 0 {
 		return nil
 	}
-	// time.Sleep(1 * time.Second)
 	return fmt.Errorf("invalid signature: ID must be positive")
 }
 
@@ -165,15 +178,16 @@ func (*Node) VerificationSequence() uint64 {
 	return 0
 }
 
-func (*Node) Sign(msg []byte) []byte {
-	//time.Sleep(1 * time.Second)
+func (n *Node) Sign(msg []byte) []byte {
+	fmt.Printf("Node %d signing message\n", n.id)
+	Delay()
 	return msg
 }
 
 func (n *Node) SignProposal(proposal bft.Proposal, _ []byte) *bft.Signature {
 	header := BlockHeaderFromBytes(proposal.Header)
 	fmt.Printf("Node %d signing proposal with sequence %d\n", n.id, header.Sequence)
-	//time.Sleep(1 * time.Second)
+	Delay()
 	
 	return &bft.Signature{
 		ID:    n.id,
@@ -211,8 +225,9 @@ func (n *Node) AssembleProposal(metadata []byte, requests [][]byte) bft.Proposal
 }
 
 func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {
-	/*fmt.Printf("Node %d пытается отправить сообщение узлу %d типа %T\n", 
-		n.id, targetID, message.GetContent())*/
+	fmt.Printf("Node %d пытается отправить сообщение узлу %d типа %T\n", 
+		n.id, targetID, message.GetContent())
+	
 
 	client, ok := n.clients[targetID]
 	if !ok {
@@ -220,51 +235,55 @@ func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {
 		return
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	req := &pb.ConsensusMessageRequest{
-		FromNode: n.id,
-		ToNode:   targetID,
-		Message:  message,
-	}
-
-	//time.Sleep(1 * time.Second)
-	_, err := client.SendConsensusMessage(ctx, req)
-	if err != nil {
-		fmt.Printf("Node %d: ошибка отправки сообщения узлу %d: %v\n", n.id, targetID, err)
-		return
-	}
+	time.AfterFunc(SleepDuration*time.Millisecond, func() {
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+	
+		req := &pb.ConsensusMessageRequest{
+			FromNode: n.id,
+			ToNode:   targetID,
+			Message:  message,
+		}
+		_, err := client.SendConsensusMessage(ctx, req)
+		if err != nil {
+			fmt.Printf("Node %d: ошибка отправки сообщения узлу %d: %v\n", n.id, targetID, err)
+			return
+		}
+		fmt.Printf("Node %d успешно отправил сообщение узлу %d типа %T\n", n.id, targetID, message.GetContent())
+	})
+	
 
 	//fmt.Printf("Node %d успешно отправил сообщение узлу %d\n", n.id, targetID)
 }
 
 func (n *Node) SendTransaction(targetID uint64, request []byte) {
+	fmt.Printf("Node %d пытается отправить транзакцию узлу %d\n", 
+		n.id, targetID)
+	Delay()
 	client, ok := n.clients[targetID]
 	if !ok {
 		fmt.Printf("Node %d: клиент для узла %d не найден\n", n.id, targetID)
 		return
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
+	time.AfterFunc(SleepDuration*time.Millisecond, func() {
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
 
-	tx := TransactionFromBytes(request)
+		tx := TransactionFromBytes(request)
 
-	req := &pb.TransactionRequest{
-		FromNode: n.id,
-		ToNode:   targetID,
-		Tx : &pb.Transaction{ClientId: tx.ClientID, Id: tx.ID},
-	}
-
-	//time.Sleep(1 * time.Second)
-	_, err := client.SendTransaction(ctx, req)
-	if err != nil {
-		fmt.Printf("Node %d: ошибка отправки транзакции узлу %d: %v\n", n.id, targetID, err)
-		return
-	}
-
-	fmt.Printf("Node %d успешно отправил транзакцию узлу %d %s\n", n.id, targetID, n.RequestID(request))
+		req := &pb.TransactionRequest{
+			FromNode: n.id,
+			ToNode:   targetID,
+			Tx : &pb.Transaction{ClientId: tx.ClientID, Id: tx.ID},
+		}
+		_, err := client.SendTransaction(ctx, req)
+		if err != nil {
+			fmt.Printf("Node %d: ошибка отправки транзакции узлу %d: %v\n", n.id, targetID, err)
+			return
+		}
+		fmt.Printf("Node %d успешно отправил транзакцию узлу %d %s\n", n.id, targetID, n.RequestID(request))
+	})
 }
 
 func (n *Node) MembershipChange() bool {
@@ -483,19 +502,13 @@ func (*Node) AuxiliaryData(bytes []byte) []byte {
 }
 
 func (n *Node) BroadcastSpamMessage(){
-	header := BlockHeaderFromBytes(n.consensus.LastProposal.Header)
-	fmt.Printf("Spam %d %d \n", header.Sequence, header.ViewId)
+	fmt.Printf("Spam %d %d \n", n.consensus.Controller.GetCurrentViewNumber(), n.consensus.Controller.GetCurrentSequence() + 1)
 	msg :=  &smartbftprotos.Message{
-		Content: &smartbftprotos.Message_PrePrepare{
-			PrePrepare : &smartbftprotos.PrePrepare{
-				View: uint64(n.consensus.Controller.ge)
-				Seq:  uint64(header.Sequence),
-				Proposal: &smartbftprotos.Proposal{
-					Header:  []byte{0},
-					Payload: []byte{1},
-					Metadata: []byte{0},
-					VerificationSequence: 0,
-				},
+		Content: &smartbftprotos.Message_Prepare{
+			Prepare : &smartbftprotos.Prepare{
+				View: uint64(n.consensus.Controller.GetCurrentViewNumber()),
+				Seq:  uint64(n.consensus.Controller.GetCurrentSequence() + 1),
+				Digest: "",
 			}, 
 		},
 	}

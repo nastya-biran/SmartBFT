@@ -362,7 +362,7 @@ func (v *View) prepared() Phase {
 	}
 	v.MetricsView.SizeOfBatch.Add(float64(size))
 	v.MetricsView.LatencyBatchProcessing.Observe(time.Since(v.beginPrePrepare).Seconds())
-	_, err := v.metrics_file.WriteString(fmt.Sprintf("LatencyBatchProcessing %.6f\n", time.Since(v.beginPrePrepare).Seconds()))
+	_, err := v.metrics_file.WriteString(fmt.Sprintf("LatencyBatchProcessing %.6f %d\n", time.Since(v.beginPrePrepare).Seconds(), v.beginPrePrepare.Unix()))
     if err != nil {
         fmt.Println("Ошибка записи строки:", err)
     }

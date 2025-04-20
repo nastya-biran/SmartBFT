@@ -1,2 +1,5 @@
-LatencyBatchProcessing 6.022351
-LatencyBatchProcessing 9.160588
+LatencyBatchProcessing 3.028087 1745160687
+LatencyBatchProcessing 4.571944 1745160692
+LatencyBatchProcessing 4.567821 1745160699
+LatencyBatchProcessing 2.040985 1745160711
+LatencyBatchProcessing 2.037680 1745160718

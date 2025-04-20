@@ -1,2 +1,13 @@
-LatencyBatchProcessing 4.019210
-LatencyBatchProcessing 4.139079
+LatencyBatchProcessing 2.022787 1745160688
+LatencyBatchProcessing 2.063229 1745160695
+LatencyBatchProcessing 2.060021 1745160702
+LatencyBatchProcessing 2.072936 1745160711
+LatencyBatchProcessing 2.038523 1745160718
+LatencyBatchProcessing 2.083617 1745160724
+LatencyBatchProcessing 4.613587 1745160731
+LatencyBatchProcessing 9223372036.854776 -62135596800
+LatencyBatchProcessing 4.651033 1745160762
+LatencyBatchProcessing 9223372036.854776 -62135596800
+LatencyBatchProcessing 4.563521 1745160857
+LatencyBatchProcessing 9223372036.854776 -62135596800
+LatencyBatchProcessing 2.141554 1745160926

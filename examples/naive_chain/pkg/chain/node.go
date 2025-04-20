@@ -59,7 +59,7 @@ type consensusServer struct {
 	node *Node
 }
 
-const SleepDuration = 1000
+const SleepDuration = 500
 
 func (s *consensusServer) SendConsensusMessage(ctx context.Context, req *pb.ConsensusMessageRequest) (*pb.ConsensusMessageResponse, error) {
 	fmt.Printf("Node %d получил консенсус-сообщение от %d типа %T\n", 

@@ -9,7 +9,7 @@ for i in $(seq -f "%03g" 1 10); do
         \"id\": \"txn-$i\"
       }
     }" \
-    localhost:7053 \
+    localhost:7051 \
     consensus.TransactionService/SubmitTransaction
   
   echo "-----------------------------------------"

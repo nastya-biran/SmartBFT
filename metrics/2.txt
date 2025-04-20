@@ -1,13 +1,22 @@
-LatencyBatchProcessing 2.019541 1745160688
-LatencyBatchProcessing 2.077594 1745160695
-LatencyBatchProcessing 2.047689 1745160702
-LatencyBatchProcessing 4.585824 1745160709
-LatencyBatchProcessing 4.555328 1745160715
-LatencyBatchProcessing 4.617321 1745160722
-LatencyBatchProcessing 2.104095 1745160734
+beginPrePrepare 1745164067
+LatencyBatchProcessing 2.072870 1745164067
+beginPrePrepare 1745164074
+LatencyBatchProcessing 2.017380 1745164074
+beginPrePrepare 1745164080
+LatencyBatchProcessing 2.046160 1745164080
+beginPrePrepare 1745164087
+LatencyBatchProcessing 4.596300 1745164087
+beginPrePrepare 1745164094
+LatencyBatchProcessing 4.546639 1745164094
+beginPrePrepare 1745164101
+LatencyBatchProcessing 4.580616 1745164101
+beginPrePrepare 1745164113
+LatencyBatchProcessing 2.021273 1745164113
+beginPrePrepare 1745164119
+LatencyBatchProcessing 2.016804 1745164119
+beginPrePrepare 1745164126
 LatencyBatchProcessing 9223372036.854776 -62135596800
-LatencyBatchProcessing 2.050655 1745160764
-LatencyBatchProcessing 9223372036.854776 -62135596800
-LatencyBatchProcessing 2.058815 1745160859
-LatencyBatchProcessing 9223372036.854776 -62135596800
-LatencyBatchProcessing 2.143513 1745160926
+beginPrePrepare 1745164137
+LatencyBatchProcessing 4.603704 1745164137
+beginPrePrepare 1745164143
+LatencyBatchProcessing 4.653404 1745164143

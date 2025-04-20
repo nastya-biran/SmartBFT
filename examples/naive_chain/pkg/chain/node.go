@@ -225,8 +225,7 @@ func (n *Node) AssembleProposal(metadata []byte, requests [][]byte) bft.Proposal
 }
 
 func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {
-	fmt.Printf("Node %d пытается отправить сообщение узлу %d типа %T\n", 
-		n.id, targetID, message.GetContent())
+	//fmt.Printf("Node %d пытается отправить сообщение узлу %d типа %T\n", n.id, targetID, message.GetContent())
 	
 
 	client, ok := n.clients[targetID]
@@ -249,7 +248,7 @@ func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {
 			fmt.Printf("Node %d: ошибка отправки сообщения узлу %d: %v\n", n.id, targetID, err)
 			return
 		}
-		fmt.Printf("Node %d успешно отправил сообщение узлу %d типа %T\n", n.id, targetID, message.GetContent())
+		//fmt.Printf("Node %d успешно отправил сообщение узлу %d типа %T\n", n.id, targetID, message.GetContent())
 	})
 	
 
@@ -257,8 +256,7 @@ func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {
 }
 
 func (n *Node) SendTransaction(targetID uint64, request []byte) {
-	fmt.Printf("Node %d пытается отправить транзакцию узлу %d\n", 
-		n.id, targetID)
+	//fmt.Printf("Node %d пытается отправить транзакцию узлу %d\n",  n.id, targetID)
 	Delay()
 	client, ok := n.clients[targetID]
 	if !ok {
@@ -282,7 +280,7 @@ func (n *Node) SendTransaction(targetID uint64, request []byte) {
 			fmt.Printf("Node %d: ошибка отправки транзакции узлу %d: %v\n", n.id, targetID, err)
 			return
 		}
-		fmt.Printf("Node %d успешно отправил транзакцию узлу %d %s\n", n.id, targetID, n.RequestID(request))
+		//fmt.Printf("Node %d успешно отправил транзакцию узлу %d %s\n", n.id, targetID, n.RequestID(request))
 	})
 }
 
@@ -502,7 +500,7 @@ func (*Node) AuxiliaryData(bytes []byte) []byte {
 }
 
 func (n *Node) BroadcastSpamMessage(){
-	fmt.Printf("Spam %d %d \n", n.consensus.Controller.GetCurrentViewNumber(), n.consensus.Controller.GetCurrentSequence() + 1)
+	//fmt.Printf("Spam %d %d \n", n.consensus.Controller.GetCurrentViewNumber(), n.consensus.Controller.GetCurrentSequence() + 1)
 	msg :=  &smartbftprotos.Message{
 		Content: &smartbftprotos.Message_Prepare{
 			Prepare : &smartbftprotos.Prepare{

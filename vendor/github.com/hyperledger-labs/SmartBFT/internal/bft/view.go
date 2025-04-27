@@ -418,7 +418,7 @@ func (v *View) processProposal() Phase {
 
 	v.MetricsView.CountTxsInBatch.Set(float64(len(requests)))
 	v.beginPrePrepare = time.Now()
-	_, err = v.metrics_file.WriteString(fmt.Sprintf("beginPrePrepare %d\n", v.beginPrePrepare.Unix()))
+	_, err = v.metrics_file.WriteString(fmt.Sprintf("beginPrePrepare %d %d\n", v.beginPrePrepare.Unix(), proposal, v.ProposalSequence))
     if err != nil {
         fmt.Println("Ошибка записи строки:", err)
     }

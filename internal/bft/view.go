@@ -6,10 +6,10 @@
 package bft
 
 import (
-	"os"
 	"bytes"
 	"errors"
 	"fmt"
+	"os"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -123,7 +123,7 @@ type View struct {
 
 	ViewSequences *atomic.Value
 
-	metrics_file       *os.File
+	metrics_file *os.File
 }
 
 // Start starts the view
@@ -139,16 +139,16 @@ func (v *View) Start() {
 
 	metricsDir := "/app/metrics"
 	_, err := os.Stat(metricsDir)
-    if os.IsNotExist(err) {
-        if err := os.MkdirAll(metricsDir, 0755); err != nil {
+	if os.IsNotExist(err) {
+		if err := os.MkdirAll(metricsDir, 0755); err != nil {
 			panic(fmt.Sprintf("Failed to create data directory: %v", err))
 		}
-    }
+	}
 	file, err := os.OpenFile(fmt.Sprintf("/app/metrics/%d.txt", v.SelfID), os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-    if err != nil {
-        fmt.Println("Ошибка открытия файла:", err)
-        return
-    } else {
+	if err != nil {
+		fmt.Println("Ошибка открытия файла:", err)
+		return
+	} else {
 		fmt.Println("Файл открыт", err)
 	}
 	v.metrics_file = file
@@ -418,7 +418,7 @@ func (v *View) processProposal() Phase {
 
 	v.MetricsView.CountTxsInBatch.Set(float64(len(requests)))
 	v.beginPrePrepare = time.Now()
-	_, err = v.metrics_file.WriteString(fmt.Sprintf("beginPrePrepare %d %d\n", v.beginPrePrepare.Unix(), proposal, v.ProposalSequence))
+	_, err = v.metrics_file.WriteString(fmt.Sprintf("beginPrePrepare %d\n", v.beginPrePrepare.Unix()))
     if err != nil {
         fmt.Println("Ошибка записи строки:", err)
     }

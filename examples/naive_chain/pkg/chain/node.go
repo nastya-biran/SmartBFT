@@ -511,11 +511,13 @@ func (n *Node) BroadcastSpamMessage(){
 		},
 	}
 	
-	for _, node := range n.Nodes() {
-	// Do not send to yourself
-		if n.id == node {
-			continue
+	for i := 1; i <= 100; i++ {
+		for _, node := range n.Nodes() {
+		// Do not send to yourself
+			if n.id == node {
+				continue
+			}
+			n.SendConsensus(node, msg)
 		}
-		n.SendConsensus(node, msg)
 	}
 }

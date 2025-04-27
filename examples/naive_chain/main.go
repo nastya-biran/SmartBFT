@@ -8,13 +8,13 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	
-	"go.uber.org/zap"
+
+	smart "github.com/hyperledger-labs/SmartBFT/pkg/api"
 	"github.com/hyperledger-labs/SmartBFT/pkg/metrics/disabled"
 	"github.com/hyperledger-labs/SmartBFT/pkg/wal"
-	smart "github.com/hyperledger-labs/SmartBFT/pkg/api"
 	"github.com/nastya-biran/SmartBFT/examples/naive_chain/pkg/chain"
 	pb "github.com/nastya-biran/SmartBFT/examples/naive_chain/pkg/chain/proto"
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -118,7 +118,7 @@ func main() {
 
 	// Настраиваем логгер
 	logConfig := zap.NewDevelopmentConfig()
-	// logConfig.Level = zap.NewAtomicLevelAt(zap.InfoLevel)
+	logConfig.Level = zap.NewAtomicLevelAt(zap.DebugLevel)
 	logger, _ := logConfig.Build()
 	sugar := logger.Sugar()
 
@@ -217,12 +217,11 @@ func main() {
 			}
 		}
 	} else {
-			// Слушаем блоки
+		// Слушаем блоки
 		for {
 			block := <-c.Listen()
 			sugar.Infof("Node %d received block: %+v", nodeID, block)
 		}
 	}
 
-	
-} 
+}

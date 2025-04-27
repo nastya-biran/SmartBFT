@@ -13,6 +13,7 @@ import (
 	"path/filepath"
 	"sync"
 	"time"
+	"os"
 
 	smart "github.com/hyperledger-labs/SmartBFT/pkg/api"
 	smartbft "github.com/hyperledger-labs/SmartBFT/pkg/consensus"
@@ -59,7 +60,9 @@ type consensusServer struct {
 	node *Node
 }
 
-const SleepDuration = 500
+const NetworkLatency = 50
+const CryptoLatency = 3
+const VerifyProposalLatency = 10
 
 func (s *consensusServer) SendConsensusMessage(ctx context.Context, req *pb.ConsensusMessageRequest) (*pb.ConsensusMessageResponse, error) {
 	fmt.Printf("Node %d получил консенсус-сообщение от %d типа %T\n", 
@@ -81,10 +84,10 @@ func (*Node) RequestID(req []byte) bft.RequestInfo {
 	}
 }
 
-func Delay() {
+func Delay(count int) {
 	done := make(chan bool)
     go func() {
-        time.Sleep(SleepDuration * time.Millisecond)
+        time.Sleep(time.Duration(count) * time.Millisecond)
         done <- true
     }()
     
@@ -96,7 +99,7 @@ func (*Node) VerifyProposal(proposal bft.Proposal) ([]bft.RequestInfo, error) {
 	header := BlockHeaderFromBytes(proposal.Header)
 	fmt.Printf("Verifying proposal with sequence %d\n", header.Sequence)
 
-	Delay()
+	Delay(VerifyProposalLatency)
 	
 	blockData := BlockDataFromBytes(proposal.Payload)
 	requests := make([]bft.RequestInfo, 0)
@@ -136,7 +139,7 @@ func (*Node) RequestsFromProposal(proposal bft.Proposal) []bft.RequestInfo {
 func (*Node) VerifyRequest(val []byte) (bft.RequestInfo, error) {
 	txn := TransactionFromBytes(val)
 	fmt.Printf("Verifying request from client %s with ID %s\n", txn.ClientID, txn.ID)
-	Delay()
+	Delay(VerifyProposalLatency)
 	if txn.ClientID == "" || txn.ID == "" {
 		return bft.RequestInfo{}, fmt.Errorf("invalid transaction: missing ClientID or ID")
 	}
@@ -148,7 +151,7 @@ func (*Node) VerifyRequest(val []byte) (bft.RequestInfo, error) {
 
 func (*Node) VerifyConsenterSig(sig bft.Signature, proposal bft.Proposal) ([]byte, error) {
 	fmt.Printf("Verifying consenter signature from node %d\n", sig.ID)
-	Delay()
+	Delay(CryptoLatency)
 	if sig.ID > 0 {
 		header := BlockHeaderFromBytes(proposal.Header)
 		fmt.Printf("Signature verified for proposal with sequence %d\n", header.Sequence)
@@ -167,7 +170,7 @@ func (*Node) VerifyConsenterSig(sig bft.Signature, proposal bft.Proposal) ([]byt
 
 func (*Node) VerifySignature(signature bft.Signature) error {
 	fmt.Printf("Verifying signature from node %d\n", signature.ID)
-	Delay()
+	Delay(CryptoLatency)
 	if signature.ID > 0 {
 		return nil
 	}
@@ -180,14 +183,14 @@ func (*Node) VerificationSequence() uint64 {
 
 func (n *Node) Sign(msg []byte) []byte {
 	fmt.Printf("Node %d signing message\n", n.id)
-	Delay()
+	Delay(CryptoLatency)
 	return msg
 }
 
 func (n *Node) SignProposal(proposal bft.Proposal, _ []byte) *bft.Signature {
 	header := BlockHeaderFromBytes(proposal.Header)
 	fmt.Printf("Node %d signing proposal with sequence %d\n", n.id, header.Sequence)
-	Delay()
+	Delay(CryptoLatency)
 	
 	return &bft.Signature{
 		ID:    n.id,
@@ -234,8 +237,8 @@ func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {
 		return
 	}
 
-	time.AfterFunc(SleepDuration*time.Millisecond, func() {
-		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	time.AfterFunc(NetworkLatency*time.Millisecond, func() {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 	
 		req := &pb.ConsensusMessageRequest{
@@ -246,6 +249,7 @@ func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {
 		_, err := client.SendConsensusMessage(ctx, req)
 		if err != nil {
 			fmt.Printf("Node %d: ошибка отправки сообщения узлу %d: %v\n", n.id, targetID, err)
+			os.Exit(123)
 			return
 		}
 		//fmt.Printf("Node %d успешно отправил сообщение узлу %d типа %T\n", n.id, targetID, message.GetContent())
@@ -257,15 +261,15 @@ func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {
 
 func (n *Node) SendTransaction(targetID uint64, request []byte) {
 	//fmt.Printf("Node %d пытается отправить транзакцию узлу %d\n",  n.id, targetID)
-	Delay()
+	
 	client, ok := n.clients[targetID]
 	if !ok {
 		fmt.Printf("Node %d: клиент для узла %d не найден\n", n.id, targetID)
 		return
 	}
 
-	time.AfterFunc(SleepDuration*time.Millisecond, func() {
-		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	time.AfterFunc(NetworkLatency*time.Millisecond, func() {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 
 		tx := TransactionFromBytes(request)
@@ -278,6 +282,7 @@ func (n *Node) SendTransaction(targetID uint64, request []byte) {
 		_, err := client.SendTransaction(ctx, req)
 		if err != nil {
 			fmt.Printf("Node %d: ошибка отправки транзакции узлу %d: %v\n", n.id, targetID, err)
+			os.Exit(123)
 			return
 		}
 		//fmt.Printf("Node %d успешно отправил транзакцию узлу %d %s\n", n.id, targetID, n.RequestID(request))
@@ -499,7 +504,7 @@ func (*Node) AuxiliaryData(bytes []byte) []byte {
 	return nil // Возвращаем nil, так как у нас нет дополнительных данных
 }
 
-func (n *Node) BroadcastSpamMessage(){
+func (n *Node) BroadcastSpamMessage(count uint64){
 	//fmt.Printf("Spam %d %d \n", n.consensus.Controller.GetCurrentViewNumber(), n.consensus.Controller.GetCurrentSequence() + 1)
 	msg :=  &smartbftprotos.Message{
 		Content: &smartbftprotos.Message_Prepare{
@@ -511,7 +516,7 @@ func (n *Node) BroadcastSpamMessage(){
 		},
 	}
 	
-	for i := 1; i <= 100; i++ {
+	for i := uint64(1); i <= count; i++ {
 		for _, node := range n.Nodes() {
 		// Do not send to yourself
 			if n.id == node {

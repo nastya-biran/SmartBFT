@@ -47,6 +47,6 @@ func (c *Chain) InitializeClients() error {
 	return c.node.InitializeClients()
 } 
 
-func (c *Chain) BroadcastSpamMessage() {
-	c.node.BroadcastSpamMessage()
+func (c *Chain) BroadcastSpamMessage(count uint64) {
+	c.node.BroadcastSpamMessage(count)
 }

@@ -118,7 +118,7 @@ func main() {
 
 	// Настраиваем логгер
 	logConfig := zap.NewDevelopmentConfig()
-	logConfig.Level = zap.NewAtomicLevelAt(zap.DebugLevel)
+	logConfig.Level = zap.NewAtomicLevelAt(zap.ErrorLevel)
 	logger, _ := logConfig.Build()
 	sugar := logger.Sugar()
 
@@ -206,6 +206,11 @@ func main() {
 			panic(fmt.Sprintf("Invalid SPAM_MESSAGE_PERIOD: %v", err))
 		}
 
+		count, err := strconv.ParseUint(os.Getenv("SPAM_MESSAGE_COUNT"), 10, 64)
+		if err != nil {
+			panic(fmt.Sprintf("Invalid SPAM_MESSAGE_COUNT: %v", err))
+		}
+
 		ticker := time.NewTicker(time.Duration(period) * time.Millisecond)
 
 		for {
@@ -213,7 +218,7 @@ func main() {
 			case block := <-c.Listen():
 				sugar.Infof("Node %d received block: %+v", nodeID, block)
 			case <-ticker.C:
-				c.BroadcastSpamMessage()
+				c.BroadcastSpamMessage(count)
 			}
 		}
 	} else {

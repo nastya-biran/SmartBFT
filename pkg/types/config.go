@@ -93,7 +93,7 @@ var DefaultConfig = Configuration{
 	RequestBatchMaxCount:          100,
 	RequestBatchMaxBytes:          10 * 1024 * 1024,
 	RequestBatchMaxInterval:       50 * time.Millisecond,
-	IncomingMessageBufferSize:     200,
+	IncomingMessageBufferSize:     10000,
 	RequestPoolSize:               400,
 	RequestForwardTimeout:         2 * time.Second,
 	RequestComplainTimeout:        20 * time.Second,

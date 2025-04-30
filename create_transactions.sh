@@ -1,4 +1,4 @@
-for i in $(seq -f "%03g" 1 10); do
+for i in $(seq -f "%03g" 11 50); do
   echo "Executing request with transaction ID: txn-$i"
   
   # Определяем порт, начиная с 7051 и циклически используя до 7057

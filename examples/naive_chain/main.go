@@ -29,7 +29,22 @@ type consensusServer struct {
 	chain *chain.Chain
 }
 
+const NetworkLatency = 50
+const CryptoLatency = 3
+const VerifyProposalLatency = 10
+
+func Delay(count int) {
+	done := make(chan bool)
+    go func() {
+        time.Sleep(time.Duration(count) * time.Millisecond)
+        done <- true
+    }()
+    
+    <-done
+}
+
 func (s *consensusServer) SendConsensusMessage(ctx context.Context, req *pb.ConsensusMessageRequest) (*pb.ConsensusMessageResponse, error) {
+	Delay(CryptoLatency)
 	err := s.chain.HandleMessage(req.FromNode, req.Message)
 	if err != nil {
 		return &pb.ConsensusMessageResponse{
@@ -44,6 +59,7 @@ func (s *consensusServer) SendConsensusMessage(ctx context.Context, req *pb.Cons
 
 func (s *consensusServer) SendTransaction(ctx context.Context, req *pb.TransactionRequest) (*pb.TransactionResponse, error) {
 	// Пока просто пересылаем транзакцию в цепочку
+	Delay(CryptoLatency)
 	fmt.Printf("Send transaction in main %d %s %s\n", req.FromNode, req.Tx.Id, req.Tx.ClientId)
 	err := s.chain.Order(chain.Transaction{
 		ClientID: req.Tx.ClientId,
@@ -64,6 +80,7 @@ func (s *consensusServer) SendTransaction(ctx context.Context, req *pb.Transacti
 
 func (s *transactionServer) SubmitTransaction(ctx context.Context, req *pb.ClientTransactionRequest) (*pb.TransactionResponse, error) {
 	// Пока просто пересылаем транзакцию в цепочку
+	Delay(CryptoLatency)
 	err := s.chain.Order(chain.Transaction{
 		ClientID: req.Tx.ClientId,
 		ID:       req.Tx.Id,

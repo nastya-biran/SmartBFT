@@ -64,7 +64,7 @@ var MyDefaultConfig = bft.Configuration{
 	RequestBatchMaxCount:          1,
 	RequestBatchMaxBytes:          10 * 1024 * 1024,
 	RequestBatchMaxInterval:       50 * time.Millisecond,
-	IncomingMessageBufferSize:     1000000,
+	IncomingMessageBufferSize:     1000,
 	RequestPoolSize:               400,
 	RequestForwardTimeout:         2 * time.Second,
 	RequestComplainTimeout:        20 * time.Second,
@@ -87,26 +87,6 @@ const NetworkLatency = 50
 const CryptoLatency = 3
 const VerifyProposalLatency = 10
 
-func (s *consensusServer) SendConsensusMessage(ctx context.Context, req *pb.ConsensusMessageRequest) (*pb.ConsensusMessageResponse, error) {
-	fmt.Printf("Node %d получил консенсус-сообщение от %d типа %T\n", 
-		s.node.id, req.FromNode, req.Message.GetContent())
-	
-	// Обрабатываем сообщение
-	s.node.HandleMessage(req.FromNode, req.Message)
-	
-	return &pb.ConsensusMessageResponse{
-		Success: true,
-	}, nil
-}
-
-func (*Node) RequestID(req []byte) bft.RequestInfo {
-	txn := TransactionFromBytes(req)
-	return bft.RequestInfo{
-		ClientID: txn.ClientID,
-		ID:       txn.ID,
-	}
-}
-
 func Delay(count int) {
 	done := make(chan bool)
     go func() {
@@ -116,6 +96,14 @@ func Delay(count int) {
     
     fmt.Println("Sleeping")
     <-done
+}
+
+func (*Node) RequestID(req []byte) bft.RequestInfo {
+	txn := TransactionFromBytes(req)
+	return bft.RequestInfo{
+		ClientID: txn.ClientID,
+		ID:       txn.ID,
+	}
 }
 
 func (*Node) VerifyProposal(proposal bft.Proposal) ([]bft.RequestInfo, error) {

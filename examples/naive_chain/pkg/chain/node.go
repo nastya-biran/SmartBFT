@@ -60,6 +60,29 @@ type consensusServer struct {
 	node *Node
 }
 
+var MyDefaultConfig = bft.Configuration{
+	RequestBatchMaxCount:          1,
+	RequestBatchMaxBytes:          10 * 1024 * 1024,
+	RequestBatchMaxInterval:       50 * time.Millisecond,
+	IncomingMessageBufferSize:     1000000,
+	RequestPoolSize:               400,
+	RequestForwardTimeout:         2 * time.Second,
+	RequestComplainTimeout:        20 * time.Second,
+	RequestAutoRemoveTimeout:      3 * time.Minute,
+	ViewChangeResendInterval:      5 * time.Second,
+	ViewChangeTimeout:             20 * time.Second,
+	LeaderHeartbeatTimeout:        time.Minute,
+	LeaderHeartbeatCount:          10,
+	NumOfTicksBehindBeforeSyncing: 10,
+	CollectTimeout:                time.Second,
+	SyncOnStart:                   false,
+	SpeedUpViewChange:             false,
+	LeaderRotation:                true,
+	DecisionsPerLeader:            3,
+	RequestMaxBytes:               10 * 1024,
+	RequestPoolSubmitTimeout:      5 * time.Second,
+}
+
 const NetworkLatency = 50
 const CryptoLatency = 3
 const VerifyProposalLatency = 10
@@ -261,7 +284,7 @@ func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {
 
 func (n *Node) SendTransaction(targetID uint64, request []byte) {
 	//fmt.Printf("Node %d пытается отправить транзакцию узлу %d\n",  n.id, targetID)
-	
+
 	client, ok := n.clients[targetID]
 	if !ok {
 		fmt.Printf("Node %d: клиент для узла %d не найден\n", n.id, targetID)
@@ -336,7 +359,7 @@ func NewNode(id uint64, nodeAddresses map[uint64]string, deliverChan chan<- *Blo
 		clients:       make(map[uint64]pb.ConsensusServiceClient),
 	}
 
-	config := bft.DefaultConfig
+	config := MyDefaultConfig
 	config.SelfID = id
 	config.RequestBatchMaxInterval = opts.BatchTimeout
 	config.RequestBatchMaxCount = opts.BatchSize

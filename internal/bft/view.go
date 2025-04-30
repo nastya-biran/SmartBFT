@@ -262,7 +262,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 
 	if prp := m.GetPrepare(); prp != nil {
 		if prepares_count_value := v.prepares_count.Add(1); prepares_count_value % 1000 == 0 {
-			v.Logger.Errorf("prepares count %d", prepares_count_value)
+			v.Logger.Infof("prepares count %d", prepares_count_value)
 		}
 
 		if msgForNextProposal {
@@ -411,6 +411,8 @@ func (v *View) processProposal() Phase {
 			}
 		}
 	}
+
+	v.Logger.Infof("process proposal %d", v.ProposalSequence)
 
 	requests, err := v.verifyProposal(proposal, prevCommits)
 	if err != nil {

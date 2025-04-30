@@ -219,6 +219,8 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	msgViewNum := viewNumber(m)
 	msgProposalSeq := proposalSequence(m)
 
+	v.Logger.Infof("%d got message %s from %d with seq %d", v.SelfID, MsgToString(m), sender, msgProposalSeq)
+
 	if msgViewNum != v.Number {
 		v.Logger.Warnf("%d got message %v from %d of view %d, expected view %d", v.SelfID, m, sender, msgViewNum, v.Number)
 		if sender != v.LeaderID {

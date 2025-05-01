@@ -215,13 +215,13 @@ func (hm *HeartbeatMonitor) handleArtificialHeartBeat(sender uint64, hb *smartbf
 
 func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.HeartBeat, artificial bool) {
 	if hb.View < hm.view {
-		hm.logger.Debugf("Heartbeat view is lower than expected, sending response; expected-view=%d, received-view: %d", hm.view, hb.View)
+		//hm.logger.Debugf("Heartbeat view is lower than expected, sending response; expected-view=%d, received-view: %d", hm.view, hb.View)
 		hm.sendHeartBeatResponse(sender)
 		return
 	}
 
 	if !hm.stopSendHeartbearFromLeader && sender != hm.leaderID {
-		hm.logger.Debugf("Heartbeat sender is not leader, ignoring; leader: %d, sender: %d", hm.leaderID, sender)
+		//hm.logger.Debugf("Heartbeat sender is not leader, ignoring; leader: %d, sender: %d", hm.leaderID, sender)
 		return
 	}
 
@@ -240,7 +240,7 @@ func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.He
 		}
 		if ourSeq+1 == hb.Seq {
 			hm.followerBehind = true
-			hm.logger.Debugf("Our sequence is behind the heartbeat sequence, leader's sequence is %d and ours is %d", hb.Seq, ourSeq)
+			//hm.logger.Debugf("Our sequence is behind the heartbeat sequence, leader's sequence is %d and ours is %d", hb.Seq, ourSeq)
 			if ourSeq > hm.behindSeq {
 				hm.behindSeq = ourSeq
 				hm.behindCounter = 0
@@ -252,28 +252,28 @@ func (hm *HeartbeatMonitor) handleHeartBeat(sender uint64, hb *smartbftprotos.He
 		hm.followerBehind = false
 	}
 
-	hm.logger.Debugf("Received heartbeat from %d, last heartbeat was %v ago", sender, hm.lastTick.Sub(hm.lastHeartbeat))
+	//hm.logger.Debugf("Received heartbeat from %d, last heartbeat was %v ago", sender, hm.lastTick.Sub(hm.lastHeartbeat))
 	hm.lastHeartbeat = hm.lastTick
 }
 
 // handleHeartBeatResponse keeps track of responses, and if we get f+1 identical, force a sync
 func (hm *HeartbeatMonitor) handleHeartBeatResponse(sender uint64, hbr *smartbftprotos.HeartBeatResponse) {
 	if hm.follower {
-		hm.logger.Debugf("Monitor is not a leader, ignoring HeartBeatResponse; sender: %d, msg: %v", sender, hbr)
+		//hm.logger.Debugf("Monitor is not a leader, ignoring HeartBeatResponse; sender: %d, msg: %v", sender, hbr)
 		return
 	}
 
 	if hm.syncReq {
-		hm.logger.Debugf("Monitor already called Sync, ignoring HeartBeatResponse; sender: %d, msg: %v", sender, hbr)
+		//hm.logger.Debugf("Monitor already called Sync, ignoring HeartBeatResponse; sender: %d, msg: %v", sender, hbr)
 		return
 	}
 
 	if hm.view >= hbr.View {
-		hm.logger.Debugf("Monitor view: %d >= HeartBeatResponse, ignoring; sender: %d, msg: %v", hm.view, sender, hbr)
+		//hm.logger.Debugf("Monitor view: %d >= HeartBeatResponse, ignoring; sender: %d, msg: %v", hm.view, sender, hbr)
 		return
 	}
 
-	hm.logger.Debugf("Received HeartBeatResponse, msg: %v; from %d", hbr, sender)
+	//hm.logger.Debugf("Received HeartBeatResponse, msg: %v; from %d", hbr, sender)
 	hm.hbRespCollector[sender] = hbr.View
 
 	// check if we have f+1 votes
@@ -294,7 +294,7 @@ func (hm *HeartbeatMonitor) sendHeartBeatResponse(target uint64) {
 		},
 	}
 	hm.comm.SendConsensus(target, heartbeatResponse)
-	hm.logger.Debugf("Sent HeartBeatResponse view: %d; to %d", hm.view, target)
+	//hm.logger.Debugf("Sent HeartBeatResponse view: %d; to %d", hm.view, target)
 }
 
 func (hm *HeartbeatMonitor) viewActive(hbMsg *smartbftprotos.HeartBeat) (bool, uint64) {
@@ -362,7 +362,7 @@ func (hm *HeartbeatMonitor) leaderTick(now time.Time) {
 		hm.logger.Infof("ViewSequence uninitialized or view inactive")
 		return
 	}
-	hm.logger.Debugf("Sending heartbeat with view %d, sequence %d", hm.view, sequence)
+	//hm.logger.Debugf("Sending heartbeat with view %d, sequence %d", hm.view, sequence)
 	heartbeat := &smartbftprotos.Message{
 		Content: &smartbftprotos.Message_HeartBeat{
 			HeartBeat: &smartbftprotos.HeartBeat{
@@ -390,7 +390,7 @@ func (hm *HeartbeatMonitor) followerTick(now time.Time) {
 		return
 	}
 
-	hm.logger.Debugf("Last heartbeat from %d was %v ago", hm.leaderID, delta)
+	//hm.logger.Debugf("Last heartbeat from %d was %v ago", hm.leaderID, delta)
 
 	if !hm.followerBehind {
 		return

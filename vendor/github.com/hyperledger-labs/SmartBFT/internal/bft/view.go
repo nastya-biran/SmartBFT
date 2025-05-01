@@ -222,12 +222,15 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	if msgViewNum != v.Number {
 		//v.Logger.Warnf("%d got message %v from %d of view %d, expected view %d", v.SelfID, m, sender, msgViewNum, v.Number)
 		if sender != v.LeaderID {
+			v.Logger.Debugf("Discover if sync needed\n")
 			v.discoverIfSyncNeeded(sender, m)
 			return
 		}
+		v.Logger.Debugf("Complaining on %d because of wrong view %d\n", sender, msgViewNum)
 		v.FailureDetector.Complain(v.Number, false)
 		// Else, we got a message with a wrong view from the leader.
 		if msgViewNum > v.Number {
+			v.Logger.Debugf("Syncing because of message with greater view from %d\n", sender)
 			v.Sync.Sync()
 		}
 		v.stop()
@@ -782,11 +785,11 @@ func (v *View) handlePrevSeqMessage(msgProposalSeq, sender uint64, m *protos.Mes
 		}
 	}
 
-	prevMsgFound := fmt.Sprintf("but didn't have a previous %s to send back.", msgType)
+	/*prevMsgFound := fmt.Sprintf("but didn't have a previous %s to send back.", msgType)
 	if found {
 		prevMsgFound = fmt.Sprintf("sent back previous %s.", msgType)
 	}
-	v.Logger.Debugf("Got %s for previous sequence (%d) from %d, %s", msgType, msgProposalSeq, sender, prevMsgFound)
+	v.Logger.Debugf("Got %s for previous sequence (%d) from %d, %s", msgType, msgProposalSeq, sender, prevMsgFound)*/
 }
 
 func (v *View) discoverIfSyncNeeded(sender uint64, m *protos.Message) {

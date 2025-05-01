@@ -357,6 +357,7 @@ func (v *ViewChanger) StartViewChange(view uint64, stopView bool) {
 	select {
 	case v.startChangeChan <- &change{view: view, stopView: stopView}:
 	default:
+		v.Logger.Errorf("Starting view change")
 	}
 }
 

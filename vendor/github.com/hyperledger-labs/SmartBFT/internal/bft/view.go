@@ -762,7 +762,7 @@ func (v *View) handlePrevSeqMessage(msgProposalSeq, sender uint64, m *protos.Mes
 		msgType = "commit"
 	}
 
-	var found bool
+	//var found bool
 
 	switch msgType {
 	case "prepare":
@@ -772,7 +772,7 @@ func (v *View) handlePrevSeqMessage(msgProposalSeq, sender uint64, m *protos.Mes
 		}
 		if v.prevPrepareSent != nil {
 			v.Comm.SendConsensus(sender, v.prevPrepareSent)
-			found = true
+			//found = true
 		}
 	case "commit":
 		// This is an assist message, we don't need to reply to it.
@@ -781,7 +781,7 @@ func (v *View) handlePrevSeqMessage(msgProposalSeq, sender uint64, m *protos.Mes
 		}
 		if v.prevCommitSent != nil {
 			v.Comm.SendConsensus(sender, v.prevCommitSent)
-			found = true
+			//found = true
 		}
 	}
 

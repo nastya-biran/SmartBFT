@@ -8,6 +8,7 @@ package bft
 import (
 	"errors"
 	"fmt"
+	"os"
 
 	"github.com/hyperledger-labs/SmartBFT/pkg/api"
 	"github.com/hyperledger-labs/SmartBFT/pkg/types"
@@ -113,6 +114,7 @@ func (ps *PersistedState) LoadViewChangeIfApplicable() (*protos.ViewChange, erro
 }
 
 func (ps *PersistedState) Restore(v *View) error {
+	os.Exit(124)
 	// Unless we conclude otherwise, we're in a COMMITTED state
 	v.Phase = COMMITTED
 

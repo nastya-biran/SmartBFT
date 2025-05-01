@@ -242,7 +242,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	v.Logger.Debugf("%d got message %s from %d with seq %d", v.SelfID, MsgToString(m), sender, msgProposalSeq)
 	// This message is either for this proposal or the next one (we might be behind the rest)
 	if msgProposalSeq != v.ProposalSequence && msgProposalSeq != v.ProposalSequence+1 {
-		v.Logger.Warnf("%d got message from %d with sequence %d but our sequence is %d", v.SelfID, sender, msgProposalSeq, v.ProposalSequence)
+		// v.Logger.Warnf("%d got message from %d with sequence %d but our sequence is %d", v.SelfID, sender, msgProposalSeq, v.ProposalSequence)
 		v.discoverIfSyncNeeded(sender, m)
 		return
 	}
@@ -261,7 +261,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	}
 
 	if prp := m.GetPrepare(); prp != nil {
-		if prepares_count_value := v.prepares_count.Add(1); prepares_count_value % 1000 == 0 {
+		if prepares_count_value := v.prepares_count.Add(1); prepares_count_value % 10000 == 0 {
 			v.Logger.Infof("prepares count %d", prepares_count_value)
 		}
 
@@ -796,7 +796,7 @@ func (v *View) discoverIfSyncNeeded(sender uint64, m *protos.Message) {
 	if commit == nil {
 		return
 	}
-
+f
 	// To commit a block we need 2f + 1 votes.
 	// at least f+1 of them are honest and will broadcast
 	// their commits to votes to everyone including us.

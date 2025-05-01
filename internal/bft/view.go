@@ -782,11 +782,11 @@ func (v *View) handlePrevSeqMessage(msgProposalSeq, sender uint64, m *protos.Mes
 		}
 	}
 
-	prevMsgFound := fmt.Sprintf("but didn't have a previous %s to send back.", msgType)
+	/*prevMsgFound := fmt.Sprintf("but didn't have a previous %s to send back.", msgType)
 	if found {
 		prevMsgFound = fmt.Sprintf("sent back previous %s.", msgType)
 	}
-	v.Logger.Debugf("Got %s for previous sequence (%d) from %d, %s", msgType, msgProposalSeq, sender, prevMsgFound)
+	v.Logger.Debugf("Got %s for previous sequence (%d) from %d, %s", msgType, msgProposalSeq, sender, prevMsgFound)*/
 }
 
 func (v *View) discoverIfSyncNeeded(sender uint64, m *protos.Message) {

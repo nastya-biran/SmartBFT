@@ -1,4 +1,4 @@
-for i in $(seq -f "%03g" 1 40); do
+for i in $(seq -f "%03g" 20 80); do
   echo "Executing request with transaction ID: txn-$i"
   
   # Определяем порт, начиная с 7051 и циклически используя до 7057
@@ -20,7 +20,7 @@ for i in $(seq -f "%03g" 1 40); do
   
   echo "-----------------------------------------"
   # Small delay between requests to avoid overwhelming the server
-  sleep 0.01
+  sleep 1
 done
 
 sleep 2m

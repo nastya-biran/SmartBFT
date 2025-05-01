@@ -78,6 +78,35 @@ func (s *consensusServer) SendTransaction(ctx context.Context, req *pb.Transacti
 	}, nil
 }
 
+func (s *consensusServer) Sync(ctx context.Context, req *pb.SyncRequest) (*pb.SyncResponse, error) {
+	// Пока просто пересылаем транзакцию в цепочку
+	Delay(CryptoLatency)
+	fmt.Printf("Node %d called sync\n", req.FromNode)
+
+	if req.Sequence > s.chain.GetCurrentSequence() {
+		return &pb.SyncResponse{
+			Sequence:    req.Sequence,
+			HasProposal: false,
+		}, nil
+	}
+
+	proposal, error := s.chain.GetDeliveredProposal(int64(req.Sequence))
+	if error != nil {
+		return &pb.SyncResponse{
+			Sequence:    req.Sequence,
+			HasProposal: false,
+		}, nil
+	}
+
+	return &pb.SyncResponse{
+		Sequence: req.Sequence,
+		HasProposal: true,
+		Proposal: proposal,
+		Signatures: nil,
+	}, nil
+	
+}
+
 func (s *transactionServer) SubmitTransaction(ctx context.Context, req *pb.ClientTransactionRequest) (*pb.TransactionResponse, error) {
 	// Пока просто пересылаем транзакцию в цепочку
 	Delay(CryptoLatency)

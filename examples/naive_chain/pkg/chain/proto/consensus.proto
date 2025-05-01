@@ -3,19 +3,21 @@ syntax = "proto3";
 package consensus;
 option go_package = "github.com/nastya-biran/SmartBFT/examples/naive_chain/pkg/chain/proto";
 
-// Импортируем существующие протобафы из SmartBFT
+
 import "smartbftprotos/messages.proto";
 
-// Сервис для консенсуса
+
 service ConsensusService {
-  // Отправка консенсус-сообщений между нодами
+  
   rpc SendConsensusMessage(ConsensusMessageRequest) returns (ConsensusMessageResponse) {}
   
-  // Отправка транзакций между нодами
+  
   rpc SendTransaction(TransactionRequest) returns (TransactionResponse) {}
+
+  rpc Sync(SyncRequest) returns (SyncResponse) {}
 }
 
-// Сервис для обработки транзакций от клиентов
+
 service TransactionService {
   rpc SubmitTransaction(ClientTransactionRequest) returns (TransactionResponse) {}
 }
@@ -50,3 +52,15 @@ message TransactionResponse {
   bool success = 1;
   string error = 2;
 } 
+
+message SyncRequest {
+  uint64 sequence = 1;  
+  uint64 from_node = 2; 
+}
+
+message SyncResponse {
+  uint64 sequence = 1;                
+  bool has_proposal = 2;              
+  smartbftprotos.Proposal proposal = 3;              
+  repeated smartbftprotos.Signature signatures = 4; 
+}

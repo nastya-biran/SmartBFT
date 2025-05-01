@@ -21,18 +21,16 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	ConsensusService_SendConsensusMessage_FullMethodName = "/consensus.ConsensusService/SendConsensusMessage"
 	ConsensusService_SendTransaction_FullMethodName      = "/consensus.ConsensusService/SendTransaction"
+	ConsensusService_Sync_FullMethodName                 = "/consensus.ConsensusService/Sync"
 )
 
 // ConsensusServiceClient is the client API for ConsensusService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// Сервис для консенсуса
 type ConsensusServiceClient interface {
-	// Отправка консенсус-сообщений между нодами
 	SendConsensusMessage(ctx context.Context, in *ConsensusMessageRequest, opts ...grpc.CallOption) (*ConsensusMessageResponse, error)
-	// Отправка транзакций между нодами
 	SendTransaction(ctx context.Context, in *TransactionRequest, opts ...grpc.CallOption) (*TransactionResponse, error)
+	Sync(ctx context.Context, in *SyncRequest, opts ...grpc.CallOption) (*SyncResponse, error)
 }
 
 type consensusServiceClient struct {
@@ -63,16 +61,23 @@ func (c *consensusServiceClient) SendTransaction(ctx context.Context, in *Transa
 	return out, nil
 }
 
+func (c *consensusServiceClient) Sync(ctx context.Context, in *SyncRequest, opts ...grpc.CallOption) (*SyncResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SyncResponse)
+	err := c.cc.Invoke(ctx, ConsensusService_Sync_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ConsensusServiceServer is the server API for ConsensusService service.
 // All implementations must embed UnimplementedConsensusServiceServer
 // for forward compatibility.
-//
-// Сервис для консенсуса
 type ConsensusServiceServer interface {
-	// Отправка консенсус-сообщений между нодами
 	SendConsensusMessage(context.Context, *ConsensusMessageRequest) (*ConsensusMessageResponse, error)
-	// Отправка транзакций между нодами
 	SendTransaction(context.Context, *TransactionRequest) (*TransactionResponse, error)
+	Sync(context.Context, *SyncRequest) (*SyncResponse, error)
 	mustEmbedUnimplementedConsensusServiceServer()
 }
 
@@ -88,6 +93,9 @@ func (UnimplementedConsensusServiceServer) SendConsensusMessage(context.Context,
 }
 func (UnimplementedConsensusServiceServer) SendTransaction(context.Context, *TransactionRequest) (*TransactionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendTransaction not implemented")
+}
+func (UnimplementedConsensusServiceServer) Sync(context.Context, *SyncRequest) (*SyncResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Sync not implemented")
 }
 func (UnimplementedConsensusServiceServer) mustEmbedUnimplementedConsensusServiceServer() {}
 func (UnimplementedConsensusServiceServer) testEmbeddedByValue()                          {}
@@ -146,6 +154,24 @@ func _ConsensusService_SendTransaction_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ConsensusService_Sync_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SyncRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ConsensusServiceServer).Sync(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ConsensusService_Sync_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ConsensusServiceServer).Sync(ctx, req.(*SyncRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ConsensusService_ServiceDesc is the grpc.ServiceDesc for ConsensusService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -161,6 +187,10 @@ var ConsensusService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "SendTransaction",
 			Handler:    _ConsensusService_SendTransaction_Handler,
 		},
+		{
+			MethodName: "Sync",
+			Handler:    _ConsensusService_Sync_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "examples/naive_chain/pkg/chain/proto/consensus.proto",
@@ -173,8 +203,6 @@ const (
 // TransactionServiceClient is the client API for TransactionService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// Сервис для обработки транзакций от клиентов
 type TransactionServiceClient interface {
 	SubmitTransaction(ctx context.Context, in *ClientTransactionRequest, opts ...grpc.CallOption) (*TransactionResponse, error)
 }
@@ -200,8 +228,6 @@ func (c *transactionServiceClient) SubmitTransaction(ctx context.Context, in *Cl
 // TransactionServiceServer is the server API for TransactionService service.
 // All implementations must embed UnimplementedTransactionServiceServer
 // for forward compatibility.
-//
-// Сервис для обработки транзакций от клиентов
 type TransactionServiceServer interface {
 	SubmitTransaction(context.Context, *ClientTransactionRequest) (*TransactionResponse, error)
 	mustEmbedUnimplementedTransactionServiceServer()

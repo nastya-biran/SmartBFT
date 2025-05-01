@@ -342,6 +342,126 @@ func (x *TransactionResponse) GetError() string {
 	return ""
 }
 
+type SyncRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Sequence      uint64                 `protobuf:"varint,1,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	FromNode      uint64                 `protobuf:"varint,2,opt,name=from_node,json=fromNode,proto3" json:"from_node,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncRequest) Reset() {
+	*x = SyncRequest{}
+	mi := &file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncRequest) ProtoMessage() {}
+
+func (x *SyncRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SyncRequest.ProtoReflect.Descriptor instead.
+func (*SyncRequest) Descriptor() ([]byte, []int) {
+	return file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *SyncRequest) GetSequence() uint64 {
+	if x != nil {
+		return x.Sequence
+	}
+	return 0
+}
+
+func (x *SyncRequest) GetFromNode() uint64 {
+	if x != nil {
+		return x.FromNode
+	}
+	return 0
+}
+
+type SyncResponse struct {
+	state         protoimpl.MessageState      `protogen:"open.v1"`
+	Sequence      uint64                      `protobuf:"varint,1,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	HasProposal   bool                        `protobuf:"varint,2,opt,name=has_proposal,json=hasProposal,proto3" json:"has_proposal,omitempty"`
+	Proposal      *smartbftprotos.Proposal    `protobuf:"bytes,3,opt,name=proposal,proto3" json:"proposal,omitempty"`
+	Signatures    []*smartbftprotos.Signature `protobuf:"bytes,4,rep,name=signatures,proto3" json:"signatures,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncResponse) Reset() {
+	*x = SyncResponse{}
+	mi := &file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncResponse) ProtoMessage() {}
+
+func (x *SyncResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SyncResponse.ProtoReflect.Descriptor instead.
+func (*SyncResponse) Descriptor() ([]byte, []int) {
+	return file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *SyncResponse) GetSequence() uint64 {
+	if x != nil {
+		return x.Sequence
+	}
+	return 0
+}
+
+func (x *SyncResponse) GetHasProposal() bool {
+	if x != nil {
+		return x.HasProposal
+	}
+	return false
+}
+
+func (x *SyncResponse) GetProposal() *smartbftprotos.Proposal {
+	if x != nil {
+		return x.Proposal
+	}
+	return nil
+}
+
+func (x *SyncResponse) GetSignatures() []*smartbftprotos.Signature {
+	if x != nil {
+		return x.Signatures
+	}
+	return nil
+}
+
 var File_examples_naive_chain_pkg_chain_proto_consensus_proto protoreflect.FileDescriptor
 
 const file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDesc = "" +
@@ -365,10 +485,21 @@ const file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDesc = "" +
 	"\x02tx\x18\x01 \x01(\v2\x16.consensus.TransactionR\x02tx\"E\n" +
 	"\x13TransactionResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x14\n" +
-	"\x05error\x18\x02 \x01(\tR\x05error2\xc9\x01\n" +
+	"\x05error\x18\x02 \x01(\tR\x05error\"F\n" +
+	"\vSyncRequest\x12\x1a\n" +
+	"\bsequence\x18\x01 \x01(\x04R\bsequence\x12\x1b\n" +
+	"\tfrom_node\x18\x02 \x01(\x04R\bfromNode\"\xbe\x01\n" +
+	"\fSyncResponse\x12\x1a\n" +
+	"\bsequence\x18\x01 \x01(\x04R\bsequence\x12!\n" +
+	"\fhas_proposal\x18\x02 \x01(\bR\vhasProposal\x124\n" +
+	"\bproposal\x18\x03 \x01(\v2\x18.smartbftprotos.ProposalR\bproposal\x129\n" +
+	"\n" +
+	"signatures\x18\x04 \x03(\v2\x19.smartbftprotos.SignatureR\n" +
+	"signatures2\x84\x02\n" +
 	"\x10ConsensusService\x12a\n" +
 	"\x14SendConsensusMessage\x12\".consensus.ConsensusMessageRequest\x1a#.consensus.ConsensusMessageResponse\"\x00\x12R\n" +
-	"\x0fSendTransaction\x12\x1d.consensus.TransactionRequest\x1a\x1e.consensus.TransactionResponse\"\x002p\n" +
+	"\x0fSendTransaction\x12\x1d.consensus.TransactionRequest\x1a\x1e.consensus.TransactionResponse\"\x00\x129\n" +
+	"\x04Sync\x12\x16.consensus.SyncRequest\x1a\x17.consensus.SyncResponse\"\x002p\n" +
 	"\x12TransactionService\x12Z\n" +
 	"\x11SubmitTransaction\x12#.consensus.ClientTransactionRequest\x1a\x1e.consensus.TransactionResponse\"\x00BGZEgithub.com/nastya-biran/SmartBFT/examples/naive_chain/pkg/chain/protob\x06proto3"
 
@@ -384,7 +515,7 @@ func file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDescGZIP() []b
 	return file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDescData
 }
 
-var file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_examples_naive_chain_pkg_chain_proto_consensus_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_examples_naive_chain_pkg_chain_proto_consensus_proto_goTypes = []any{
 	(*ConsensusMessageRequest)(nil),  // 0: consensus.ConsensusMessageRequest
 	(*ConsensusMessageResponse)(nil), // 1: consensus.ConsensusMessageResponse
@@ -392,23 +523,31 @@ var file_examples_naive_chain_pkg_chain_proto_consensus_proto_goTypes = []any{
 	(*TransactionRequest)(nil),       // 3: consensus.TransactionRequest
 	(*ClientTransactionRequest)(nil), // 4: consensus.ClientTransactionRequest
 	(*TransactionResponse)(nil),      // 5: consensus.TransactionResponse
-	(*smartbftprotos.Message)(nil),   // 6: smartbftprotos.Message
+	(*SyncRequest)(nil),              // 6: consensus.SyncRequest
+	(*SyncResponse)(nil),             // 7: consensus.SyncResponse
+	(*smartbftprotos.Message)(nil),   // 8: smartbftprotos.Message
+	(*smartbftprotos.Proposal)(nil),  // 9: smartbftprotos.Proposal
+	(*smartbftprotos.Signature)(nil), // 10: smartbftprotos.Signature
 }
 var file_examples_naive_chain_pkg_chain_proto_consensus_proto_depIdxs = []int32{
-	6, // 0: consensus.ConsensusMessageRequest.message:type_name -> smartbftprotos.Message
-	2, // 1: consensus.TransactionRequest.tx:type_name -> consensus.Transaction
-	2, // 2: consensus.ClientTransactionRequest.tx:type_name -> consensus.Transaction
-	0, // 3: consensus.ConsensusService.SendConsensusMessage:input_type -> consensus.ConsensusMessageRequest
-	3, // 4: consensus.ConsensusService.SendTransaction:input_type -> consensus.TransactionRequest
-	4, // 5: consensus.TransactionService.SubmitTransaction:input_type -> consensus.ClientTransactionRequest
-	1, // 6: consensus.ConsensusService.SendConsensusMessage:output_type -> consensus.ConsensusMessageResponse
-	5, // 7: consensus.ConsensusService.SendTransaction:output_type -> consensus.TransactionResponse
-	5, // 8: consensus.TransactionService.SubmitTransaction:output_type -> consensus.TransactionResponse
-	6, // [6:9] is the sub-list for method output_type
-	3, // [3:6] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	8,  // 0: consensus.ConsensusMessageRequest.message:type_name -> smartbftprotos.Message
+	2,  // 1: consensus.TransactionRequest.tx:type_name -> consensus.Transaction
+	2,  // 2: consensus.ClientTransactionRequest.tx:type_name -> consensus.Transaction
+	9,  // 3: consensus.SyncResponse.proposal:type_name -> smartbftprotos.Proposal
+	10, // 4: consensus.SyncResponse.signatures:type_name -> smartbftprotos.Signature
+	0,  // 5: consensus.ConsensusService.SendConsensusMessage:input_type -> consensus.ConsensusMessageRequest
+	3,  // 6: consensus.ConsensusService.SendTransaction:input_type -> consensus.TransactionRequest
+	6,  // 7: consensus.ConsensusService.Sync:input_type -> consensus.SyncRequest
+	4,  // 8: consensus.TransactionService.SubmitTransaction:input_type -> consensus.ClientTransactionRequest
+	1,  // 9: consensus.ConsensusService.SendConsensusMessage:output_type -> consensus.ConsensusMessageResponse
+	5,  // 10: consensus.ConsensusService.SendTransaction:output_type -> consensus.TransactionResponse
+	7,  // 11: consensus.ConsensusService.Sync:output_type -> consensus.SyncResponse
+	5,  // 12: consensus.TransactionService.SubmitTransaction:output_type -> consensus.TransactionResponse
+	9,  // [9:13] is the sub-list for method output_type
+	5,  // [5:9] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_examples_naive_chain_pkg_chain_proto_consensus_proto_init() }
@@ -422,7 +561,7 @@ func file_examples_naive_chain_pkg_chain_proto_consensus_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDesc), len(file_examples_naive_chain_pkg_chain_proto_consensus_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   2,
 		},

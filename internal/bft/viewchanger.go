@@ -1349,7 +1349,7 @@ func (v *ViewChanger) HandleViewMessage(sender uint64, m *protos.Message) {
 	v.inFlightViewLock.RLock()
 	defer v.inFlightViewLock.RUnlock()
 	if view := v.inFlightView; view != nil {
-		v.Logger.Debugf("Node %d is passing a message to the in flight view", v.SelfID)
+		//v.Logger.Debugf("Node %d is passing a message to the in flight view", v.SelfID)
 		view.HandleMessage(sender, m)
 	}
 }

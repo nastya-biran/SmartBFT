@@ -50,3 +50,25 @@ func (c *Chain) InitializeClients() error {
 func (c *Chain) BroadcastSpamMessage(count uint64) {
 	c.node.BroadcastSpamMessage(count)
 }
+
+func (c *Chain) GetCurrentSequence() uint64 {
+	return c.node.consensus.Controller.GetCurrentSequence();
+}
+
+func (c *Chain) GetCurrentViewNumber() uint64 {
+	return c.node.consensus.Controller.GetCurrentViewNumber();
+}
+
+func (c *Chain) GetDeliveredProposal(seq int64) (*smartbftprotos.Proposal, error) {
+	proposal, error := c.node.GetDeliveredProposal(seq)
+	if error != nil {
+		return nil, error
+	}
+
+	return &smartbftprotos.Proposal{
+		Header: proposal.Header,
+		Metadata: proposal.Metadata,
+		Payload: proposal.Payload,
+	}, nil
+}
+

@@ -14,6 +14,7 @@ import (
 	"sync"
 	"time"
 	"os"
+	"bytes"
 
 	smart "github.com/hyperledger-labs/SmartBFT/pkg/api"
 	smartbft "github.com/hyperledger-labs/SmartBFT/pkg/consensus"
@@ -52,6 +53,8 @@ type Node struct {
 	grpcServer    *grpc.Server
 	// Адреса нод
 	nodeAddresses map[uint64]string
+
+	delivered_proposals map[int64]bft.Proposal
 }
 
 // ConsensusServiceServer реализация gRPC сервера
@@ -64,7 +67,7 @@ var MyDefaultConfig = bft.Configuration{
 	RequestBatchMaxCount:          1,
 	RequestBatchMaxBytes:          10 * 1024 * 1024,
 	RequestBatchMaxInterval:       50 * time.Millisecond,
-	IncomingMessageBufferSize:     1000,
+	IncomingMessageBufferSize:     100,
 	RequestPoolSize:               400,
 	RequestForwardTimeout:         2 * time.Second,
 	RequestComplainTimeout:        20 * time.Second,
@@ -315,6 +318,9 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) bft.Rec
 		})
 	}
 	header := BlockHeaderFromBytes(proposal.Header)
+	fmt.Printf("before delivered_proposal\n")
+	n.delivered_proposals[header.Sequence] = proposal
+	fmt.Printf("after\n")
 
 	select {
 	case <-n.stopChan:
@@ -345,6 +351,7 @@ func NewNode(id uint64, nodeAddresses map[uint64]string, deliverChan chan<- *Blo
 		stopChan:      make(chan struct{}),
 		nodeAddresses: nodeAddresses,
 		clients:       make(map[uint64]pb.ConsensusServiceClient),
+		delivered_proposals: make(map[int64]bft.Proposal),
 	}
 
 	config := MyDefaultConfig
@@ -482,32 +489,74 @@ func (n *Node) StartViewChange(view uint64) {
 func (n *Node) Sync() bft.SyncResponse {
 	fmt.Printf("Node %d: Sync called\n", n.id)
 	
-	// Получаем последний блок
-	header := BlockHeader{
-		Sequence: 1, // Начинаем с 1
-		PrevHash: n.prevHash,
-		ViewId: 0,
+	curSeq := n.consensus.Controller.GetCurrentSequence()
+
+
+	for {
+		var lock sync.Mutex
+		var proposalForSeq *bft.Proposal = nil
+		for nodeID := range n.nodeAddresses {
+			if nodeID == n.id {
+				continue
+			}
+
+			client, ok := n.clients[nodeID]
+			if !ok {
+				panic(fmt.Sprintf("Node %d: клиент для узла %d не найден\n", n.id, nodeID))
+			}
+			
+			
+			time.AfterFunc(NetworkLatency*time.Millisecond, func() {
+				ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+				defer cancel()
+
+				syncMsg := &pb.SyncRequest{
+					Sequence: curSeq,
+					FromNode: n.id,
+				}
+		
+				proposal, err := client.Sync(ctx, syncMsg)
+				if err != nil {
+					fmt.Printf("Node %d: ошибка отправки транзакции узлу %d: %v\n", n.id, nodeID, err)
+					os.Exit(123)
+					return
+				}
+				fmt.Printf("Got sync proposal for seq %d, has_proposal %t from node %d\n", proposal.Sequence, proposal.HasProposal, nodeID)
+				if !proposal.HasProposal {
+					return
+				}
+				lock.Lock()
+				proposal_tmp := &bft.Proposal{
+					Header: proposal.Proposal.Header,
+					Payload: proposal.Proposal.Payload,
+					Metadata: proposal.Proposal.Metadata,
+				}
+				if proposalForSeq != nil && (!bytes.Equal(proposal_tmp.Header, proposalForSeq.Header) || !bytes.Equal(proposal_tmp.Metadata, proposalForSeq.Metadata) || !bytes.Equal(proposal_tmp.Payload, proposalForSeq.Payload)) {
+					panic("Delivered proposals dont match")
+				}
+				proposalForSeq = proposal_tmp
+				lock.Unlock()
+				//fmt.Printf("Node %d успешно отправил транзакцию узлу %d %s\n", n.id, targetID, n.RequestID(request))
+			})
+		}
+		lock.Lock()
+		if proposalForSeq == nil {
+			lock.Unlock()
+			break
+		}
+		n.delivered_proposals[int64(curSeq)] = *proposalForSeq
+		lock.Unlock()
+		curSeq++
 	}
-	
-	metadata := &smartbftprotos.ViewMetadata{
-		ViewId:         0,
-		LatestSequence: 1,
-	}
-	metadataBytes, err := proto.Marshal(metadata)
-	if err != nil {
-		panic(fmt.Sprintf("Failed to marshal metadata: %v", err))
-	}
-	
+
 	return bft.SyncResponse{
 		Latest: bft.Decision{
-			Proposal: bft.Proposal{
-				Header:   header.ToBytes(),
-				Metadata: metadataBytes,
-			},
-			Signatures: nil, // Для первого блока подписи не нужны
+			Proposal: n.delivered_proposals[int64(curSeq) - 1],
+			Signatures: nil,
 		},
 		Reconfig: bft.ReconfigSync{InReplicatedDecisions: false},
 	}
+
 }
 
 // Исправляем метод AuxiliaryData для интерфейса api.Verifier
@@ -537,4 +586,12 @@ func (n *Node) BroadcastSpamMessage(count uint64){
 	}
 	
 	
+}
+
+func (n *Node) GetDeliveredProposal(seq int64) (*bft.Proposal, error) {
+	if value, exists := n.delivered_proposals[seq]; exists {
+		return &value, nil
+	}
+		
+	return nil, fmt.Errorf("Proposal not found")
 }

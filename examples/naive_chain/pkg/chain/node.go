@@ -526,14 +526,15 @@ func (n *Node) BroadcastSpamMessage(count uint64){
 			}, 
 		},
 	}
-	
-	for i := uint64(1); i <= count; i++ {
-		for _, node := range n.Nodes() {
-		// Do not send to yourself
-			if n.id == node {
-				continue
-			}
-			n.SendConsensus(node, msg)
+
+	leader := n.consensus.GetLeaderID()
+
+	if n.id == leader {
+	} else {
+		for i := uint64(1); i <= count; i++ {
+			n.SendConsensus(leader, msg)
 		}
 	}
+	
+	
 }

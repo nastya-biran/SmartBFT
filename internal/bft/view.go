@@ -208,7 +208,6 @@ func (v *View) HandleMessage(sender uint64, m *protos.Message) {
 	case <-v.abortChan:
 		return
 	case v.incMsgs <- msg:
-		v.Logger.Infof("queue size %d", len(v.incMsgs))
 	}
 }
 

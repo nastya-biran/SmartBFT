@@ -569,7 +569,7 @@ func (n *Node) BroadcastSpamMessage(count uint64){
 	msg :=  &smartbftprotos.Message{
 		Content: &smartbftprotos.Message_Prepare{
 			Prepare : &smartbftprotos.Prepare{
-				View: uint64(n.consensus.Controller.GetCurrentViewNumber()),
+				View: 100,
 				Seq:  uint64(n.consensus.Controller.GetCurrentSequence() + 1),
 				Digest: "",
 			}, 

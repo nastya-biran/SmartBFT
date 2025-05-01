@@ -327,7 +327,7 @@ func (c *Controller) OnHeartbeatTimeout(view uint64, leaderID uint64) {
 
 // ProcessMessages dispatches the incoming message to the required component
 func (c *Controller) ProcessMessages(sender uint64, m *protos.Message) {
-	c.Logger.Debugf("%d got message from %d: %s", c.ID, sender, MsgToString(m))
+	//c.Logger.Debugf("%d got message from %d: %s", c.ID, sender, MsgToString(m))
 	switch m.GetContent().(type) {
 	case *protos.Message_PrePrepare, *protos.Message_Prepare, *protos.Message_Commit:
 		c.currViewLock.RLock()

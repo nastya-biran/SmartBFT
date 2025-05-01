@@ -796,7 +796,7 @@ func (v *View) discoverIfSyncNeeded(sender uint64, m *protos.Message) {
 	if commit == nil {
 		return
 	}
-f
+	
 	// To commit a block we need 2f + 1 votes.
 	// at least f+1 of them are honest and will broadcast
 	// their commits to votes to everyone including us.

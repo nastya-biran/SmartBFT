@@ -592,8 +592,7 @@ func (n *Node) BroadcastSpamMessage(count uint64){
 
 	leader := n.consensus.GetLeaderID()
 
-	if n.id == leader {
-	} else {
+	if n.id != leader {
 		for i := uint64(1); i <= count; i++ {
 			n.SendConsensus(leader, msg)
 		}

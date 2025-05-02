@@ -368,8 +368,10 @@ func (v *View) prepared() Phase {
 		size += len(signatures[i].Value) + len(signatures[i].Msg)
 	}
 	v.MetricsView.SizeOfBatch.Add(float64(size))
+	now := time.Now()
+	formatted := now.Format("2006-01-02 15:04:05.000")
 	v.MetricsView.LatencyBatchProcessing.Observe(time.Since(v.beginPrePrepare).Seconds())
-	_, err := v.metrics_file.WriteString(fmt.Sprintf("LatencyBatchProcessing %.6f %d\n", time.Since(v.beginPrePrepare).Seconds(), v.beginPrePrepare.Unix()))
+	_, err := v.metrics_file.WriteString(fmt.Sprintf("LatencyBatchProcessing seq %d %.6f %s\n", seq, time.Since(v.beginPrePrepare).Seconds(), formatted))
 	if err != nil {
 		fmt.Println("Ошибка записи строки:", err)
 	}

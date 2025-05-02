@@ -3,8 +3,8 @@
 set -e
 
 echo "Stopping and removing all smartbft containers..."
-docker ps -a | grep smartbft_node | awk '{print $1}' | xargs -r docker stop
-docker ps -a | grep smartbft_node | awk '{print $1}' | xargs -r docker rm -f
+docker ps -a | grep smartbft-node | awk '{print $1}' | xargs -r docker stop
+docker ps -a | grep smartbft-node | awk '{print $1}' | xargs -r docker rm -f
 
 # Функция для проверки состояния контейнера
 check_container() {
@@ -19,7 +19,7 @@ check_container() {
 }
 
 echo "Cleaning up previous data..."
-docker-compose down --volumes --remove-orphans
+docker compose down --volumes --remove-orphans
 rm -rf data/node*
 rm -rf metrics/*
 
@@ -28,17 +28,17 @@ mkdir -p data/node{1,2,3,4}
 chmod -R 777 data/
 
 echo "Building Docker images..."
-docker-compose build node1
+docker compose build node1
 
 echo "Starting the network..."
-docker-compose up -d
+docker compose up -d
 
 echo "Waiting for initialization..."
 sleep 5
 
 # Проверяем состояние каждой ноды
 for i in {1..4}; do
-    container_name="smartbft_node${i}_1"
+    container_name="smartbft-node${i}-1"
     check_container $container_name
     echo "Checked node ${i}"
 done

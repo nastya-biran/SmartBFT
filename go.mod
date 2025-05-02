@@ -3,7 +3,7 @@ module github.com/nastya-biran/SmartBFT
 go 1.24.1
 
 require (
-	github.com/hyperledger-labs/SmartBFT v0.0.0-00010101000000-000000000000
+	github.com/hyperledger-labs/SmartBFT v0.3.0
 	github.com/stretchr/testify v1.10.0
 	go.uber.org/zap v1.27.0
 	golang.org/x/sync v0.12.0
@@ -23,4 +23,4 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace github.com/hyperledger-labs/SmartBFT => github.com/nastya-biran/SmartBFT v0.0.0-20250502131825-32eb53e93a12
+replace github.com/hyperledger-labs/SmartBFT => github.com/nastya-biran/SmartBFT v0.0.0-20250502141336-78b31d6b606c

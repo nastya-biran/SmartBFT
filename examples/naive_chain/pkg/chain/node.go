@@ -55,6 +55,7 @@ type Node struct {
 	nodeAddresses map[uint64]string
 
 	delivered_proposals map[int64]bft.Proposal
+	maxDeliveredSequence int64
 }
 
 // ConsensusServiceServer реализация gRPC сервера
@@ -320,6 +321,10 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) bft.Rec
 	header := BlockHeaderFromBytes(proposal.Header)
 	fmt.Printf("before delivered_proposal\n")
 	n.delivered_proposals[header.Sequence] = proposal
+	if n.maxDeliveredSequence >= header.Sequence {
+		panic("Delivering old proposal")
+	}
+	n.maxDeliveredSequence = header.Sequence
 	fmt.Printf("after\n")
 
 	select {
@@ -352,6 +357,7 @@ func NewNode(id uint64, nodeAddresses map[uint64]string, deliverChan chan<- *Blo
 		nodeAddresses: nodeAddresses,
 		clients:       make(map[uint64]pb.ConsensusServiceClient),
 		delivered_proposals: make(map[int64]bft.Proposal),
+		maxDeliveredSequence: 0,
 	}
 
 	config := MyDefaultConfig
@@ -489,12 +495,16 @@ func (n *Node) StartViewChange(view uint64) {
 func (n *Node) Sync() bft.SyncResponse {
 	fmt.Printf("Node %d: Sync called\n", n.id)
 	
-	curSeq := n.consensus.Controller.GetCurrentSequence()
+	curSeq := n.maxDeliveredSequence
 
 
 	for {
+		fmt.Printf("Trying to get seq %d in sync\n", curSeq)
 		var lock sync.Mutex
+		var wg sync.WaitGroup
 		var proposalForSeq *bft.Proposal = nil
+
+		wg.Add(len(n.nodeAddresses) - 1)
 		for nodeID := range n.nodeAddresses {
 			if nodeID == n.id {
 				continue
@@ -509,9 +519,10 @@ func (n *Node) Sync() bft.SyncResponse {
 			time.AfterFunc(NetworkLatency*time.Millisecond, func() {
 				ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 				defer cancel()
+				defer wg.Done()
 
 				syncMsg := &pb.SyncRequest{
-					Sequence: curSeq,
+					Sequence: uint64(curSeq),
 					FromNode: n.id,
 				}
 		
@@ -539,6 +550,7 @@ func (n *Node) Sync() bft.SyncResponse {
 				//fmt.Printf("Node %d успешно отправил транзакцию узлу %d %s\n", n.id, targetID, n.RequestID(request))
 			})
 		}
+		wg.Wait()
 		lock.Lock()
 		if proposalForSeq == nil {
 			lock.Unlock()
@@ -546,8 +558,10 @@ func (n *Node) Sync() bft.SyncResponse {
 		}
 		n.delivered_proposals[int64(curSeq)] = *proposalForSeq
 		lock.Unlock()
-		curSeq++
+		curSeq += 1
 	}
+
+	fmt.Printf("Returning from sync seq %d\n", BlockHeaderFromBytes(n.delivered_proposals[int64(curSeq) - 1].Header).Sequence)
 
 	return bft.SyncResponse{
 		Latest: bft.Decision{

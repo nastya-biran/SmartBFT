@@ -487,6 +487,7 @@ func (v *View) processPrepares() Phase {
 			v.processMsg(msg.sender, msg.Message)
 		case vote := <-v.prepares.votes:
 			prepare := vote.GetPrepare()
+			v.Logger.Debugf("Digests in prepares %s %s\n", prepare.Digest, expectedDigest)
 			if prepare.Digest != expectedDigest {
 				seq := v.ProposalSequence
 				v.Logger.Warnf("Got wrong digest at processPrepares for prepare with seq %d, expecting %v but got %v, we are in seq %d", prepare.Seq, expectedDigest, prepare.Digest, seq)

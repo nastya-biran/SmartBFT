@@ -222,7 +222,6 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	if msgViewNum != v.Number {
 		//v.Logger.Warnf("%d got message %v from %d of view %d, expected view %d", v.SelfID, m, sender, msgViewNum, v.Number)
 		if sender != v.LeaderID {
-			v.Logger.Debugf("Discover if sync needed\n")
 			v.discoverIfSyncNeeded(sender, m)
 			return
 		}

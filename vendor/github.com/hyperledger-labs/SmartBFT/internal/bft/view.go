@@ -263,7 +263,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	}
 
 	if prp := m.GetPrepare(); prp != nil {
-		if prepares_count_value := v.prepares_count.Add(1); prepares_count_value%10000 == 0 {
+		if prepares_count_value := v.prepares_count.Add(1); prepares_count_value%100000 == 0 {
 			v.Logger.Infof("prepares count %d", prepares_count_value)
 		}
 

@@ -56,6 +56,9 @@ type Node struct {
 
 	delivered_proposals map[int64]bft.Proposal
 	maxDeliveredSequence int64
+
+	isByzantine bool
+	deliverFile *os.File
 }
 
 // ConsensusServiceServer реализация gRPC сервера
@@ -71,7 +74,7 @@ var MyDefaultConfig = bft.Configuration{
 	IncomingMessageBufferSize:     100,
 	RequestPoolSize:               400,
 	RequestForwardTimeout:         2 * time.Second,
-	RequestComplainTimeout:        20 * time.Second,
+	RequestComplainTimeout:        5 * time.Second,
 	RequestAutoRemoveTimeout:      3 * time.Minute,
 	ViewChangeResendInterval:      5 * time.Second,
 	ViewChangeTimeout:             20 * time.Second,
@@ -91,15 +94,18 @@ const NetworkLatency = 50
 const CryptoLatency = 3
 const VerifyProposalLatency = 10
 
-func Delay(count int) {
-	done := make(chan bool)
-    go func() {
-        time.Sleep(time.Duration(count) * time.Millisecond)
-        done <- true
-    }()
+func Delay(count int) int {
+	start := time.Now()
+	//fmt.Printf("Start Delay %d %s\n", count, start.Format("2006-01-02 15:04:05.000"))
+    // Активный цикл ожидания
+	i := 0
+    for time.Since(start).Milliseconds() < int64(count) {
+       i++
+    }
+	//fmt.Printf("Finish Delay %d %d %s\n", i, count, time.Now().Format("2006-01-02 15:04:05.000"))
     
-    fmt.Println("Sleeping")
-    <-done
+    //fmt.Println("Sleeping")
+	return i
 }
 
 func (*Node) RequestID(req []byte) bft.RequestInfo {
@@ -125,6 +131,9 @@ func (*Node) VerifyProposal(proposal bft.Proposal) ([]bft.RequestInfo, error) {
 		if tx.ClientID == "" || tx.ID == "" {
 			fmt.Errorf("invalid transaction in proposal: missing ClientID or ID")
 			return nil, fmt.Errorf("invalid transaction in proposal: missing ClientID or ID")
+		}
+		if (tx.ClientID == "faulty") {
+			return nil, fmt.Errorf("invalid transaction")
 		}
 		reqInfo := bft.RequestInfo{ID: tx.ID, ClientID: tx.ClientID}
 		requests = append(requests, reqInfo)
@@ -153,10 +162,13 @@ func (*Node) RequestsFromProposal(proposal bft.Proposal) []bft.RequestInfo {
 
 func (*Node) VerifyRequest(val []byte) (bft.RequestInfo, error) {
 	txn := TransactionFromBytes(val)
-	fmt.Printf("Verifying request from client %s with ID %s\n", txn.ClientID, txn.ID)
+	//fmt.Printf("Verifying request from client %s with ID %s\n", txn.ClientID, txn.ID)
 	Delay(VerifyProposalLatency)
 	if txn.ClientID == "" || txn.ID == "" {
 		return bft.RequestInfo{}, fmt.Errorf("invalid transaction: missing ClientID or ID")
+	}
+	if (txn.ClientID == "faulty") {
+		return bft.RequestInfo{}, fmt.Errorf("invalid transaction")
 	}
 	return bft.RequestInfo{
 		ClientID: txn.ClientID,
@@ -246,16 +258,16 @@ func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {
 	//fmt.Printf("Node %d пытается отправить сообщение узлу %d типа %T\n", n.id, targetID, message.GetContent())
 	
 
-	client, ok := n.clients[targetID]
-	if !ok {
-		fmt.Printf("Node %d: клиент для узла %d не найден\n", n.id, targetID)
-		return
-	}
+	go func() {
+		client, ok := n.clients[targetID]
+		if !ok {
+			fmt.Printf("Node %d: клиент для узла %d не найден\n", n.id, targetID)
+			return
+		}
 
-	time.AfterFunc(NetworkLatency*time.Millisecond, func() {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
-	
+
 		req := &pb.ConsensusMessageRequest{
 			FromNode: n.id,
 			ToNode:   targetID,
@@ -263,12 +275,12 @@ func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {
 		}
 		_, err := client.SendConsensusMessage(ctx, req)
 		if err != nil {
-			fmt.Printf("Node %d: ошибка отправки сообщения узлу %d: %v\n", n.id, targetID, err)
-			os.Exit(123)
+			//fmt.Printf("Node %d: ошибка отправки сообщения узлу %d: %v\n", n.id, targetID, err)
+			//os.Exit(123)
 			return
 		}
-		//fmt.Printf("Node %d успешно отправил сообщение узлу %d типа %T\n", n.id, targetID, message.GetContent())
-	})
+	}()
+	//fmt.Printf("Node %d успешно отправил сообщение узлу %d типа %T\n", n.id, targetID, message.GetContent())
 	
 
 	//fmt.Printf("Node %d успешно отправил сообщение узлу %d\n", n.id, targetID)
@@ -283,7 +295,7 @@ func (n *Node) SendTransaction(targetID uint64, request []byte) {
 		return
 	}
 
-	time.AfterFunc(NetworkLatency*time.Millisecond, func() {
+	go func() {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 
@@ -296,12 +308,12 @@ func (n *Node) SendTransaction(targetID uint64, request []byte) {
 		}
 		_, err := client.SendTransaction(ctx, req)
 		if err != nil {
-			fmt.Printf("Node %d: ошибка отправки транзакции узлу %d: %v\n", n.id, targetID, err)
-			os.Exit(123)
+			//fmt.Printf("Node %d: ошибка отправки транзакции узлу %d: %v\n", n.id, targetID, err)
+			//os.Exit(123)
 			return
 		}
-		//fmt.Printf("Node %d успешно отправил транзакцию узлу %d %s\n", n.id, targetID, n.RequestID(request))
-	})
+	}()
+	//fmt.Printf("Node %d успешно отправил транзакцию узлу %d %s\n", n.id, targetID, n.RequestID(request))
 }
 
 func (n *Node) MembershipChange() bool {
@@ -313,6 +325,17 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) bft.Rec
 	txns := make([]Transaction, 0, len(blockData.Transactions))
 	for _, rawTxn := range blockData.Transactions {
 		txn := TransactionFromBytes(rawTxn)
+
+		if txn.ClientID != "faulty" {
+			now := time.Now()
+			formatted := now.Format("2006-01-02 15:04:05.000")
+			_, err := n.deliverFile.WriteString(fmt.Sprintf("Delivered %s %s\n", txn.ID, formatted))
+			if err != nil {
+				fmt.Println("Ошибка записи строки:", err)
+			}
+		}
+		
+
 		txns = append(txns, Transaction{
 			ClientID: txn.ClientID,
 			ID:       txn.ID,
@@ -327,6 +350,7 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) bft.Rec
 	n.maxDeliveredSequence = header.Sequence
 	fmt.Printf("after\n")
 
+
 	select {
 	case <-n.stopChan:
 		return bft.Reconfig{InLatestDecision: false}
@@ -340,12 +364,17 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) bft.Rec
 	return bft.Reconfig{InLatestDecision: false}
 }
 
-func NewNode(id uint64, nodeAddresses map[uint64]string, deliverChan chan<- *Block, logger smart.Logger, walmet *wal.Metrics, bftmet *smart.Metrics, opts NetworkOptions, testDir string) *Node {
+func NewNode(id uint64, nodeAddresses map[uint64]string, deliverChan chan<- *Block, logger smart.Logger, walmet *wal.Metrics, bftmet *smart.Metrics, opts NetworkOptions, testDir string, isByzantine bool) *Node {
 	nodeDir := filepath.Join(testDir, fmt.Sprintf("node%d", id))
 
 	writeAheadLog, err := wal.Create(logger, nodeDir, &wal.Options{Metrics: walmet.With("label1", "val1")})
 	if err != nil {
 		logger.Panicf("Cannot create WAL at %s", nodeDir)
+	}
+
+	file, err := os.OpenFile(fmt.Sprintf("app/metrics/%d_deliver", id), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	if err != nil {
+		panic(fmt.Sprintf("Error opening file:", err))
 	}
 
 	node := &Node{
@@ -358,36 +387,41 @@ func NewNode(id uint64, nodeAddresses map[uint64]string, deliverChan chan<- *Blo
 		clients:       make(map[uint64]pb.ConsensusServiceClient),
 		delivered_proposals: make(map[int64]bft.Proposal),
 		maxDeliveredSequence: 0,
+		isByzantine: isByzantine,
+		deliverFile: file,
 	}
 
-	config := MyDefaultConfig
-	config.SelfID = id
-	config.RequestBatchMaxInterval = opts.BatchTimeout
-	config.RequestBatchMaxCount = opts.BatchSize
+	if !isByzantine {
+		config := MyDefaultConfig
+		config.SelfID = id
+		config.RequestBatchMaxInterval = opts.BatchTimeout
+		config.RequestBatchMaxCount = opts.BatchSize
 
-	node.consensus = &smartbft.Consensus{
-		Config:             config,
-		ViewChangerTicker:  node.secondClock.C,
-		Scheduler:          node.clock.C,
-		Logger:             logger,
-		Metrics:            bftmet,
-		Comm:               node,
-		Signer:             node,
-		MembershipNotifier: node,
-		Verifier:           node,
-		Application:        node,
-		Assembler:          node,
-		RequestInspector:   node,
-		Synchronizer:       node,
-		WAL:                writeAheadLog,
-		Metadata: &smartbftprotos.ViewMetadata{
-			LatestSequence: 0,
-			ViewId:         0,
-		},
+		node.consensus = &smartbft.Consensus{
+			Config:             config,
+			ViewChangerTicker:  node.secondClock.C,
+			Scheduler:          node.clock.C,
+			Logger:             logger,
+			Metrics:            bftmet,
+			Comm:               node,
+			Signer:             node,
+			MembershipNotifier: node,
+			Verifier:           node,
+			Application:        node,
+			Assembler:          node,
+			RequestInspector:   node,
+			Synchronizer:       node,
+			WAL:                writeAheadLog,
+			Metadata: &smartbftprotos.ViewMetadata{
+				LatestSequence: 0,
+				ViewId:         0,
+			},
+		}
+		if err = node.consensus.Start(); err != nil {
+			panic("error on consensus start")
+		}
 	}
-	if err = node.consensus.Start(); err != nil {
-		panic("error on consensus start")
-	}
+
 	node.Start()
 	return node
 }
@@ -472,6 +506,15 @@ func (n *Node) HandleMessage(fromNode uint64, msg *smartbftprotos.Message) error
 	return nil
 }
 
+func (n *Node) HandleRequest(fromNode uint64, req []byte) error {
+	/*fmt.Printf("Node %d обрабатывает сообщение от %d типа %T\n", 
+		n.id, fromNode, msg.GetContent())*/
+	
+	// Передаем сообщение в консенсус
+	n.consensus.HandleRequest(fromNode, req)
+	return nil
+}
+
 func (n *Node) StartViewChange(view uint64) {
 	fmt.Printf("Node %d initiating view change to view %d\n", n.id, view)
 	
@@ -516,7 +559,7 @@ func (n *Node) Sync() bft.SyncResponse {
 			}
 			
 			
-			time.AfterFunc(NetworkLatency*time.Millisecond, func() {
+			go func() {
 				ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 				defer cancel()
 				defer wg.Done()
@@ -528,8 +571,8 @@ func (n *Node) Sync() bft.SyncResponse {
 		
 				proposal, err := client.Sync(ctx, syncMsg)
 				if err != nil {
-					fmt.Printf("Node %d: ошибка отправки транзакции узлу %d: %v\n", n.id, nodeID, err)
-					os.Exit(123)
+					//fmt.Printf("Node %d: ошибка отправки транзакции узлу %d: %v\n", n.id, nodeID, err)
+					//os.Exit(123)
 					return
 				}
 				fmt.Printf("Got sync proposal for seq %d, has_proposal %t from node %d\n", proposal.Sequence, proposal.HasProposal, nodeID)
@@ -548,7 +591,7 @@ func (n *Node) Sync() bft.SyncResponse {
 				proposalForSeq = proposal_tmp
 				lock.Unlock()
 				//fmt.Printf("Node %d успешно отправил транзакцию узлу %d %s\n", n.id, targetID, n.RequestID(request))
-			})
+			} ()
 		}
 		wg.Wait()
 		lock.Lock()
@@ -578,23 +621,40 @@ func (*Node) AuxiliaryData(bytes []byte) []byte {
 	return nil // Возвращаем nil, так как у нас нет дополнительных данных
 }
 
-func (n *Node) BroadcastSpamMessage(count uint64){
+func (n *Node) BroadcastSpamMessage(count uint64, round uint64){
 	//fmt.Printf("Spam %d %d \n", n.consensus.Controller.GetCurrentViewNumber(), n.consensus.Controller.GetCurrentSequence() + 1)
-	msg :=  &smartbftprotos.Message{
-		Content: &smartbftprotos.Message_Prepare{
-			Prepare : &smartbftprotos.Prepare{
-				View: n.consensus.Controller.GetCurrentViewNumber(),
-				Seq:  uint64(n.consensus.Controller.GetCurrentSequence() + 1),
-				Digest: "",
-			}, 
-		},
-	}
 
-	leader := n.consensus.GetLeaderID()
+	for i := uint64(1); i <= count; i++ {
+		for nodeID := range n.nodeAddresses {
+			if nodeID == n.id {
+				continue
+			}
+			msg :=  &pb.TransactionRequest{
+				FromNode: n.id,
+				ToNode: nodeID,
+				Tx: &pb.Transaction{
+					ClientId: "faulty",
+					Id: fmt.Sprintf("%d-%d", i, round),
+				},
+			}
+			client, ok := n.clients[nodeID]
+			if !ok {
+				fmt.Printf("Node %d: клиент для узла %d не найден\n", n.id, nodeID)
+				return
+			}
 
-	if n.id != leader {
-		for i := uint64(1); i <= count; i++ {
-			n.SendConsensus(leader, msg)
+			go func() {
+				ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+				defer cancel()
+
+			
+				_, err := client.SendTransaction(ctx, msg)
+				if err != nil {
+					//fmt.Printf("Node %d: ошибка отправки транзакции узлу %d: %v\n", n.id, nodeID, err)
+					//os.Exit(123)
+					return
+				}
+			}()
 		}
 	}
 	

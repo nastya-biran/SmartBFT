@@ -33,25 +33,20 @@ const NetworkLatency = 50
 const CryptoLatency = 3
 const VerifyProposalLatency = 10
 
-func Delay(count int) {
-	done := make(chan bool)
-    go func() {
-        time.Sleep(time.Duration(count) * time.Millisecond)
-        done <- true
-    }()
-    
-    <-done
-}
-
 func (s *consensusServer) SendConsensusMessage(ctx context.Context, req *pb.ConsensusMessageRequest) (*pb.ConsensusMessageResponse, error) {
-	Delay(CryptoLatency)
-	err := s.chain.HandleMessage(req.FromNode, req.Message)
-	if err != nil {
-		return &pb.ConsensusMessageResponse{
-			Success: false,
-			Error:   err.Error(),
-		}, nil
+	time.Sleep(time.Duration(CryptoLatency + NetworkLatency) * time.Millisecond)
+
+	if !s.chain.IsByzantine() {
+		err := s.chain.HandleMessage(req.FromNode, req.Message)
+		if err != nil {
+			return &pb.ConsensusMessageResponse{
+				Success: false,
+				Error:   err.Error(),
+			}, nil
+		}
 	}
+	
+	
 	return &pb.ConsensusMessageResponse{
 		Success: true,
 	}, nil
@@ -59,18 +54,21 @@ func (s *consensusServer) SendConsensusMessage(ctx context.Context, req *pb.Cons
 
 func (s *consensusServer) SendTransaction(ctx context.Context, req *pb.TransactionRequest) (*pb.TransactionResponse, error) {
 	// Пока просто пересылаем транзакцию в цепочку
-	Delay(CryptoLatency)
-	fmt.Printf("Send transaction in main %d %s %s\n", req.FromNode, req.Tx.Id, req.Tx.ClientId)
-	err := s.chain.Order(chain.Transaction{
-		ClientID: req.Tx.ClientId,
-		ID:       req.Tx.Id,
-	})
+	time.Sleep(time.Duration(CryptoLatency + NetworkLatency) * time.Millisecond)
 
-	if err != nil {
-		return &pb.TransactionResponse{
-			Success: false,
-			Error:   err.Error(),
-		}, nil
+	tx := chain.Transaction {
+		ClientID: req.Tx.ClientId,
+		ID: req.Tx.Id,
+	}
+
+	if !s.chain.IsByzantine() {
+		err := s.chain.HandleRequest(req.FromNode, tx.ToBytes())
+		if err != nil {
+			return &pb.TransactionResponse{
+				Success: false,
+				Error:   err.Error(),
+			}, nil
+		}
 	}
 
 	return &pb.TransactionResponse{
@@ -80,10 +78,10 @@ func (s *consensusServer) SendTransaction(ctx context.Context, req *pb.Transacti
 
 func (s *consensusServer) Sync(ctx context.Context, req *pb.SyncRequest) (*pb.SyncResponse, error) {
 	// Пока просто пересылаем транзакцию в цепочку
-	Delay(CryptoLatency)
+	time.Sleep(time.Duration(CryptoLatency + NetworkLatency) * time.Millisecond)
 	fmt.Printf("Node %d called sync\n", req.FromNode)
 
-	if req.Sequence > s.chain.GetCurrentSequence() {
+	if s.chain.IsByzantine() || req.Sequence > s.chain.GetCurrentSequence()  {
 		return &pb.SyncResponse{
 			Sequence:    req.Sequence,
 			HasProposal: false,
@@ -109,17 +107,18 @@ func (s *consensusServer) Sync(ctx context.Context, req *pb.SyncRequest) (*pb.Sy
 
 func (s *transactionServer) SubmitTransaction(ctx context.Context, req *pb.ClientTransactionRequest) (*pb.TransactionResponse, error) {
 	// Пока просто пересылаем транзакцию в цепочку
-	Delay(CryptoLatency)
-	err := s.chain.Order(chain.Transaction{
-		ClientID: req.Tx.ClientId,
-		ID:       req.Tx.Id,
-	})
+	if !s.chain.IsByzantine() {
+		err := s.chain.Order(chain.Transaction{
+			ClientID: req.Tx.ClientId,
+			ID:       req.Tx.Id,
+		})
 
-	if err != nil {
-		return &pb.TransactionResponse{
-			Success: false,
-			Error:   err.Error(),
-		}, nil
+		if err != nil {
+			return &pb.TransactionResponse{
+				Success: false,
+				Error:   err.Error(),
+			}, nil
+		}
 	}
 
 	return &pb.TransactionResponse{
@@ -164,7 +163,7 @@ func main() {
 
 	// Настраиваем логгер
 	logConfig := zap.NewDevelopmentConfig()
-	logConfig.Level = zap.NewAtomicLevelAt(zap.InfoLevel)
+	logConfig.Level = zap.NewAtomicLevelAt(zap.DebugLevel)
 	logger, _ := logConfig.Build()
 	sugar := logger.Sugar()
 
@@ -187,6 +186,10 @@ func main() {
 	}
 
 	// Создаем и запускаем цепочку
+	is_byzantine, err := strconv.ParseBool(os.Getenv("IS_BYZANTINE"))
+	if err != nil {
+		panic(fmt.Sprintf("Invalid IS_BYZANTINE: %v", err))
+	}
 	c := chain.NewChain(
 		nodeID,
 		nodeAddresses,
@@ -195,6 +198,7 @@ func main() {
 		bftMet,
 		opts,
 		dataDir,
+		is_byzantine,
 	)
 
 	// Создаем gRPC сервер для транзакций
@@ -241,12 +245,9 @@ func main() {
 	}
 	sugar.Info("Successfully connected to other nodes")
 
-	is_byzantine, err := strconv.ParseBool(os.Getenv("IS_BYZANTINE"))
-	if err != nil {
-		panic(fmt.Sprintf("Invalid IS_BYZANTINE: %v", err))
-	}
-
+	
 	if is_byzantine {
+		round := uint64(1)
 		period, err := strconv.ParseUint(os.Getenv("SPAM_MESSAGE_PERIOD"), 10, 64)
 		if err != nil {
 			panic(fmt.Sprintf("Invalid SPAM_MESSAGE_PERIOD: %v", err))
@@ -264,7 +265,8 @@ func main() {
 			case block := <-c.Listen():
 				sugar.Infof("Node %d received block: %+v", nodeID, block)
 			case <-ticker.C:
-				c.BroadcastSpamMessage(count)
+				round++
+				c.BroadcastSpamMessage(count, round)
 			}
 		}
 	} else {

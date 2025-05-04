@@ -499,6 +499,7 @@ func (v *View) processPrepares() Phase {
 		}
 	}
 
+
 	v.Logger.Infof("%d collected %d prepares from %v", v.SelfID, len(voterIDs), voterIDs)
 
 	// SignProposal returns a types.Signature with the following 3 fields:

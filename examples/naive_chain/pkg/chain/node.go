@@ -13,7 +13,6 @@ import (
 	"path/filepath"
 	"sync"
 	"time"
-	"os"
 	"bytes"
 
 	smart "github.com/hyperledger-labs/SmartBFT/pkg/api"
@@ -58,7 +57,6 @@ type Node struct {
 	maxDeliveredSequence int64
 
 	isByzantine bool
-	deliverFile *os.File
 }
 
 // ConsensusServiceServer реализация gRPC сервера
@@ -68,13 +66,13 @@ type consensusServer struct {
 }
 
 var MyDefaultConfig = bft.Configuration{
-	RequestBatchMaxCount:          1,
+	RequestBatchMaxCount:          100,
 	RequestBatchMaxBytes:          10 * 1024 * 1024,
 	RequestBatchMaxInterval:       50 * time.Millisecond,
-	IncomingMessageBufferSize:     100,
+	IncomingMessageBufferSize:     10000,
 	RequestPoolSize:               400,
 	RequestForwardTimeout:         2 * time.Second,
-	RequestComplainTimeout:        5 * time.Second,
+	RequestComplainTimeout:        20 * time.Second,
 	RequestAutoRemoveTimeout:      3 * time.Minute,
 	ViewChangeResendInterval:      5 * time.Second,
 	ViewChangeTimeout:             20 * time.Second,
@@ -326,16 +324,6 @@ func (n *Node) Deliver(proposal bft.Proposal, signature []bft.Signature) bft.Rec
 	for _, rawTxn := range blockData.Transactions {
 		txn := TransactionFromBytes(rawTxn)
 
-		if txn.ClientID != "faulty" {
-			now := time.Now()
-			formatted := now.Format("2006-01-02 15:04:05.000")
-			_, err := n.deliverFile.WriteString(fmt.Sprintf("Delivered %s %s\n", txn.ID, formatted))
-			if err != nil {
-				fmt.Println("Ошибка записи строки:", err)
-			}
-		}
-		
-
 		txns = append(txns, Transaction{
 			ClientID: txn.ClientID,
 			ID:       txn.ID,
@@ -372,11 +360,6 @@ func NewNode(id uint64, nodeAddresses map[uint64]string, deliverChan chan<- *Blo
 		logger.Panicf("Cannot create WAL at %s", nodeDir)
 	}
 
-	file, err := os.OpenFile(fmt.Sprintf("app/metrics/%d_deliver", id), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
-	if err != nil {
-		panic(fmt.Sprintf("Error opening file:", err))
-	}
-
 	node := &Node{
 		clock:         time.NewTicker(time.Second),
 		secondClock:   time.NewTicker(time.Second),
@@ -388,7 +371,6 @@ func NewNode(id uint64, nodeAddresses map[uint64]string, deliverChan chan<- *Blo
 		delivered_proposals: make(map[int64]bft.Proposal),
 		maxDeliveredSequence: 0,
 		isByzantine: isByzantine,
-		deliverFile: file,
 	}
 
 	if !isByzantine {

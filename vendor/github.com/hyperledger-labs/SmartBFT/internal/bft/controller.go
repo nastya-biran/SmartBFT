@@ -239,17 +239,17 @@ func (c *Controller) GetLeaderID() uint64 {
 
 // HandleRequest handles a request from the client
 func (c *Controller) HandleRequest(sender uint64, req []byte) {
-	iAm, leaderID := c.iAmTheLeader()
+	iAm, _ := c.iAmTheLeader()
 	if !iAm {
-		c.Logger.Warnf("Got request from %d but the leader is %d, dropping request", sender, leaderID)
+		//c.Logger.Warnf("Got request from %d but the leader is %d, dropping request", sender, leaderID)
 		return
 	}
 	reqInfo, err := c.Verifier.VerifyRequest(req)
 	if err != nil {
-		c.Logger.Warnf("Got bad request from %d: %v", sender, err)
+		//c.Logger.Warnf("Got bad request from %d: %v", sender, err)
 		return
 	}
-	c.Logger.Debugf("Got request from %d", sender)
+	//c.Logger.Debugf("Got request from %d", sender)
 	c.addRequest(reqInfo, req)
 }
 

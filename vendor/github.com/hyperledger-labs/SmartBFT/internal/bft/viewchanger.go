@@ -392,19 +392,22 @@ func (v *ViewChanger) startViewChange(change *change) {
 }
 
 func (v *ViewChanger) processViewChangeMsg(restore bool) {
+	v.Logger.Debugf("view change voted %d %t\n", uint64(len(v.viewChangeMsgs.voted)), restore)
 	if ((uint64(len(v.viewChangeMsgs.voted)) == uint64(v.f+1)) && v.SpeedUpViewChange) || restore { // join view change
-		v.Logger.Debugf("Node %d is joining view change, last view is %d", v.SelfID, v.currView)
+		v.Logger.Debugf("Node %d is joining view change (case 1), last view is %d", v.SelfID, v.currView)
 		v.startViewChange(&change{v.currView, true})
 	}
 	if (len(v.viewChangeMsgs.voted) < v.quorum-1) && !restore {
+		v.Logger.Debugf("case 2")
 		return
 	}
 	// send view data
 	if !v.SpeedUpViewChange {
-		v.Logger.Debugf("Node %d is joining view change, last view is %d", v.SelfID, v.currView)
+		v.Logger.Debugf("Node %d is joining view change (case 3), last view is %d", v.SelfID, v.currView)
 		v.startViewChange(&change{v.currView, true})
 	}
 	if !restore {
+		v.Logger.Debugf("case 3")
 		msgToSave := &protos.SavedMessage{
 			Content: &protos.SavedMessage_ViewChange{
 				ViewChange: &protos.ViewChange{

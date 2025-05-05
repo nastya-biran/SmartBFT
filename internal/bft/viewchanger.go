@@ -504,6 +504,8 @@ func (v *ViewChanger) getInFlight(lastDecision *protos.Proposal) *protos.Proposa
 
 func (v *ViewChanger) validateViewDataMsg(svd *protos.SignedViewData, sender uint64) bool {
 	if v.getLeader() != v.SelfID { // check if I am the next leader
+		v.Logger.Debugf("view(%d) + (decisionsInView(%d) / decisionsPerLeader(%d)), N(%d), blacklist(%v)",
+		v.currView,0, v.DecisionsPerLeader,v.N, v.blacklist())
 		v.Logger.Warnf("Node %d got %s from %d, but %d is not the next leader of view %d", v.SelfID, signedViewDataToString(svd), sender, v.SelfID, v.currView)
 		return false
 	}

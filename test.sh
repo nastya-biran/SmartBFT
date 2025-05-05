@@ -45,4 +45,6 @@ done
 
 echo "All nodes are running. Use 'docker-compose logs -f' to see the logs.\n\n\n" 
 
+./create_transactions.sh
+
 echo "All transactions submitted successfully!"

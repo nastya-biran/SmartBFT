@@ -1,7 +1,7 @@
 # github.com/davecgh/go-spew v1.1.1
 ## explicit
 github.com/davecgh/go-spew/spew
-# github.com/hyperledger-labs/SmartBFT v0.3.0 => github.com/nastya-biran/SmartBFT v0.0.0-20250504135002-a4ac32948b21
+# github.com/hyperledger-labs/SmartBFT v0.3.0 => github.com/nastya-biran/SmartBFT v0.0.0-20250504142801-c5f8a5ba075b
 ## explicit; go 1.24.1
 github.com/hyperledger-labs/SmartBFT/internal/bft
 github.com/hyperledger-labs/SmartBFT/internal/bft/mocks
@@ -169,4 +169,4 @@ google.golang.org/protobuf/types/known/timestamppb
 # gopkg.in/yaml.v3 v3.0.1
 ## explicit
 gopkg.in/yaml.v3
-# github.com/hyperledger-labs/SmartBFT => github.com/nastya-biran/SmartBFT v0.0.0-20250504135002-a4ac32948b21
+# github.com/hyperledger-labs/SmartBFT => github.com/nastya-biran/SmartBFT v0.0.0-20250504142801-c5f8a5ba075b

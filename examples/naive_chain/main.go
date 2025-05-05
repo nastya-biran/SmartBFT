@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"math/rand"
 
 	smart "github.com/hyperledger-labs/SmartBFT/pkg/api"
 	"github.com/hyperledger-labs/SmartBFT/pkg/metrics/disabled"
@@ -34,7 +35,7 @@ const CryptoLatency = 3
 const VerifyProposalLatency = 10
 
 func (s *consensusServer) SendConsensusMessage(ctx context.Context, req *pb.ConsensusMessageRequest) (*pb.ConsensusMessageResponse, error) {
-	time.Sleep(time.Duration(CryptoLatency + NetworkLatency) * time.Millisecond)
+	time.Sleep(time.Duration(CryptoLatency + NetworkLatency +  rand.Intn(21) - 10) * time.Millisecond)
 
 	if !s.chain.IsByzantine() {
 		err := s.chain.HandleMessage(req.FromNode, req.Message)
@@ -54,7 +55,7 @@ func (s *consensusServer) SendConsensusMessage(ctx context.Context, req *pb.Cons
 
 func (s *consensusServer) SendTransaction(ctx context.Context, req *pb.TransactionRequest) (*pb.TransactionResponse, error) {
 	// Пока просто пересылаем транзакцию в цепочку
-	time.Sleep(time.Duration(CryptoLatency + NetworkLatency) * time.Millisecond)
+	time.Sleep(time.Duration(CryptoLatency + NetworkLatency + rand.Intn(21) - 10) * time.Millisecond)
 
 	tx := chain.Transaction {
 		ClientID: req.Tx.ClientId,
@@ -78,7 +79,7 @@ func (s *consensusServer) SendTransaction(ctx context.Context, req *pb.Transacti
 
 func (s *consensusServer) Sync(ctx context.Context, req *pb.SyncRequest) (*pb.SyncResponse, error) {
 	// Пока просто пересылаем транзакцию в цепочку
-	time.Sleep(time.Duration(CryptoLatency + NetworkLatency) * time.Millisecond)
+	time.Sleep(time.Duration(CryptoLatency +  + rand.Intn(21) - 10) * time.Millisecond)
 	fmt.Printf("Node %d called sync\n", req.FromNode)
 
 	if s.chain.IsByzantine() || req.Sequence > s.chain.GetCurrentSequence()  {
@@ -114,6 +115,7 @@ func (s *transactionServer) SubmitTransaction(ctx context.Context, req *pb.Clien
 		})
 
 		if err != nil {
+			//fmt.Printf("Error submitting: %s", err)
 			return &pb.TransactionResponse{
 				Success: false,
 				Error:   err.Error(),
@@ -121,12 +123,16 @@ func (s *transactionServer) SubmitTransaction(ctx context.Context, req *pb.Clien
 		}
 	}
 
+	/*block := <-s.chain.Listen()
+	fmt.Printf("Node received block: %+v", block.Transactions)*/
+
 	return &pb.TransactionResponse{
 		Success: true,
 	}, nil
 }
 
 func main() {
+	rand.Seed(time.Now().UnixNano())
 	// Получаем ID ноды и общее количество нод из переменных окружения
 	nodeID, err := strconv.ParseUint(os.Getenv("NODE_ID"), 10, 64)
 	if err != nil {

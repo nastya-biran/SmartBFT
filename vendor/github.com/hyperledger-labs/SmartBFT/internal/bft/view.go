@@ -369,9 +369,9 @@ func (v *View) prepared() Phase {
 	}
 	v.MetricsView.SizeOfBatch.Add(float64(size))
 	now := time.Now()
-	formatted := now.Format("2006-01-02 15:04:05.000")
+	formatted := now.Format("15:04:05.000")
 	v.MetricsView.LatencyBatchProcessing.Observe(time.Since(v.beginPrePrepare).Seconds())
-	_, err := v.metrics_file.WriteString(fmt.Sprintf("LatencyBatchProcessing seq %d %.6f %s\n", seq, time.Since(v.beginPrePrepare).Seconds(), formatted))
+	_, err := v.metrics_file.WriteString(fmt.Sprintf("seq %d %.6f %s\n", seq, time.Since(v.beginPrePrepare).Seconds(), formatted))
 	if err != nil {
 		fmt.Println("Ошибка записи строки:", err)
 	}
@@ -428,10 +428,6 @@ func (v *View) processProposal() Phase {
 
 	v.MetricsView.CountTxsInBatch.Set(float64(len(requests)))
 	v.beginPrePrepare = time.Now()
-	_, err = v.metrics_file.WriteString(fmt.Sprintf("beginPrePrepare %d\n", v.beginPrePrepare.Unix()))
-	if err != nil {
-		fmt.Println("Ошибка записи строки:", err)
-	}
 
 	seq := v.ProposalSequence
 

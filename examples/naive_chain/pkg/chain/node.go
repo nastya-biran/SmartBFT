@@ -273,7 +273,7 @@ func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {
 		}
 		_, err := client.SendConsensusMessage(ctx, req)
 		if err != nil {
-			//fmt.Printf("Node %d: ошибка отправки сообщения узлу %d: %v\n", n.id, targetID, err)
+			fmt.Printf("Node %d: ошибка отправки сообщения узлу %d: %v\n", n.id, targetID, err)
 			//os.Exit(123)
 			return
 		}
@@ -306,7 +306,7 @@ func (n *Node) SendTransaction(targetID uint64, request []byte) {
 		}
 		_, err := client.SendTransaction(ctx, req)
 		if err != nil {
-			//fmt.Printf("Node %d: ошибка отправки транзакции узлу %d: %v\n", n.id, targetID, err)
+			fmt.Printf("Node %d: ошибка отправки транзакции узлу %d: %v\n", n.id, targetID, err)
 			//os.Exit(123)
 			return
 		}
@@ -553,7 +553,7 @@ func (n *Node) Sync() bft.SyncResponse {
 		
 				proposal, err := client.Sync(ctx, syncMsg)
 				if err != nil {
-					//fmt.Printf("Node %d: ошибка отправки транзакции узлу %d: %v\n", n.id, nodeID, err)
+					fmt.Printf("Node %d: ошибка отправки транзакции узлу %d: %v\n", n.id, nodeID, err)
 					//os.Exit(123)
 					return
 				}

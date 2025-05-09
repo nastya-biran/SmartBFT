@@ -141,6 +141,8 @@ type Controller struct {
 
 	StartedWG *sync.WaitGroup
 	syncLock  sync.Mutex
+
+	requests Requests
 }
 
 func (c *Controller) blacklist() []uint64 {
@@ -244,13 +246,29 @@ func (c *Controller) HandleRequest(sender uint64, req []byte) {
 		//c.Logger.Warnf("Got request from %d but the leader is %d, dropping request", sender, leaderID)
 		return
 	}
-	reqInfo, err := c.Verifier.VerifyRequest(req)
+	_, err := c.requests.Add(int(sender), req)
 	if err != nil {
-		//c.Logger.Warnf("Got bad request from %d: %v", sender, err)
+		c.Logger.Warnf("Can not handle request from %d: %v", sender, err)
+		return
+	}
+	c.Logger.Debugf("Handled Request from %d id %d", sender, c.RequestInspector.RequestID(req).ID)
+}
+
+func (c *Controller) ProcessRequest(requestData RequestData) {
+	c.Logger.Debugf("Processing request from %d id %d", requestData.SourceIndex, c.RequestInspector.RequestID(requestData.Payload).ID)
+	iAm, leaderID := c.iAmTheLeader()
+	if !iAm {
+		c.Logger.Warnf("Got request from %d but the leader is %d, dropping request", requestData.SourceIndex, leaderID)
+		return
+	}
+
+	reqInfo, err := c.Verifier.VerifyRequest(requestData.Payload)
+	if err != nil {
+		c.Logger.Warnf("Got bad request from %d: %v", requestData.SourceIndex, err)
 		return
 	}
 	//c.Logger.Debugf("Got request from %d", sender)
-	c.addRequest(reqInfo, req)
+	c.addRequest(reqInfo, requestData.Payload)
 }
 
 // SubmitRequest Submits a request to go through consensus.
@@ -502,6 +520,8 @@ func (c *Controller) run() {
 		c.CurrView.Abort()
 	}()
 
+	go c.requests.pollRequests()
+
 	for {
 		select {
 		case d := <-c.decisionChan:
@@ -529,6 +549,8 @@ func (c *Controller) run() {
 				}
 				c.changeView(c.GetCurrentViewNumber(), vs.(ViewSequence).ProposalSeq, c.getCurrentDecisionsInView())
 			}
+		case requestData := <-c.requests.multiplexedRequests:
+			c.ProcessRequest(requestData)
 		}
 	}
 }
@@ -797,6 +819,15 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64,
 	c.deliverChan = make(chan struct{})
 	c.viewChange = make(chan viewInfo, 1)
 	c.abortViewChan = make(chan uint64, 1)
+
+	c.requests = Requests{
+		requests: make([]chan []byte, c.N),
+		multiplexedRequests: make(chan RequestData, 4),
+		activitySignal:  make(chan struct{}),
+	}
+	for i := uint64(0); i < c.N; i++ {
+		c.requests.requests[i] = make(chan []byte, 100)
+	}
 
 	Q, F := computeQuorum(c.N)
 	c.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", c.N, F, Q)

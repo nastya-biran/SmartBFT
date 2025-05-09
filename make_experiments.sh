@@ -15,3 +15,4 @@ for value in {0..80..10}; do
 done
 
 echo "Скрипт завершен. Финальное значение: SPAM_MESSAGE_COUNT=80"
+./stop.sh

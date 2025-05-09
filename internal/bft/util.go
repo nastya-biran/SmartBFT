@@ -586,3 +586,112 @@ type IntDoubleByte struct {
 type IntDoubleBytes struct {
 	A []IntDoubleByte
 }
+
+type RequestData struct {
+	Payload    []byte 
+	SourceIndex int
+}
+
+type Requests struct {
+	activitySignal chan struct{}
+	requests            []chan []byte
+	multiplexedRequests chan RequestData
+	logger             api.Logger
+}
+
+func (requests *Requests) Add(index int, payload []byte) (bool, error) {
+	if index < 0 || index >= len(requests.requests) {
+		return false, fmt.Errorf("Invalid request channel index %d for sending", index)
+	}
+	targetChan := requests.requests[index]
+	if targetChan == nil {
+		return false, fmt.Errorf("Request channel %d is nil (possibly closed and nilled)", index)
+	}
+
+	select {
+	case targetChan <- payload:
+		select {
+		case requests.activitySignal<- struct {}{}:
+		default:
+		}
+		return true, nil
+	default:
+		return false, fmt.Errorf("Could not submit request to channel %d, channel is full", index)
+	}
+}
+
+func (requests *Requests) tryReadFromChannel(channelIndex int, isChannelClosed []bool) (processed bool) {
+	if channelIndex < 0 || channelIndex >= len(requests.requests) || isChannelClosed[channelIndex] {
+		return false
+	}
+
+	reqChan := requests.requests[channelIndex]
+	if reqChan == nil {
+		if !isChannelClosed[channelIndex] {
+			requests.logger.Debugf("Request channel (original index %d) found nil during tryRead.", channelIndex)
+			isChannelClosed[channelIndex] = true
+		}
+		return true
+	}
+
+
+	select {
+	case payload, ok := <-reqChan:
+		if !ok {
+			if !isChannelClosed[channelIndex] {
+				requests.logger.Debugf("Request channel (original index %d) closed during tryRead.", channelIndex)
+				isChannelClosed[channelIndex] = true
+			}
+			return false
+		}
+
+		select {
+		case requests.multiplexedRequests <- RequestData{Payload: payload, SourceIndex: channelIndex}:
+		default:
+			requests.logger.Warnf("MultiplexedRequests is full during tryRead for req[%d]. Message dropped.", channelIndex)
+		}
+		return true
+	default:
+		return false
+	}
+}
+
+func (requests *Requests) pollRequests() {
+	defer func() {
+		requests.logger.Debugf("Indexed-signal request polling goroutine stopped. Closing multiplexedRequests.")
+		close(requests.multiplexedRequests)
+	}()
+
+	if len(requests.requests) == 0 {
+		requests.logger.Debugf("No request channels to poll.")
+		return
+	}
+
+	isChannelClosed := make([]bool, len(requests.requests))
+	activeChannelsCount := len(requests.requests)
+
+	for {
+		if activeChannelsCount == 0 {
+			requests.logger.Debugf("All request channels are closed. Indexed-signal polling stopped.")
+			return
+		}
+
+		select {
+		case _, ok := <-requests.activitySignal:
+			if !ok {
+				requests.logger.Errorf("activitySignalWithIndex channel was closed unexpectedly. Exiting poller.")
+				return
+			}
+    
+		for i := 0; i < len(requests.requests); i++ {
+			if requests.tryReadFromChannel(i, isChannelClosed) {
+				if isChannelClosed[i] && requests.requests[i] != nil {
+					activeChannelsCount--
+					requests.requests[i] = nil
+				}
+			}
+		}
+	}
+}
+}
+

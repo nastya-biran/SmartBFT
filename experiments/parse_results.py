@@ -63,7 +63,7 @@ def main():
         print("Использование: python вывод.csv")
         sys.exit(1)
     
-    output_path = f"/home/nastbir/SmartBFT/experiments/results2/{sys.argv[1]}.csv"
+    output_path = f"/home/nastbir/SmartBFT/experiments/results3/{sys.argv[1]}.csv"
     n = 3 
 
     results_internal = None

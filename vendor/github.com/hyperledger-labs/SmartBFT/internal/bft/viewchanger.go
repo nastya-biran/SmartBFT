@@ -229,6 +229,8 @@ func (v *ViewChanger) run() {
 }
 
 func (v *ViewChanger) getLeader() uint64 {
+	v.Logger.Debugf("view(%d) + (decisionsInView(%d) / decisionsPerLeader(%d)), N(%d), blacklist(%v)",
+		v.currView,0, v.DecisionsPerLeader,v.N, v.blacklist())
 	return getLeaderID(v.currView, v.N, v.NodesList, v.LeaderRotation, 0, v.DecisionsPerLeader, v.blacklist())
 }
 

@@ -589,19 +589,26 @@ type IntDoubleBytes struct {
 
 type RequestData struct {
 	Payload    []byte 
-	SourceIndex int
+	Sender uint64
 }
 
 type Requests struct {
 	activitySignal chan struct{}
 	requests            []chan []byte
 	multiplexedRequests chan RequestData
+	nodesList          []uint64
 	logger             api.Logger
 }
 
-func (requests *Requests) Add(index int, payload []byte) (bool, error) {
-	if index < 0 || index >= len(requests.requests) {
-		return false, fmt.Errorf("Invalid request channel index %d for sending", index)
+func (requests *Requests) Add(sender uint64, payload []byte) (bool, error) {
+	index := -1
+	for i, node := range requests.nodesList {
+		if node == sender {
+			index = i
+		}
+	}
+	if index == -1 {
+		return false, fmt.Errorf("Sender %d not found in nodes list", sender)
 	}
 	targetChan := requests.requests[index]
 	if targetChan == nil {
@@ -646,7 +653,7 @@ func (requests *Requests) tryReadFromChannel(channelIndex int, isChannelClosed [
 		}
 
 		select {
-		case requests.multiplexedRequests <- RequestData{Payload: payload, SourceIndex: channelIndex}:
+		case requests.multiplexedRequests <- RequestData{Payload: payload, Sender: requests.nodesList[channelIndex]}:
 		default:
 			requests.logger.Warnf("MultiplexedRequests is full during tryRead for req[%d]. Message dropped.", channelIndex)
 		}

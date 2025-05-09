@@ -246,7 +246,7 @@ func (c *Controller) HandleRequest(sender uint64, req []byte) {
 		//c.Logger.Warnf("Got request from %d but the leader is %d, dropping request", sender, leaderID)
 		return
 	}
-	_, err := c.requests.Add(int(sender), req)
+	_, err := c.requests.Add(int(sender) - 1, req)
 	if err != nil {
 		c.Logger.Warnf("Can not handle request from %d: %v", sender, err)
 		return

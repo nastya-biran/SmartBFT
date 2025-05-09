@@ -251,11 +251,11 @@ func (c *Controller) HandleRequest(sender uint64, req []byte) {
 		c.Logger.Warnf("Can not handle request from %d: %v", sender, err)
 		return
 	}
-	c.Logger.Debugf("Handled Request from %d id %d", sender, c.RequestInspector.RequestID(req).ID)
+	c.Logger.Debugf("Handled Request from %d id %s", sender, c.RequestInspector.RequestID(req).ID)
 }
 
 func (c *Controller) ProcessRequest(requestData RequestData) {
-	c.Logger.Debugf("Processing request from %d id %d", requestData.SourceIndex, c.RequestInspector.RequestID(requestData.Payload).ID)
+	c.Logger.Debugf("Processing request from %d id %s", requestData.SourceIndex, c.RequestInspector.RequestID(requestData.Payload).ID)
 	iAm, leaderID := c.iAmTheLeader()
 	if !iAm {
 		c.Logger.Warnf("Got request from %d but the leader is %d, dropping request", requestData.SourceIndex, leaderID)

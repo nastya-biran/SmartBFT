@@ -1,172 +1,1550 @@
-node2-1  | 2025-05-09T12:26:53.920Z	DEBUG	wal/writeaheadlog.go:755	CRC-Anchor DEED0001 written to file: /app/data/node2/0000000000000001.wal, at offset 0, size=16
-node4-1  | 2025-05-09T12:26:53.882Z	DEBUG	wal/writeaheadlog.go:755	CRC-Anchor DEED0001 written to file: /app/data/node4/0000000000000001.wal, at offset 0, size=16
-node3-1  | 2025-05-09T12:26:53.998Z	DEBUG	wal/writeaheadlog.go:755	CRC-Anchor DEED0001 written to file: /app/data/node3/0000000000000001.wal, at offset 0, size=16
-node4-1  | 2025-05-09T12:26:53.882Z	INFO	wal/writeaheadlog.go:192	Write-Ahead-Log created successfully, mode: WRITE, dir: /app/data/node4
-node4-1  | Node 4 starting
-node4-1  | 2025-05-09T12:26:53.883Z	INFO	naive_chain/main.go:244	Node 4 started successfully
-node2-1  | 2025-05-09T12:26:53.920Z	INFO	wal/writeaheadlog.go:192	Write-Ahead-Log created successfully, mode: WRITE, dir: /app/data/node2
-node2-1  | 2025-05-09T12:26:53.920Z	DEBUG	consensus/consensus.go:153	Application started with view 0, seq 0, and decisions 0
-node2-1  | 2025-05-09T12:26:53.920Z	INFO	bft/state.go:99	Nothing to restore
-node2-1  | 2025-05-09T12:26:53.920Z	DEBUG	consensus/consensus.go:481	No view change to restore
-node2-1  | 2025-05-09T12:26:53.920Z	INFO	bft/state.go:80	Nothing to restore
-node2-1  | 2025-05-09T12:26:53.920Z	DEBUG	consensus/consensus.go:496	No new view to restore
-node2-1  | 2025-05-09T12:26:53.920Z	DEBUG	bft/controller.go:812	Starting controller with view 0, sequence 1, and decisions 0
-node2-1  | 2025-05-09T12:26:53.920Z	DEBUG	bft/controller.go:833	The number of nodes (N) is 4, F is 1, and the quorum size is 3
-node3-1  | 2025-05-09T12:26:53.998Z	INFO	wal/writeaheadlog.go:192	Write-Ahead-Log created successfully, mode: WRITE, dir: /app/data/node3
-node3-1  | 2025-05-09T12:26:53.998Z	DEBUG	consensus/consensus.go:153	Application started with view 0, seq 0, and decisions 0
-node3-1  | 2025-05-09T12:26:53.998Z	INFO	bft/state.go:99	Nothing to restore
-node3-1  | 2025-05-09T12:26:53.998Z	DEBUG	consensus/consensus.go:481	No view change to restore
-node1-1  | 2025-05-09T12:26:53.958Z	DEBUG	wal/writeaheadlog.go:755	CRC-Anchor DEED0001 written to file: /app/data/node1/0000000000000001.wal, at offset 0, size=16
-node1-1  | 2025-05-09T12:26:53.958Z	INFO	wal/writeaheadlog.go:192	Write-Ahead-Log created successfully, mode: WRITE, dir: /app/data/node1
-node1-1  | 2025-05-09T12:26:53.958Z	DEBUG	consensus/consensus.go:153	Application started with view 0, seq 0, and decisions 0
-node1-1  | 2025-05-09T12:26:53.958Z	INFO	bft/state.go:99	Nothing to restore
-node1-1  | 2025-05-09T12:26:53.958Z	DEBUG	consensus/consensus.go:481	No view change to restore
-node1-1  | 2025-05-09T12:26:53.958Z	INFO	bft/state.go:80	Nothing to restore
-node1-1  | 2025-05-09T12:26:53.958Z	DEBUG	consensus/consensus.go:496	No new view to restore
-node1-1  | 2025-05-09T12:26:53.958Z	DEBUG	bft/controller.go:812	Starting controller with view 0, sequence 1, and decisions 0
-node1-1  | 2025-05-09T12:26:53.958Z	DEBUG	bft/controller.go:833	The number of nodes (N) is 4, F is 1, and the quorum size is 3
-node1-1  | 2025-05-09T12:26:53.959Z	INFO	bft/state.go:121	Nothing to restore
+node2-1  | 2025-05-09T12:31:02.730Z	DEBUG	wal/writeaheadlog.go:755	CRC-Anchor DEED0001 written to file: /app/data/node2/0000000000000001.wal, at offset 0, size=16
+node2-1  | 2025-05-09T12:31:02.730Z	INFO	wal/writeaheadlog.go:192	Write-Ahead-Log created successfully, mode: WRITE, dir: /app/data/node2
+node2-1  | 2025-05-09T12:31:02.730Z	DEBUG	consensus/consensus.go:153	Application started with view 0, seq 0, and decisions 0
+node2-1  | 2025-05-09T12:31:02.730Z	INFO	bft/state.go:99	Nothing to restore
+node2-1  | 2025-05-09T12:31:02.730Z	DEBUG	consensus/consensus.go:481	No view change to restore
+node2-1  | 2025-05-09T12:31:02.730Z	INFO	bft/state.go:80	Nothing to restore
+node2-1  | 2025-05-09T12:31:02.730Z	DEBUG	consensus/consensus.go:496	No new view to restore
+node1-1  | 2025-05-09T12:31:02.701Z	DEBUG	wal/writeaheadlog.go:755	CRC-Anchor DEED0001 written to file: /app/data/node1/0000000000000001.wal, at offset 0, size=16
+node1-1  | 2025-05-09T12:31:02.701Z	INFO	wal/writeaheadlog.go:192	Write-Ahead-Log created successfully, mode: WRITE, dir: /app/data/node1
+node1-1  | 2025-05-09T12:31:02.701Z	DEBUG	consensus/consensus.go:153	Application started with view 0, seq 0, and decisions 0
+node1-1  | 2025-05-09T12:31:02.701Z	INFO	bft/state.go:99	Nothing to restore
+node3-1  | 2025-05-09T12:31:02.769Z	DEBUG	wal/writeaheadlog.go:755	CRC-Anchor DEED0001 written to file: /app/data/node3/0000000000000001.wal, at offset 0, size=16
+node3-1  | 2025-05-09T12:31:02.770Z	INFO	wal/writeaheadlog.go:192	Write-Ahead-Log created successfully, mode: WRITE, dir: /app/data/node3
+node3-1  | 2025-05-09T12:31:02.770Z	DEBUG	consensus/consensus.go:153	Application started with view 0, seq 0, and decisions 0
+node1-1  | 2025-05-09T12:31:02.701Z	DEBUG	consensus/consensus.go:481	No view change to restore
+node1-1  | 2025-05-09T12:31:02.701Z	INFO	bft/state.go:80	Nothing to restore
+node1-1  | 2025-05-09T12:31:02.701Z	DEBUG	consensus/consensus.go:496	No new view to restore
+node1-1  | 2025-05-09T12:31:02.701Z	DEBUG	bft/controller.go:812	Starting controller with view 0, sequence 1, and decisions 0
+node1-1  | 2025-05-09T12:31:02.701Z	DEBUG	bft/controller.go:833	The number of nodes (N) is 4, F is 1, and the quorum size is 3
+node1-1  | 2025-05-09T12:31:02.702Z	INFO	bft/state.go:121	Nothing to restore
+node1-1  | 2025-05-09T12:31:02.702Z	DEBUG	bft/controller.go:413	Acquiring leader token when starting view with phase COMMITTED
 node1-1  | Файл открыт <nil>
-node1-1  | 2025-05-09T12:26:53.959Z	DEBUG	bft/controller.go:413	Acquiring leader token when starting view with phase COMMITTED
-node3-1  | 2025-05-09T12:26:53.998Z	INFO	bft/state.go:80	Nothing to restore
-node3-1  | 2025-05-09T12:26:53.998Z	DEBUG	consensus/consensus.go:496	No new view to restore
-node3-1  | 2025-05-09T12:26:53.998Z	DEBUG	bft/controller.go:812	Starting controller with view 0, sequence 1, and decisions 0
-node3-1  | 2025-05-09T12:26:53.998Z	DEBUG	bft/controller.go:833	The number of nodes (N) is 4, F is 1, and the quorum size is 3
-node3-1  | 2025-05-09T12:26:53.998Z	INFO	bft/state.go:121	Nothing to restore
-node3-1  | Файл открыт <nil>
-node3-1  | 2025-05-09T12:26:53.998Z	INFO	bft/heartbeatmonitor.go:185	Changing to follower role, current view: 0, current leader: 1
-node3-1  | 2025-05-09T12:26:53.998Z	INFO	bft/controller.go:421	Starting view with number 0, sequence 1, and decisions 0
-node3-1  | Node 3 starting
-node3-1  | 2025-05-09T12:26:53.999Z	INFO	naive_chain/main.go:244	Node 3 started successfully
-node2-1  | 2025-05-09T12:26:53.921Z	INFO	bft/state.go:121	Nothing to restore
-node2-1  | Файл открыт <nil>
-node2-1  | 2025-05-09T12:26:53.921Z	INFO	bft/heartbeatmonitor.go:185	Changing to follower role, current view: 0, current leader: 1
-node2-1  | Node 2 starting
-node2-1  | 2025-05-09T12:26:53.921Z	INFO	bft/controller.go:421	Starting view with number 0, sequence 1, and decisions 0
-node2-1  | 2025-05-09T12:26:53.921Z	INFO	naive_chain/main.go:244	Node 2 started successfully
-node1-1  | 2025-05-09T12:26:53.959Z	INFO	bft/heartbeatmonitor.go:185	Changing to leader role, current view: 0, current leader: 1
-node1-1  | 2025-05-09T12:26:53.959Z	INFO	bft/controller.go:421	Starting view with number 0, sequence 1, and decisions 0
+node1-1  | 2025-05-09T12:31:02.702Z	INFO	bft/heartbeatmonitor.go:185	Changing to leader role, current view: 0, current leader: 1
+node1-1  | 2025-05-09T12:31:02.702Z	INFO	bft/controller.go:421	Starting view with number 0, sequence 1, and decisions 0
 node1-1  | Node 1 starting
-node1-1  | 2025-05-09T12:26:53.959Z	INFO	naive_chain/main.go:244	Node 1 started successfully
-node4-1  | 2025-05-09T12:26:58.889Z	INFO	naive_chain/main.go:252	Successfully connected to other nodes
-node2-1  | 2025-05-09T12:26:58.925Z	INFO	naive_chain/main.go:252	Successfully connected to other nodes
-node1-1  | 2025-05-09T12:26:58.962Z	INFO	naive_chain/main.go:252	Successfully connected to other nodes
-node1-1  | 2025-05-09T12:26:58.984Z	DEBUG	bft/controller.go:254	Handled Request from 4 id %!d(string=2-2)
-node1-1  | 2025-05-09T12:26:58.984Z	DEBUG	bft/controller.go:254	Handled Request from 4 id %!d(string=3-2)
-node1-1  | 2025-05-09T12:26:58.984Z	DEBUG	bft/controller.go:254	Handled Request from 4 id %!d(string=5-2)
-node1-1  | 2025-05-09T12:26:58.985Z	DEBUG	bft/controller.go:254	Handled Request from 4 id %!d(string=4-2)
-node1-1  | 2025-05-09T12:26:58.987Z	DEBUG	bft/controller.go:254	Handled Request from 4 id %!d(string=9-2)
-node1-1  | 2025-05-09T12:26:58.990Z	DEBUG	bft/controller.go:254	Handled Request from 4 id %!d(string=1-2)
+node3-1  | 2025-05-09T12:31:02.770Z	INFO	bft/state.go:99	Nothing to restore
+node1-1  | 2025-05-09T12:31:02.702Z	INFO	naive_chain/main.go:244	Node 1 started successfully
+node2-1  | 2025-05-09T12:31:02.730Z	DEBUG	bft/controller.go:812	Starting controller with view 0, sequence 1, and decisions 0
+node2-1  | 2025-05-09T12:31:02.730Z	DEBUG	bft/controller.go:833	The number of nodes (N) is 4, F is 1, and the quorum size is 3
+node4-1  | 2025-05-09T12:31:02.670Z	DEBUG	wal/writeaheadlog.go:755	CRC-Anchor DEED0001 written to file: /app/data/node4/0000000000000001.wal, at offset 0, size=16
+node4-1  | 2025-05-09T12:31:02.670Z	INFO	wal/writeaheadlog.go:192	Write-Ahead-Log created successfully, mode: WRITE, dir: /app/data/node4
+node4-1  | Node 4 starting
+node4-1  | 2025-05-09T12:31:02.670Z	INFO	naive_chain/main.go:244	Node 4 started successfully
+node3-1  | 2025-05-09T12:31:02.770Z	DEBUG	consensus/consensus.go:481	No view change to restore
+node2-1  | 2025-05-09T12:31:02.730Z	INFO	bft/state.go:121	Nothing to restore
+node2-1  | Файл открыт <nil>
+node2-1  | 2025-05-09T12:31:02.730Z	INFO	bft/heartbeatmonitor.go:185	Changing to follower role, current view: 0, current leader: 1
+node2-1  | 2025-05-09T12:31:02.730Z	INFO	bft/controller.go:421	Starting view with number 0, sequence 1, and decisions 0
+node2-1  | Node 2 starting
+node2-1  | 2025-05-09T12:31:02.731Z	INFO	naive_chain/main.go:244	Node 2 started successfully
+node3-1  | 2025-05-09T12:31:02.770Z	INFO	bft/state.go:80	Nothing to restore
+node3-1  | 2025-05-09T12:31:02.770Z	DEBUG	consensus/consensus.go:496	No new view to restore
+node3-1  | 2025-05-09T12:31:02.770Z	DEBUG	bft/controller.go:812	Starting controller with view 0, sequence 1, and decisions 0
+node3-1  | 2025-05-09T12:31:02.770Z	DEBUG	bft/controller.go:833	The number of nodes (N) is 4, F is 1, and the quorum size is 3
+node3-1  | 2025-05-09T12:31:02.770Z	INFO	bft/state.go:121	Nothing to restore
+node3-1  | 2025-05-09T12:31:02.770Z	INFO	bft/heartbeatmonitor.go:185	Changing to follower role, current view: 0, current leader: 1
+node3-1  | 2025-05-09T12:31:02.770Z	INFO	bft/controller.go:421	Starting view with number 0, sequence 1, and decisions 0
+node3-1  | 2025-05-09T12:31:02.771Z	INFO	naive_chain/main.go:244	Node 3 started successfully
+node3-1  | Файл открыт <nil>
+node3-1  | Node 3 starting
+node4-1  | 2025-05-09T12:31:07.676Z	INFO	naive_chain/main.go:252	Successfully connected to other nodes
+node1-1  | 2025-05-09T12:31:07.706Z	INFO	naive_chain/main.go:252	Successfully connected to other nodes
+node2-1  | 2025-05-09T12:31:07.734Z	INFO	naive_chain/main.go:252	Successfully connected to other nodes
+node1-1  | 2025-05-09T12:31:07.772Z	DEBUG	bft/controller.go:254	Handled Request from 4 id 6-2
+node3-1  | 2025-05-09T12:31:07.774Z	INFO	naive_chain/main.go:252	Successfully connected to other nodes
+node1-1  | 2025-05-09T12:31:07.775Z	DEBUG	bft/controller.go:254	Handled Request from 4 id 2-2
+node1-1  | 2025-05-09T12:31:07.776Z	DEBUG	bft/controller.go:254	Handled Request from 4 id 3-2
+node1-1  | 2025-05-09T12:31:07.778Z	DEBUG	bft/controller.go:254	Handled Request from 4 id 4-2
+node1-1  | 2025-05-09T12:31:07.781Z	DEBUG	bft/controller.go:254	Handled Request from 4 id 8-2
+node1-1  | 2025-05-09T12:31:07.781Z	DEBUG	bft/controller.go:254	Handled Request from 4 id 10-2
 node1-1  | panic: runtime error: invalid memory address or nil pointer dereference
 node1-1  | 	panic: runtime error: invalid memory address or nil pointer dereference
 node1-1  | [signal SIGSEGV: segmentation violation code=0x1 addr=0x18 pc=0x6a0aff]
 node1-1  | 
-node1-1  | goroutine 5 [running]:
+node1-1  | goroutine 17 [running]:
 node1-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*Requests).pollRequests.func1()
-node1-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122457-cf44c7b81994/internal/bft/util.go:661 +0x1f
+node1-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/util.go:661 +0x1f
 node1-1  | panic({0x98d680?, 0xf1d500?})
 node1-1  | 	/usr/local/go/src/runtime/panic.go:792 +0x132
-node1-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*Requests).tryReadFromChannel(0xc000196eb8, 0x3, {0xc000010048, 0x0?, 0x0?})
-node1-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122457-cf44c7b81994/internal/bft/util.go:651 +0x1e4
-node1-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*Requests).pollRequests(0xc000196eb8)
-node1-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122457-cf44c7b81994/internal/bft/util.go:687 +0x18c
-node1-1  | created by github.com/hyperledger-labs/SmartBFT/internal/bft.(*Controller).run in goroutine 24
-node1-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122457-cf44c7b81994/internal/bft/controller.go:523 +0xa7
+node1-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*Requests).tryReadFromChannel(0xc000180eb8, 0x3, {0xc000132000, 0xc00006af80?, 0x0?})
+node1-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/util.go:651 +0x1e4
+node1-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*Requests).pollRequests(0xc000180eb8)
+node1-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/util.go:687 +0x18c
+node1-1  | created by github.com/hyperledger-labs/SmartBFT/internal/bft.(*Controller).run in goroutine 12
+node1-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/controller.go:523 +0xa7
 [Knode1-1 exited with code 2
-node3-1  | 2025-05-09T12:27:34.006Z	FATAL	naive_chain/main.go:250	Failed to initialize clients: failed to connect to node 1 after retries: context deadline exceeded
-node3-1  | main.main
-node3-1  | 	/app/examples/naive_chain/main.go:250
-node3-1  | runtime.main
-node3-1  | 	/usr/local/go/src/runtime/proc.go:283
-[Knode3-1 exited with code 1
-node2-1  | 2025-05-09T12:27:54.921Z	WARN	bft/heartbeatmonitor.go:386	Heartbeat timeout (1m0s) from 1 expired; last heartbeat was observed 1m0.000000912s ago
+node2-1  | 2025-05-09T12:32:04.730Z	WARN	bft/heartbeatmonitor.go:386	Heartbeat timeout (1m0s) from 1 expired; last heartbeat was observed 1m0.999997847s ago
 node2-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).followerTick
-node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122457-cf44c7b81994/internal/bft/heartbeatmonitor.go:386
+node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:386
 node2-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).tick
-node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122457-cf44c7b81994/internal/bft/heartbeatmonitor.go:321
+node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:321
 node2-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).run
-node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122457-cf44c7b81994/internal/bft/heartbeatmonitor.go:126
-node2-1  | 2025-05-09T12:27:54.921Z	DEBUG	bft/controller.go:328	Heartbeat timeout expired, reported-view: 0, reported-leader: 1
-node2-1  | 2025-05-09T12:27:54.921Z	WARN	bft/controller.go:342	Heartbeat timeout expired, complaining about leader: 1
+node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:126
+node2-1  | 2025-05-09T12:32:04.730Z	DEBUG	bft/controller.go:328	Heartbeat timeout expired, reported-view: 0, reported-leader: 1
+node2-1  | 2025-05-09T12:32:04.730Z	WARN	bft/controller.go:342	Heartbeat timeout expired, complaining about leader: 1
 node2-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*Controller).OnHeartbeatTimeout
-node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122457-cf44c7b81994/internal/bft/controller.go:342
+node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/controller.go:342
 node2-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).followerTick
-node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122457-cf44c7b81994/internal/bft/heartbeatmonitor.go:388
+node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:388
 node2-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).tick
-node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122457-cf44c7b81994/internal/bft/heartbeatmonitor.go:321
+node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:321
 node2-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).run
-node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122457-cf44c7b81994/internal/bft/heartbeatmonitor.go:126
-node2-1  | 2025-05-09T12:27:54.921Z	DEBUG	bft/requestpool.go:467	Stopped all timers: size=0
-node2-1  | 2025-05-09T12:27:54.921Z	DEBUG	bft/viewchanger.go:388	Node 2 started view change, last view is 0
-node2-1  | 2025-05-09T12:27:54.921Z	DEBUG	bft/controller.go:484	AbortView, the current view num is 0
-node2-1  | 2025-05-09T12:27:54.921Z	DEBUG	bft/controller.go:456	view for abort 0, current view 0
-node2-1  | 2025-05-09T12:27:54.921Z	DEBUG	bft/controller.go:468	Aborting current view with number 0
-node2-1  | 2025-05-09T12:27:55.921Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
-node2-1  | Node 2: ошибка отправки сообщения узлу 3: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.4:7050: connect: no route to host"
-node2-1  | Node 2: ошибка отправки сообщения узлу 3: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.4:7050: connect: no route to host"
-node2-1  | 2025-05-09T12:28:00.921Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
-node2-1  | Node 2: ошибка отправки сообщения узлу 3: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.4:7050: connect: no route to host"
-node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = DeadlineExceeded desc = context deadline exceeded while waiting for connections to become ready
-node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = DeadlineExceeded desc = context deadline exceeded while waiting for connections to become ready
-node2-1  | Node 2: ошибка отправки сообщения узлу 3: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.4:7050: connect: no route to host"
-node2-1  | 2025-05-09T12:28:06.921Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:126
+node2-1  | 2025-05-09T12:32:04.730Z	DEBUG	bft/requestpool.go:467	Stopped all timers: size=0
+node2-1  | 2025-05-09T12:32:04.730Z	DEBUG	bft/viewchanger.go:388	Node 2 started view change, last view is 0
+node2-1  | 2025-05-09T12:32:04.730Z	DEBUG	bft/controller.go:484	AbortView, the current view num is 0
+node2-1  | 2025-05-09T12:32:04.730Z	DEBUG	bft/controller.go:456	view for abort 0, current view 0
+node2-1  | 2025-05-09T12:32:04.730Z	DEBUG	bft/controller.go:468	Aborting current view with number 0
+node3-1  | 2025-05-09T12:32:04.770Z	WARN	bft/heartbeatmonitor.go:386	Heartbeat timeout (1m0s) from 1 expired; last heartbeat was observed 1m1.000001641s ago
+node3-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).followerTick
+node3-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:386
+node3-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).tick
+node3-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:321
+node3-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).run
+node3-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:126
+node3-1  | 2025-05-09T12:32:04.770Z	DEBUG	bft/controller.go:328	Heartbeat timeout expired, reported-view: 0, reported-leader: 1
+node3-1  | 2025-05-09T12:32:04.770Z	WARN	bft/controller.go:342	Heartbeat timeout expired, complaining about leader: 1
+node3-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*Controller).OnHeartbeatTimeout
+node3-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/controller.go:342
+node3-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).followerTick
+node3-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:388
+node3-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).tick
+node3-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:321
+node3-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).run
+node3-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:126
+node3-1  | 2025-05-09T12:32:04.770Z	DEBUG	bft/requestpool.go:467	Stopped all timers: size=0
+node3-1  | 2025-05-09T12:32:04.770Z	DEBUG	bft/viewchanger.go:388	Node 3 started view change, last view is 0
+node3-1  | 2025-05-09T12:32:04.770Z	DEBUG	bft/controller.go:484	AbortView, the current view num is 0
+node3-1  | 2025-05-09T12:32:04.770Z	DEBUG	bft/controller.go:456	view for abort 0, current view 0
+node3-1  | 2025-05-09T12:32:04.770Z	DEBUG	bft/controller.go:468	Aborting current view with number 0
+node3-1  | 2025-05-09T12:32:04.781Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:32:04.781Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:32:04.781Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:32:04.834Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:32:04.834Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:32:04.834Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:32:05.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:32:05.771Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:32:05.783Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:32:05.783Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:32:05.783Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:32:05.834Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:32:05.834Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:32:05.834Z	DEBUG	bft/viewchanger.go:403	case 2
 node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
 node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:32:10.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
 node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
-node2-1  | Node 2: ошибка отправки сообщения узлу 3: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.4:7050: connect: no route to host"
-node2-1  | 2025-05-09T12:28:12.921Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:32:10.779Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:32:10.779Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:32:10.779Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:32:11.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node2-1  | 2025-05-09T12:32:11.815Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:32:11.815Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:32:11.815Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:32:16.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:32:16.785Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:32:16.785Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:32:16.785Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:32:17.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:32:17.835Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:32:17.835Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:32:17.835Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:32:22.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:32:22.792Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:32:22.792Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:32:22.792Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:32:23.771Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:32:23.816Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:32:23.816Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:32:23.816Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:32:24.730Z	DEBUG	bft/viewchanger.go:264	Node 2 got a view change timeout, the current view is 0
+node2-1  | 2025-05-09T12:32:24.730Z	DEBUG	bft/viewchanger.go:268	Node 2 is calling sync because it got a view change timeout
+node2-1  | 2025-05-09T12:32:24.730Z	DEBUG	bft/viewchanger.go:373	Node 2 has already started view change with last view 0
+node2-1  | 2025-05-09T12:32:24.730Z	DEBUG	bft/controller.go:539	get msg from syncChan
 node2-1  | Node 2: Sync called
 node2-1  | Trying to get seq 0 in sync
-node2-1  | 2025-05-09T12:28:15.921Z	DEBUG	bft/viewchanger.go:264	Node 2 got a view change timeout, the current view is 0
-node2-1  | 2025-05-09T12:28:15.921Z	DEBUG	bft/viewchanger.go:268	Node 2 is calling sync because it got a view change timeout
-node2-1  | 2025-05-09T12:28:15.921Z	DEBUG	bft/viewchanger.go:373	Node 2 has already started view change with last view 0
-node2-1  | 2025-05-09T12:28:15.921Z	DEBUG	bft/controller.go:539	get msg from syncChan
 node2-1  | Node 2: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
-node2-1  | Node 2: ошибка отправки транзакции узлу 3: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.4:7050: connect: no route to host"
+node3-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 3
 node4-1  | Node 2 called sync
 node2-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node2-1  | 2025-05-09T12:32:24.744Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
 node2-1  | Returning from sync seq 0
-node2-1  | 2025-05-09T12:28:15.929Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
-node2-1  | 2025-05-09T12:28:15.929Z	DEBUG	bft/statecollector.go:83	Node 2 started collecting state responses
+node2-1  | 2025-05-09T12:32:24.744Z	DEBUG	bft/statecollector.go:83	Node 2 started collecting state responses
 node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
-node2-1  | Node 2: ошибка отправки сообщения узлу 3: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.4:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:32:24.844Z	DEBUG	bft/statecollector.go:58	Node 2 handling state response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:32:24.844Z	DEBUG	bft/statecollector.go:93	Node 2 collected a response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:32:25.745Z	INFO	bft/statecollector.go:90	Node 2 reached the state collector timeout
+node2-1  | 2025-05-09T12:32:25.745Z	INFO	bft/controller.go:672	Fetching state failed
+node2-1  | 2025-05-09T12:32:25.745Z	DEBUG	bft/controller.go:545	view and seq is zero
+node2-1  | 2025-05-09T12:32:25.745Z	DEBUG	bft/controller.go:456	view for abort 0, current view 0
+node2-1  | 2025-05-09T12:32:25.745Z	DEBUG	bft/controller.go:468	Aborting current view with number 0
+node2-1  | 2025-05-09T12:32:25.745Z	DEBUG	bft/controller.go:446	Starting view after setting decisions in view to 0
+node2-1  | 2025-05-09T12:32:25.745Z	INFO	bft/heartbeatmonitor.go:185	Changing to follower role, current view: 0, current leader: 1
+node2-1  | 2025-05-09T12:32:25.745Z	INFO	bft/controller.go:421	Starting view with number 0, sequence 1, and decisions 0
 node2-1  | Файл открыт <nil>
-node2-1  | 2025-05-09T12:28:16.929Z	INFO	bft/statecollector.go:90	Node 2 reached the state collector timeout
-node2-1  | 2025-05-09T12:28:16.929Z	INFO	bft/controller.go:672	Fetching state failed
-node2-1  | 2025-05-09T12:28:16.929Z	DEBUG	bft/controller.go:545	view and seq is zero
-node2-1  | 2025-05-09T12:28:16.930Z	DEBUG	bft/controller.go:456	view for abort 0, current view 0
-node2-1  | 2025-05-09T12:28:16.930Z	DEBUG	bft/controller.go:468	Aborting current view with number 0
-node2-1  | 2025-05-09T12:28:16.930Z	DEBUG	bft/controller.go:446	Starting view after setting decisions in view to 0
-node2-1  | 2025-05-09T12:28:16.930Z	INFO	bft/heartbeatmonitor.go:185	Changing to follower role, current view: 0, current leader: 1
-node2-1  | 2025-05-09T12:28:16.930Z	INFO	bft/controller.go:421	Starting view with number 0, sequence 1, and decisions 0
+node3-1  | 2025-05-09T12:32:25.771Z	DEBUG	bft/viewchanger.go:264	Node 3 got a view change timeout, the current view is 0
+node3-1  | Node 3: Sync called
+node3-1  | Trying to get seq 0 in sync
+node3-1  | 2025-05-09T12:32:25.771Z	DEBUG	bft/viewchanger.go:268	Node 3 is calling sync because it got a view change timeout
+node3-1  | 2025-05-09T12:32:25.771Z	DEBUG	bft/viewchanger.go:373	Node 3 has already started view change with last view 0
+node3-1  | 2025-05-09T12:32:25.771Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node3-1  | Node 3: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node4-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node2-1  | Node 3 called sync
+node3-1  | 2025-05-09T12:32:25.780Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node3-1  | 2025-05-09T12:32:25.780Z	DEBUG	bft/statecollector.go:83	Node 3 started collecting state responses
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 2
+node3-1  | Returning from sync seq 0
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:32:25.888Z	DEBUG	bft/statecollector.go:58	Node 3 handling state response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:32:25.888Z	DEBUG	bft/statecollector.go:93	Node 3 collected a response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:32:26.780Z	INFO	bft/statecollector.go:90	Node 3 reached the state collector timeout
+node3-1  | 2025-05-09T12:32:26.780Z	INFO	bft/controller.go:672	Fetching state failed
+node3-1  | 2025-05-09T12:32:26.780Z	DEBUG	bft/controller.go:545	view and seq is zero
+node3-1  | 2025-05-09T12:32:26.780Z	DEBUG	bft/controller.go:456	view for abort 0, current view 0
+node3-1  | 2025-05-09T12:32:26.781Z	DEBUG	bft/controller.go:468	Aborting current view with number 0
+node3-1  | 2025-05-09T12:32:26.781Z	DEBUG	bft/controller.go:446	Starting view after setting decisions in view to 0
+node3-1  | 2025-05-09T12:32:26.781Z	INFO	bft/heartbeatmonitor.go:185	Changing to follower role, current view: 0, current leader: 1
+node3-1  | 2025-05-09T12:32:26.781Z	INFO	bft/controller.go:421	Starting view with number 0, sequence 1, and decisions 0
+node3-1  | Файл открыт <nil>
+node2-1  | 2025-05-09T12:32:27.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
 node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
-node2-1  | Node 2: ошибка отправки сообщения узлу 3: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.4:7050: connect: no route to host"
-node2-1  | 2025-05-09T12:28:18.920Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:32:27.785Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:32:27.785Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:32:27.785Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:32:29.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node2-1  | 2025-05-09T12:32:29.828Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:32:29.828Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:32:29.828Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:32:33.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
 node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
-node2-1  | Node 2: ошибка отправки сообщения узлу 3: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.4:7050: connect: no route to host"
-node2-1  | 2025-05-09T12:28:24.921Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
-node2-1  | 2025-05-09T12:28:30.921Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
-node2-1  | Node 2: ошибка отправки сообщения узлу 3: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.4:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:32:33.784Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:32:33.784Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:32:33.784Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:32:34.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node2-1  | 2025-05-09T12:32:34.832Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:32:34.832Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:32:34.832Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:32:38.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
 node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
-node2-1  | 2025-05-09T12:28:35.920Z	DEBUG	bft/viewchanger.go:264	Node 2 got a view change timeout, the current view is 0
-node2-1  | 2025-05-09T12:28:35.920Z	DEBUG	bft/viewchanger.go:268	Node 2 is calling sync because it got a view change timeout
-node2-1  | 2025-05-09T12:28:35.920Z	DEBUG	bft/viewchanger.go:373	Node 2 has already started view change with last view 0
-node2-1  | 2025-05-09T12:28:35.920Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node3-1  | 2025-05-09T12:32:38.780Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:32:38.780Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:32:38.780Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:32:39.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node2-1  | 2025-05-09T12:32:39.816Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:32:39.816Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:32:39.816Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:32:44.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | 2025-05-09T12:32:44.731Z	DEBUG	bft/viewchanger.go:264	Node 2 got a view change timeout, the current view is 0
+node2-1  | 2025-05-09T12:32:44.731Z	DEBUG	bft/viewchanger.go:268	Node 2 is calling sync because it got a view change timeout
+node2-1  | 2025-05-09T12:32:44.731Z	DEBUG	bft/viewchanger.go:373	Node 2 has already started view change with last view 0
+node2-1  | 2025-05-09T12:32:44.731Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
 node2-1  | Node 2: Sync called
 node2-1  | Trying to get seq 0 in sync
 node2-1  | Node 2: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
-node2-1  | Node 2: ошибка отправки транзакции узлу 3: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.4:7050: connect: no route to host"
+node3-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 3
 node4-1  | Node 2 called sync
 node2-1  | Got sync proposal for seq 0, has_proposal false from node 4
 node2-1  | Returning from sync seq 0
-node2-1  | 2025-05-09T12:28:35.925Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
-node2-1  | 2025-05-09T12:28:35.925Z	DEBUG	bft/statecollector.go:83	Node 2 started collecting state responses
+node2-1  | 2025-05-09T12:32:44.739Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node2-1  | 2025-05-09T12:32:44.739Z	DEBUG	bft/statecollector.go:83	Node 2 started collecting state responses
 node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
-node2-1  | Node 2: ошибка отправки сообщения узлу 3: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.4:7050: connect: no route to host"
-node2-1  | 2025-05-09T12:28:36.921Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:32:44.778Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:32:44.778Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:32:44.778Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:32:44.848Z	DEBUG	bft/statecollector.go:58	Node 2 handling state response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:32:44.848Z	DEBUG	bft/statecollector.go:93	Node 2 collected a response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:32:45.739Z	INFO	bft/statecollector.go:90	Node 2 reached the state collector timeout
+node2-1  | 2025-05-09T12:32:45.739Z	INFO	bft/controller.go:672	Fetching state failed
+node2-1  | 2025-05-09T12:32:45.739Z	DEBUG	bft/controller.go:545	view and seq is zero
+node2-1  | 2025-05-09T12:32:45.739Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | 2025-05-09T12:32:45.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:32:45.771Z	DEBUG	bft/viewchanger.go:264	Node 3 got a view change timeout, the current view is 0
+node3-1  | 2025-05-09T12:32:45.771Z	DEBUG	bft/viewchanger.go:268	Node 3 is calling sync because it got a view change timeout
+node3-1  | 2025-05-09T12:32:45.771Z	DEBUG	bft/viewchanger.go:373	Node 3 has already started view change with last view 0
+node3-1  | 2025-05-09T12:32:45.771Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node3-1  | Node 3: Sync called
+node3-1  | Trying to get seq 0 in sync
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | Node 3: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 2
+node4-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node3-1  | Returning from sync seq 0
+node3-1  | 2025-05-09T12:32:45.779Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node3-1  | 2025-05-09T12:32:45.779Z	DEBUG	bft/statecollector.go:83	Node 3 started collecting state responses
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:32:45.823Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:32:45.823Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:32:45.823Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:32:45.880Z	DEBUG	bft/statecollector.go:58	Node 3 handling state response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:32:45.880Z	DEBUG	bft/statecollector.go:93	Node 3 collected a response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:32:46.780Z	INFO	bft/statecollector.go:90	Node 3 reached the state collector timeout
+node3-1  | 2025-05-09T12:32:46.780Z	INFO	bft/controller.go:672	Fetching state failed
+node3-1  | 2025-05-09T12:32:46.780Z	DEBUG	bft/controller.go:545	view and seq is zero
+node3-1  | 2025-05-09T12:32:46.780Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
 node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
-node2-1  | Node 2: ошибка отправки сообщения узлу 3: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.4:7050: connect: no route to host"
-node2-1  | 2025-05-09T12:28:36.926Z	INFO	bft/statecollector.go:90	Node 2 reached the state collector timeout
-node2-1  | 2025-05-09T12:28:36.926Z	INFO	bft/controller.go:672	Fetching state failed
-node2-1  | 2025-05-09T12:28:36.926Z	DEBUG	bft/controller.go:545	view and seq is zero
-node2-1  | 2025-05-09T12:28:36.926Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node2-1  | 2025-05-09T12:32:50.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:32:50.771Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:32:50.791Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:32:50.791Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:32:50.791Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:32:50.834Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:32:50.834Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:32:50.834Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:32:56.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:32:56.771Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:32:56.794Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:32:56.794Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:32:56.794Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:32:56.831Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:32:56.831Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:32:56.831Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:33:01.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:33:01.826Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:33:01.827Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:33:01.827Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:33:02.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:33:02.774Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:33:02.775Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:33:02.775Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | Node 2: Sync called
+node2-1  | Trying to get seq 0 in sync
+node2-1  | Node 2: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:33:05.730Z	DEBUG	bft/viewchanger.go:264	Node 2 got a view change timeout, the current view is 0
+node2-1  | 2025-05-09T12:33:05.730Z	DEBUG	bft/viewchanger.go:268	Node 2 is calling sync because it got a view change timeout
+node2-1  | 2025-05-09T12:33:05.731Z	DEBUG	bft/viewchanger.go:373	Node 2 has already started view change with last view 0
+node2-1  | 2025-05-09T12:33:05.731Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node4-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node3-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 3
+node2-1  | Returning from sync seq 0
+node2-1  | 2025-05-09T12:33:05.740Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node2-1  | 2025-05-09T12:33:05.740Z	DEBUG	bft/statecollector.go:83	Node 2 started collecting state responses
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:33:05.771Z	DEBUG	bft/viewchanger.go:264	Node 3 got a view change timeout, the current view is 0
+node3-1  | 2025-05-09T12:33:05.771Z	DEBUG	bft/viewchanger.go:268	Node 3 is calling sync because it got a view change timeout
+node3-1  | 2025-05-09T12:33:05.771Z	DEBUG	bft/viewchanger.go:373	Node 3 has already started view change with last view 0
+node3-1  | 2025-05-09T12:33:05.771Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node3-1  | Node 3: Sync called
+node3-1  | Trying to get seq 0 in sync
+node3-1  | Node 3: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | Node 3 called sync
+node4-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 2
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node3-1  | Returning from sync seq 0
+node3-1  | 2025-05-09T12:33:05.779Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node3-1  | 2025-05-09T12:33:05.779Z	DEBUG	bft/statecollector.go:83	Node 3 started collecting state responses
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:33:05.844Z	DEBUG	bft/statecollector.go:58	Node 2 handling state response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:33:05.845Z	DEBUG	bft/statecollector.go:93	Node 2 collected a response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:33:05.889Z	DEBUG	bft/statecollector.go:58	Node 3 handling state response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:33:05.889Z	DEBUG	bft/statecollector.go:93	Node 3 collected a response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:33:06.741Z	INFO	bft/statecollector.go:90	Node 2 reached the state collector timeout
+node2-1  | 2025-05-09T12:33:06.741Z	INFO	bft/controller.go:672	Fetching state failed
+node2-1  | 2025-05-09T12:33:06.741Z	DEBUG	bft/controller.go:545	view and seq is zero
+node2-1  | 2025-05-09T12:33:06.741Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | 2025-05-09T12:33:06.779Z	INFO	bft/statecollector.go:90	Node 3 reached the state collector timeout
+node3-1  | 2025-05-09T12:33:06.779Z	INFO	bft/controller.go:672	Fetching state failed
+node3-1  | 2025-05-09T12:33:06.779Z	DEBUG	bft/controller.go:545	view and seq is zero
+node3-1  | 2025-05-09T12:33:06.779Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | 2025-05-09T12:33:07.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:33:07.825Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:33:07.825Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:33:07.825Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:33:08.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:33:08.789Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:33:08.789Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:33:08.789Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:33:13.771Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:33:13.826Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:33:13.826Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:33:13.826Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:33:14.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:33:14.776Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:33:14.776Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:33:14.776Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:33:18.771Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:33:18.818Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:33:18.818Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:33:18.818Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:33:19.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:33:19.774Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:33:19.774Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:33:19.774Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | Node 2: Sync called
+node2-1  | Trying to get seq 0 in sync
+node2-1  | Node 2: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:33:24.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | 2025-05-09T12:33:24.731Z	DEBUG	bft/viewchanger.go:264	Node 2 got a view change timeout, the current view is 0
+node2-1  | 2025-05-09T12:33:24.731Z	DEBUG	bft/viewchanger.go:268	Node 2 is calling sync because it got a view change timeout
+node2-1  | 2025-05-09T12:33:24.731Z	DEBUG	bft/viewchanger.go:373	Node 2 has already started view change with last view 0
+node2-1  | 2025-05-09T12:33:24.731Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node4-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node3-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 3
+node2-1  | Returning from sync seq 0
+node2-1  | 2025-05-09T12:33:24.738Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node2-1  | 2025-05-09T12:33:24.738Z	DEBUG	bft/statecollector.go:83	Node 2 started collecting state responses
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:33:24.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:33:24.770Z	DEBUG	bft/viewchanger.go:264	Node 3 got a view change timeout, the current view is 0
+node3-1  | 2025-05-09T12:33:24.770Z	DEBUG	bft/viewchanger.go:268	Node 3 is calling sync because it got a view change timeout
+node3-1  | 2025-05-09T12:33:24.770Z	DEBUG	bft/viewchanger.go:373	Node 3 has already started view change with last view 0
+node3-1  | 2025-05-09T12:33:24.770Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node3-1  | Node 3: Sync called
+node3-1  | Trying to get seq 0 in sync
+node3-1  | Node 3: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node4-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 2
+node2-1  | Node 3 called sync
+node3-1  | Returning from sync seq 0
+node3-1  | 2025-05-09T12:33:24.776Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node3-1  | 2025-05-09T12:33:24.777Z	DEBUG	bft/statecollector.go:83	Node 3 started collecting state responses
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:33:24.780Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:33:24.780Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:33:24.780Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:33:24.818Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:33:24.818Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:33:24.818Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:33:24.846Z	DEBUG	bft/statecollector.go:58	Node 2 handling state response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:33:24.846Z	DEBUG	bft/statecollector.go:93	Node 2 collected a response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:33:24.882Z	DEBUG	bft/statecollector.go:58	Node 3 handling state response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:33:24.882Z	DEBUG	bft/statecollector.go:93	Node 3 collected a response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:33:25.730Z	WARN	bft/heartbeatmonitor.go:386	Heartbeat timeout (1m0s) from 1 expired; last heartbeat was observed 1m0.000005999s ago
+node2-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).followerTick
+node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:386
+node2-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).tick
+node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:321
+node2-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).run
+node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:126
+node2-1  | 2025-05-09T12:33:25.731Z	DEBUG	bft/controller.go:328	Heartbeat timeout expired, reported-view: 0, reported-leader: 1
+node2-1  | 2025-05-09T12:33:25.731Z	WARN	bft/controller.go:342	Heartbeat timeout expired, complaining about leader: 1
+node2-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*Controller).OnHeartbeatTimeout
+node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/controller.go:342
+node2-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).followerTick
+node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:388
+node2-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).tick
+node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:321
+node2-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).run
+node2-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:126
+node2-1  | 2025-05-09T12:33:25.731Z	DEBUG	bft/viewchanger.go:373	Node 2 has already started view change with last view 0
+node2-1  | 2025-05-09T12:33:25.738Z	INFO	bft/statecollector.go:90	Node 2 reached the state collector timeout
+node2-1  | 2025-05-09T12:33:25.738Z	INFO	bft/controller.go:672	Fetching state failed
+node2-1  | 2025-05-09T12:33:25.738Z	DEBUG	bft/controller.go:545	view and seq is zero
+node2-1  | 2025-05-09T12:33:25.738Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | 2025-05-09T12:33:25.777Z	INFO	bft/statecollector.go:90	Node 3 reached the state collector timeout
+node3-1  | 2025-05-09T12:33:25.777Z	INFO	bft/controller.go:672	Fetching state failed
+node3-1  | 2025-05-09T12:33:25.777Z	DEBUG	bft/controller.go:545	view and seq is zero
+node3-1  | 2025-05-09T12:33:25.777Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | 2025-05-09T12:33:26.771Z	WARN	bft/heartbeatmonitor.go:386	Heartbeat timeout (1m0s) from 1 expired; last heartbeat was observed 1m0.000001647s ago
+node3-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).followerTick
+node3-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:386
+node3-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).tick
+node3-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:321
+node3-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).run
+node3-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:126
+node3-1  | 2025-05-09T12:33:26.771Z	DEBUG	bft/controller.go:328	Heartbeat timeout expired, reported-view: 0, reported-leader: 1
+node3-1  | 2025-05-09T12:33:26.771Z	WARN	bft/controller.go:342	Heartbeat timeout expired, complaining about leader: 1
+node3-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*Controller).OnHeartbeatTimeout
+node3-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/controller.go:342
+node3-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).followerTick
+node3-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:388
+node3-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).tick
+node3-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:321
+node3-1  | github.com/hyperledger-labs/SmartBFT/internal/bft.(*HeartbeatMonitor).run
+node3-1  | 	/go/pkg/mod/github.com/nastya-biran/!smart!b!f!t@v0.0.0-20250509122840-19ded464798a/internal/bft/heartbeatmonitor.go:126
+node3-1  | 2025-05-09T12:33:26.771Z	DEBUG	bft/viewchanger.go:373	Node 3 has already started view change with last view 0
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:33:29.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:33:29.778Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:33:29.778Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:33:29.778Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:33:30.771Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:33:30.831Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:33:30.831Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:33:30.831Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:33:34.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:33:34.786Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:33:34.786Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:33:34.786Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:33:35.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node2-1  | 2025-05-09T12:33:35.829Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:33:35.829Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:33:35.829Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:33:40.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:33:40.794Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:33:40.794Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:33:40.794Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:33:41.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:33:41.828Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:33:41.828Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:33:41.828Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:33:44.730Z	DEBUG	bft/viewchanger.go:264	Node 2 got a view change timeout, the current view is 0
+node2-1  | 2025-05-09T12:33:44.730Z	DEBUG	bft/viewchanger.go:268	Node 2 is calling sync because it got a view change timeout
+node2-1  | 2025-05-09T12:33:44.730Z	DEBUG	bft/viewchanger.go:373	Node 2 has already started view change with last view 0
+node2-1  | 2025-05-09T12:33:44.730Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node2-1  | Node 2: Sync called
+node2-1  | Trying to get seq 0 in sync
+node2-1  | Node 2: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node4-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node3-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 3
+node2-1  | Returning from sync seq 0
+node2-1  | 2025-05-09T12:33:44.744Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node2-1  | 2025-05-09T12:33:44.744Z	DEBUG	bft/statecollector.go:83	Node 2 started collecting state responses
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | Node 3: Sync called
+node3-1  | Trying to get seq 0 in sync
+node3-1  | Node 3: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:33:44.770Z	DEBUG	bft/viewchanger.go:264	Node 3 got a view change timeout, the current view is 0
+node3-1  | 2025-05-09T12:33:44.770Z	DEBUG	bft/viewchanger.go:268	Node 3 is calling sync because it got a view change timeout
+node3-1  | 2025-05-09T12:33:44.770Z	DEBUG	bft/viewchanger.go:373	Node 3 has already started view change with last view 0
+node3-1  | 2025-05-09T12:33:44.770Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node4-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node2-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 2
+node3-1  | Returning from sync seq 0
+node3-1  | 2025-05-09T12:33:44.783Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node3-1  | 2025-05-09T12:33:44.783Z	DEBUG	bft/statecollector.go:83	Node 3 started collecting state responses
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:33:44.861Z	DEBUG	bft/statecollector.go:58	Node 2 handling state response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:33:44.861Z	DEBUG	bft/statecollector.go:93	Node 2 collected a response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:33:44.896Z	DEBUG	bft/statecollector.go:58	Node 3 handling state response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:33:44.896Z	DEBUG	bft/statecollector.go:93	Node 3 collected a response: state_transfer_response:{sequence:1}
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:33:45.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | 2025-05-09T12:33:45.744Z	INFO	bft/statecollector.go:90	Node 2 reached the state collector timeout
+node2-1  | 2025-05-09T12:33:45.744Z	INFO	bft/controller.go:672	Fetching state failed
+node2-1  | 2025-05-09T12:33:45.744Z	DEBUG	bft/controller.go:545	view and seq is zero
+node2-1  | 2025-05-09T12:33:45.744Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | 2025-05-09T12:33:45.775Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:33:45.775Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:33:45.775Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:33:45.784Z	INFO	bft/statecollector.go:90	Node 3 reached the state collector timeout
+node3-1  | 2025-05-09T12:33:45.784Z	INFO	bft/controller.go:672	Fetching state failed
+node3-1  | 2025-05-09T12:33:45.784Z	DEBUG	bft/controller.go:545	view and seq is zero
+node3-1  | 2025-05-09T12:33:45.784Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | 2025-05-09T12:33:46.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:33:46.818Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:33:46.819Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:33:46.819Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:33:51.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:33:51.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:33:51.777Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:33:51.777Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:33:51.777Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:33:51.831Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:33:51.831Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:33:51.832Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:33:57.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:33:57.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:33:57.782Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:33:57.783Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:33:57.783Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:33:57.815Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:33:57.815Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:33:57.815Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:34:03.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:34:03.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:34:03.789Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:34:03.789Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:34:03.789Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:34:03.822Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:34:03.823Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:34:03.823Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:34:04.730Z	DEBUG	bft/viewchanger.go:264	Node 2 got a view change timeout, the current view is 0
+node2-1  | 2025-05-09T12:34:04.730Z	DEBUG	bft/viewchanger.go:268	Node 2 is calling sync because it got a view change timeout
+node2-1  | 2025-05-09T12:34:04.730Z	DEBUG	bft/viewchanger.go:373	Node 2 has already started view change with last view 0
+node2-1  | 2025-05-09T12:34:04.730Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node2-1  | Node 2: Sync called
+node2-1  | Trying to get seq 0 in sync
+node2-1  | Node 2: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 3
+node4-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node2-1  | Returning from sync seq 0
+node2-1  | 2025-05-09T12:34:04.742Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:34:04.742Z	DEBUG	bft/statecollector.go:83	Node 2 started collecting state responses
+node2-1  | 2025-05-09T12:34:04.837Z	DEBUG	bft/statecollector.go:58	Node 2 handling state response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:34:04.837Z	DEBUG	bft/statecollector.go:93	Node 2 collected a response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:34:05.743Z	INFO	bft/statecollector.go:90	Node 2 reached the state collector timeout
+node2-1  | 2025-05-09T12:34:05.743Z	INFO	bft/controller.go:672	Fetching state failed
+node2-1  | 2025-05-09T12:34:05.743Z	DEBUG	bft/controller.go:545	view and seq is zero
+node2-1  | 2025-05-09T12:34:05.743Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | 2025-05-09T12:34:05.770Z	DEBUG	bft/viewchanger.go:264	Node 3 got a view change timeout, the current view is 0
+node3-1  | 2025-05-09T12:34:05.770Z	DEBUG	bft/viewchanger.go:268	Node 3 is calling sync because it got a view change timeout
+node3-1  | 2025-05-09T12:34:05.770Z	DEBUG	bft/viewchanger.go:373	Node 3 has already started view change with last view 0
+node3-1  | 2025-05-09T12:34:05.770Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node3-1  | Node 3: Sync called
+node3-1  | Trying to get seq 0 in sync
+node3-1  | Node 3: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 2
+node4-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node3-1  | Returning from sync seq 0
+node3-1  | 2025-05-09T12:34:05.783Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node3-1  | 2025-05-09T12:34:05.783Z	DEBUG	bft/statecollector.go:83	Node 3 started collecting state responses
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:34:05.886Z	DEBUG	bft/statecollector.go:58	Node 3 handling state response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:34:05.886Z	DEBUG	bft/statecollector.go:93	Node 3 collected a response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:34:06.784Z	INFO	bft/statecollector.go:90	Node 3 reached the state collector timeout
+node3-1  | 2025-05-09T12:34:06.784Z	INFO	bft/controller.go:672	Fetching state failed
+node3-1  | 2025-05-09T12:34:06.784Z	DEBUG	bft/controller.go:545	view and seq is zero
+node3-1  | 2025-05-09T12:34:06.784Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node2-1  | 2025-05-09T12:34:09.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:34:09.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:34:09.789Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:34:09.789Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:34:09.789Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:34:09.820Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:34:09.820Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:34:09.820Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:34:14.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:34:14.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:34:14.794Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:34:14.794Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:34:14.794Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:34:14.834Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:34:14.834Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:34:14.834Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:34:20.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:34:20.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:34:20.777Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:34:20.777Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:34:20.777Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:34:20.814Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:34:20.814Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:34:20.814Z	DEBUG	bft/viewchanger.go:403	case 2
+node4-1  | Node 2 called sync
+node2-1  | 2025-05-09T12:34:24.730Z	DEBUG	bft/viewchanger.go:264	Node 2 got a view change timeout, the current view is 0
+node2-1  | 2025-05-09T12:34:24.730Z	DEBUG	bft/viewchanger.go:268	Node 2 is calling sync because it got a view change timeout
+node2-1  | Node 2: Sync called
+node2-1  | Trying to get seq 0 in sync
+node2-1  | Node 2: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:34:24.731Z	DEBUG	bft/viewchanger.go:373	Node 2 has already started view change with last view 0
+node2-1  | 2025-05-09T12:34:24.731Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node3-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 3
+node2-1  | Returning from sync seq 0
+node2-1  | 2025-05-09T12:34:24.731Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node2-1  | 2025-05-09T12:34:24.731Z	DEBUG	bft/statecollector.go:83	Node 2 started collecting state responses
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:34:24.770Z	DEBUG	bft/viewchanger.go:264	Node 3 got a view change timeout, the current view is 0
+node3-1  | 2025-05-09T12:34:24.770Z	DEBUG	bft/viewchanger.go:268	Node 3 is calling sync because it got a view change timeout
+node3-1  | 2025-05-09T12:34:24.770Z	DEBUG	bft/viewchanger.go:373	Node 3 has already started view change with last view 0
+node3-1  | Node 3: Sync called
+node3-1  | Trying to get seq 0 in sync
+node3-1  | 2025-05-09T12:34:24.770Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node3-1  | Node 3: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 2
+node4-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node3-1  | Returning from sync seq 0
+node3-1  | 2025-05-09T12:34:24.774Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node3-1  | 2025-05-09T12:34:24.774Z	DEBUG	bft/statecollector.go:83	Node 3 started collecting state responses
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:34:24.830Z	DEBUG	bft/statecollector.go:58	Node 2 handling state response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:34:24.830Z	DEBUG	bft/statecollector.go:93	Node 2 collected a response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:34:24.870Z	DEBUG	bft/statecollector.go:58	Node 3 handling state response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:34:24.870Z	DEBUG	bft/statecollector.go:93	Node 3 collected a response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:34:25.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:34:25.731Z	INFO	bft/statecollector.go:90	Node 2 reached the state collector timeout
+node2-1  | 2025-05-09T12:34:25.731Z	INFO	bft/controller.go:672	Fetching state failed
+node2-1  | 2025-05-09T12:34:25.731Z	DEBUG	bft/controller.go:545	view and seq is zero
+node2-1  | 2025-05-09T12:34:25.731Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:34:25.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:34:25.774Z	INFO	bft/statecollector.go:90	Node 3 reached the state collector timeout
+node3-1  | 2025-05-09T12:34:25.774Z	INFO	bft/controller.go:672	Fetching state failed
+node3-1  | 2025-05-09T12:34:25.774Z	DEBUG	bft/controller.go:545	view and seq is zero
+node3-1  | 2025-05-09T12:34:25.774Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | 2025-05-09T12:34:25.776Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:34:25.777Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:34:25.777Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:34:25.817Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:34:25.817Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:34:25.817Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:34:30.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:34:30.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:34:30.782Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:34:30.782Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:34:30.782Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:34:30.816Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:34:30.816Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:34:30.816Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:34:35.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:34:35.822Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:34:35.822Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:34:35.822Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:34:36.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:34:36.778Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:34:36.778Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:34:36.778Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:34:41.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:34:41.820Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:34:41.820Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:34:41.820Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:34:42.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:34:42.778Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:34:42.778Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:34:42.778Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | Node 2: Sync called
+node2-1  | Trying to get seq 0 in sync
+node2-1  | 2025-05-09T12:34:45.730Z	DEBUG	bft/viewchanger.go:264	Node 2 got a view change timeout, the current view is 0
+node2-1  | 2025-05-09T12:34:45.730Z	DEBUG	bft/viewchanger.go:268	Node 2 is calling sync because it got a view change timeout
+node2-1  | 2025-05-09T12:34:45.730Z	DEBUG	bft/viewchanger.go:373	Node 2 has already started view change with last view 0
+node2-1  | 2025-05-09T12:34:45.730Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node2-1  | Node 2: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 3
+node4-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node2-1  | Returning from sync seq 0
+node2-1  | 2025-05-09T12:34:45.743Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node2-1  | 2025-05-09T12:34:45.743Z	DEBUG	bft/statecollector.go:83	Node 2 started collecting state responses
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:34:45.771Z	DEBUG	bft/viewchanger.go:264	Node 3 got a view change timeout, the current view is 0
+node3-1  | 2025-05-09T12:34:45.771Z	DEBUG	bft/viewchanger.go:268	Node 3 is calling sync because it got a view change timeout
+node3-1  | 2025-05-09T12:34:45.771Z	DEBUG	bft/viewchanger.go:373	Node 3 has already started view change with last view 0
+node3-1  | Node 3: Sync called
+node3-1  | 2025-05-09T12:34:45.771Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node3-1  | Trying to get seq 0 in sync
+node3-1  | Node 3: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node4-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node2-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 2
+node3-1  | Returning from sync seq 0
+node3-1  | 2025-05-09T12:34:45.778Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node3-1  | 2025-05-09T12:34:45.778Z	DEBUG	bft/statecollector.go:83	Node 3 started collecting state responses
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:34:45.845Z	DEBUG	bft/statecollector.go:58	Node 2 handling state response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:34:45.845Z	DEBUG	bft/statecollector.go:93	Node 2 collected a response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:34:45.870Z	DEBUG	bft/statecollector.go:58	Node 3 handling state response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:34:45.870Z	DEBUG	bft/statecollector.go:93	Node 3 collected a response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:34:46.744Z	INFO	bft/statecollector.go:90	Node 2 reached the state collector timeout
+node2-1  | 2025-05-09T12:34:46.744Z	INFO	bft/controller.go:672	Fetching state failed
+node2-1  | 2025-05-09T12:34:46.744Z	DEBUG	bft/controller.go:545	view and seq is zero
+node2-1  | 2025-05-09T12:34:46.744Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:34:46.771Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:34:46.779Z	INFO	bft/statecollector.go:90	Node 3 reached the state collector timeout
+node3-1  | 2025-05-09T12:34:46.779Z	INFO	bft/controller.go:672	Fetching state failed
+node3-1  | 2025-05-09T12:34:46.779Z	DEBUG	bft/controller.go:545	view and seq is zero
+node3-1  | 2025-05-09T12:34:46.779Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node2-1  | 2025-05-09T12:34:46.824Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:34:46.824Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:34:46.824Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:34:48.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:34:48.789Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:34:48.789Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:34:48.789Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:34:51.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:34:51.822Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:34:51.822Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:34:51.822Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:34:54.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:34:54.789Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:34:54.789Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:34:54.789Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:34:57.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:34:57.825Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:34:57.826Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:34:57.826Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:35:00.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:35:00.787Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:35:00.787Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:35:00.787Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:35:02.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node2-1  | 2025-05-09T12:35:02.816Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:35:02.816Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:35:02.816Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:35:04.770Z	DEBUG	bft/viewchanger.go:264	Node 3 got a view change timeout, the current view is 0
+node3-1  | 2025-05-09T12:35:04.770Z	DEBUG	bft/viewchanger.go:268	Node 3 is calling sync because it got a view change timeout
+node3-1  | 2025-05-09T12:35:04.770Z	DEBUG	bft/viewchanger.go:373	Node 3 has already started view change with last view 0
+node3-1  | 2025-05-09T12:35:04.770Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node3-1  | Node 3: Sync called
+node3-1  | Trying to get seq 0 in sync
+node3-1  | Node 3: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node4-1  | Node 3 called sync
+node2-1  | Node 3 called sync
+node3-1  | 2025-05-09T12:35:04.771Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node3-1  | 2025-05-09T12:35:04.771Z	DEBUG	bft/statecollector.go:83	Node 3 started collecting state responses
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 2
+node3-1  | Returning from sync seq 0
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:35:04.888Z	DEBUG	bft/statecollector.go:58	Node 3 handling state response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:35:04.888Z	DEBUG	bft/statecollector.go:93	Node 3 collected a response: state_transfer_response:{sequence:1}
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | Node 2: Sync called
+node2-1  | Trying to get seq 0 in sync
+node2-1  | 2025-05-09T12:35:05.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | 2025-05-09T12:35:05.731Z	DEBUG	bft/viewchanger.go:264	Node 2 got a view change timeout, the current view is 0
+node2-1  | 2025-05-09T12:35:05.731Z	DEBUG	bft/viewchanger.go:268	Node 2 is calling sync because it got a view change timeout
+node2-1  | 2025-05-09T12:35:05.731Z	DEBUG	bft/viewchanger.go:373	Node 2 has already started view change with last view 0
+node2-1  | 2025-05-09T12:35:05.731Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node2-1  | Node 2: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 3
+node3-1  | Node 2 called sync
+node4-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node2-1  | 2025-05-09T12:35:05.738Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node2-1  | Returning from sync seq 0
+node2-1  | 2025-05-09T12:35:05.738Z	DEBUG	bft/statecollector.go:83	Node 2 started collecting state responses
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:35:05.772Z	INFO	bft/statecollector.go:90	Node 3 reached the state collector timeout
+node3-1  | 2025-05-09T12:35:05.772Z	INFO	bft/controller.go:672	Fetching state failed
+node3-1  | 2025-05-09T12:35:05.772Z	DEBUG	bft/controller.go:545	view and seq is zero
+node3-1  | 2025-05-09T12:35:05.772Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | 2025-05-09T12:35:05.776Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:35:05.776Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:35:05.776Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:35:05.845Z	DEBUG	bft/statecollector.go:58	Node 2 handling state response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:35:05.845Z	DEBUG	bft/statecollector.go:93	Node 2 collected a response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:35:06.739Z	INFO	bft/statecollector.go:90	Node 2 reached the state collector timeout
+node2-1  | 2025-05-09T12:35:06.739Z	INFO	bft/controller.go:672	Fetching state failed
+node2-1  | 2025-05-09T12:35:06.739Z	DEBUG	bft/controller.go:545	view and seq is zero
+node2-1  | 2025-05-09T12:35:06.739Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | 2025-05-09T12:35:07.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:35:07.830Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:35:07.830Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:35:07.830Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:35:11.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:35:11.776Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:35:11.776Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:35:11.776Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:35:12.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node2-1  | 2025-05-09T12:35:12.832Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:35:12.832Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:35:12.832Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:35:17.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:35:17.780Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:35:17.780Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:35:17.780Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:35:18.771Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:35:18.826Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:35:18.826Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:35:18.826Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:35:23.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:35:23.771Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:35:23.793Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:35:23.793Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:35:23.793Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:35:23.829Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:35:23.829Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:35:23.829Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:35:24.730Z	DEBUG	bft/viewchanger.go:264	Node 2 got a view change timeout, the current view is 0
+node2-1  | 2025-05-09T12:35:24.730Z	DEBUG	bft/viewchanger.go:268	Node 2 is calling sync because it got a view change timeout
+node2-1  | Node 2: Sync called
+node2-1  | Trying to get seq 0 in sync
+node2-1  | 2025-05-09T12:35:24.730Z	DEBUG	bft/viewchanger.go:373	Node 2 has already started view change with last view 0
+node2-1  | 2025-05-09T12:35:24.730Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node2-1  | Node 2: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 3
+node3-1  | Node 2 called sync
+node4-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node2-1  | Returning from sync seq 0
+node2-1  | 2025-05-09T12:35:24.738Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node2-1  | 2025-05-09T12:35:24.738Z	DEBUG	bft/statecollector.go:83	Node 2 started collecting state responses
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:35:24.836Z	DEBUG	bft/statecollector.go:58	Node 2 handling state response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:35:24.836Z	DEBUG	bft/statecollector.go:93	Node 2 collected a response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:35:25.738Z	INFO	bft/statecollector.go:90	Node 2 reached the state collector timeout
+node2-1  | 2025-05-09T12:35:25.738Z	INFO	bft/controller.go:672	Fetching state failed
+node2-1  | 2025-05-09T12:35:25.738Z	DEBUG	bft/controller.go:545	view and seq is zero
+node2-1  | 2025-05-09T12:35:25.738Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | Node 3: Sync called
+node3-1  | Trying to get seq 0 in sync
+node3-1  | 2025-05-09T12:35:25.770Z	DEBUG	bft/viewchanger.go:264	Node 3 got a view change timeout, the current view is 0
+node3-1  | 2025-05-09T12:35:25.770Z	DEBUG	bft/viewchanger.go:268	Node 3 is calling sync because it got a view change timeout
+node3-1  | 2025-05-09T12:35:25.770Z	DEBUG	bft/viewchanger.go:373	Node 3 has already started view change with last view 0
+node3-1  | 2025-05-09T12:35:25.770Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node3-1  | Node 3: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 2
+node4-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node3-1  | Returning from sync seq 0
+node3-1  | 2025-05-09T12:35:25.782Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:35:25.782Z	DEBUG	bft/statecollector.go:83	Node 3 started collecting state responses
+node3-1  | 2025-05-09T12:35:25.890Z	DEBUG	bft/statecollector.go:58	Node 3 handling state response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:35:25.890Z	DEBUG	bft/statecollector.go:93	Node 3 collected a response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:35:26.783Z	INFO	bft/statecollector.go:90	Node 3 reached the state collector timeout
+node3-1  | 2025-05-09T12:35:26.783Z	INFO	bft/controller.go:672	Fetching state failed
+node3-1  | 2025-05-09T12:35:26.783Z	DEBUG	bft/controller.go:545	view and seq is zero
+node3-1  | 2025-05-09T12:35:26.783Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node2-1  | 2025-05-09T12:35:28.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:35:28.794Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:35:28.794Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:35:28.794Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:35:29.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:35:29.818Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:35:29.818Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:35:29.818Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:35:34.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:35:34.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:35:34.778Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:35:34.779Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:35:34.779Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:35:34.833Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:35:34.833Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:35:34.833Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:35:40.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:35:40.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:35:40.779Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:35:40.779Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:35:40.779Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:35:40.830Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:35:40.830Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:35:40.830Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:35:44.731Z	DEBUG	bft/viewchanger.go:264	Node 2 got a view change timeout, the current view is 0
+node2-1  | 2025-05-09T12:35:44.731Z	DEBUG	bft/viewchanger.go:268	Node 2 is calling sync because it got a view change timeout
+node2-1  | 2025-05-09T12:35:44.731Z	DEBUG	bft/viewchanger.go:373	Node 2 has already started view change with last view 0
+node2-1  | 2025-05-09T12:35:44.731Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node2-1  | Node 2: Sync called
+node2-1  | Trying to get seq 0 in sync
+node2-1  | Node 2: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node4-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node3-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 3
+node2-1  | Returning from sync seq 0
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:35:44.732Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node2-1  | 2025-05-09T12:35:44.732Z	DEBUG	bft/statecollector.go:83	Node 2 started collecting state responses
+node2-1  | 2025-05-09T12:35:44.834Z	DEBUG	bft/statecollector.go:58	Node 2 handling state response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:35:44.834Z	DEBUG	bft/statecollector.go:93	Node 2 collected a response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:35:45.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:35:45.733Z	INFO	bft/statecollector.go:90	Node 2 reached the state collector timeout
+node2-1  | 2025-05-09T12:35:45.733Z	INFO	bft/controller.go:672	Fetching state failed
+node2-1  | 2025-05-09T12:35:45.733Z	DEBUG	bft/controller.go:545	view and seq is zero
+node2-1  | 2025-05-09T12:35:45.733Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | Node 3: Sync called
+node3-1  | Trying to get seq 0 in sync
+node3-1  | Node 3: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:35:45.770Z	DEBUG	bft/viewchanger.go:264	Node 3 got a view change timeout, the current view is 0
+node3-1  | 2025-05-09T12:35:45.770Z	DEBUG	bft/viewchanger.go:268	Node 3 is calling sync because it got a view change timeout
+node3-1  | 2025-05-09T12:35:45.770Z	DEBUG	bft/viewchanger.go:373	Node 3 has already started view change with last view 0
+node3-1  | 2025-05-09T12:35:45.770Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node4-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node2-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 2
+node3-1  | Returning from sync seq 0
+node3-1  | 2025-05-09T12:35:45.780Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node3-1  | 2025-05-09T12:35:45.780Z	DEBUG	bft/statecollector.go:83	Node 3 started collecting state responses
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:35:45.791Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:35:45.791Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:35:45.791Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:35:45.886Z	DEBUG	bft/statecollector.go:58	Node 3 handling state response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:35:45.886Z	DEBUG	bft/statecollector.go:93	Node 3 collected a response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:35:46.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:35:46.781Z	INFO	bft/statecollector.go:90	Node 3 reached the state collector timeout
+node3-1  | 2025-05-09T12:35:46.781Z	INFO	bft/controller.go:672	Fetching state failed
+node3-1  | 2025-05-09T12:35:46.781Z	DEBUG	bft/controller.go:545	view and seq is zero
+node3-1  | 2025-05-09T12:35:46.781Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node2-1  | 2025-05-09T12:35:46.822Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:35:46.822Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:35:46.822Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:35:51.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:35:51.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:35:51.794Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:35:51.794Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:35:51.794Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:35:51.818Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:35:51.818Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:35:51.818Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:35:56.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:35:56.788Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:35:56.788Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:35:56.788Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:35:57.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:35:57.830Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:35:57.830Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:35:57.830Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:36:02.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:36:02.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:36:02.775Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:36:02.775Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:36:02.775Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:36:02.813Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:36:02.813Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:36:02.813Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:36:04.730Z	DEBUG	bft/viewchanger.go:264	Node 2 got a view change timeout, the current view is 0
+node2-1  | 2025-05-09T12:36:04.730Z	DEBUG	bft/viewchanger.go:268	Node 2 is calling sync because it got a view change timeout
+node2-1  | 2025-05-09T12:36:04.730Z	DEBUG	bft/viewchanger.go:373	Node 2 has already started view change with last view 0
+node2-1  | 2025-05-09T12:36:04.730Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node2-1  | Node 2: Sync called
+node2-1  | Trying to get seq 0 in sync
+node2-1  | Node 2: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 3
+node4-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node2-1  | Returning from sync seq 0
+node2-1  | 2025-05-09T12:36:04.743Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node2-1  | 2025-05-09T12:36:04.743Z	DEBUG	bft/statecollector.go:83	Node 2 started collecting state responses
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:36:04.838Z	DEBUG	bft/statecollector.go:58	Node 2 handling state response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:36:04.838Z	DEBUG	bft/statecollector.go:93	Node 2 collected a response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:36:05.743Z	INFO	bft/statecollector.go:90	Node 2 reached the state collector timeout
+node2-1  | 2025-05-09T12:36:05.743Z	INFO	bft/controller.go:672	Fetching state failed
+node2-1  | 2025-05-09T12:36:05.743Z	DEBUG	bft/controller.go:545	view and seq is zero
+node2-1  | 2025-05-09T12:36:05.743Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | Node 3: Sync called
+node3-1  | Trying to get seq 0 in sync
+node3-1  | 2025-05-09T12:36:05.770Z	DEBUG	bft/viewchanger.go:264	Node 3 got a view change timeout, the current view is 0
+node3-1  | 2025-05-09T12:36:05.770Z	DEBUG	bft/viewchanger.go:268	Node 3 is calling sync because it got a view change timeout
+node3-1  | 2025-05-09T12:36:05.770Z	DEBUG	bft/viewchanger.go:373	Node 3 has already started view change with last view 0
+node3-1  | 2025-05-09T12:36:05.770Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node3-1  | Node 3: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node4-1  | Node 3 called sync
+node2-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 2
+node3-1  | Returning from sync seq 0
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:36:05.782Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node3-1  | 2025-05-09T12:36:05.782Z	DEBUG	bft/statecollector.go:83	Node 3 started collecting state responses
+node3-1  | 2025-05-09T12:36:05.900Z	DEBUG	bft/statecollector.go:58	Node 3 handling state response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:36:05.900Z	DEBUG	bft/statecollector.go:93	Node 3 collected a response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:36:06.782Z	INFO	bft/statecollector.go:90	Node 3 reached the state collector timeout
+node3-1  | 2025-05-09T12:36:06.782Z	INFO	bft/controller.go:672	Fetching state failed
+node3-1  | 2025-05-09T12:36:06.782Z	DEBUG	bft/controller.go:545	view and seq is zero
+node3-1  | 2025-05-09T12:36:06.782Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node2-1  | 2025-05-09T12:36:07.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:36:07.793Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:36:07.793Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:36:07.793Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:36:08.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node2-1  | 2025-05-09T12:36:08.823Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:36:08.823Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:36:08.823Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:36:12.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:36:12.775Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:36:12.775Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:36:12.775Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:36:14.771Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node2-1  | 2025-05-09T12:36:14.821Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:36:14.821Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:36:14.821Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:36:18.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:36:18.784Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:36:18.784Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:36:18.784Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:36:19.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:36:19.814Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:36:19.814Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:36:19.814Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:36:23.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:36:23.781Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:36:23.781Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:36:23.781Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | Node 2 called sync
+node2-1  | 2025-05-09T12:36:25.730Z	DEBUG	bft/viewchanger.go:264	Node 2 got a view change timeout, the current view is 0
+node2-1  | 2025-05-09T12:36:25.731Z	DEBUG	bft/viewchanger.go:268	Node 2 is calling sync because it got a view change timeout
+node2-1  | 2025-05-09T12:36:25.731Z	DEBUG	bft/viewchanger.go:373	Node 2 has already started view change with last view 0
+node2-1  | 2025-05-09T12:36:25.731Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node2-1  | Node 2: Sync called
+node2-1  | Trying to get seq 0 in sync
+node2-1  | Node 2: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 3
+node4-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node2-1  | Returning from sync seq 0
+node2-1  | 2025-05-09T12:36:25.737Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node2-1  | 2025-05-09T12:36:25.737Z	DEBUG	bft/statecollector.go:83	Node 2 started collecting state responses
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:36:25.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:36:25.770Z	DEBUG	bft/viewchanger.go:264	Node 3 got a view change timeout, the current view is 0
+node3-1  | 2025-05-09T12:36:25.770Z	DEBUG	bft/viewchanger.go:268	Node 3 is calling sync because it got a view change timeout
+node3-1  | 2025-05-09T12:36:25.770Z	DEBUG	bft/viewchanger.go:373	Node 3 has already started view change with last view 0
+node3-1  | 2025-05-09T12:36:25.770Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | Node 3: Sync called
+node3-1  | Trying to get seq 0 in sync
+node3-1  | Node 3: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 2
+node4-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node3-1  | Returning from sync seq 0
+node3-1  | 2025-05-09T12:36:25.782Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node3-1  | 2025-05-09T12:36:25.782Z	DEBUG	bft/statecollector.go:83	Node 3 started collecting state responses
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:36:25.822Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:36:25.822Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:36:25.822Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:36:25.852Z	DEBUG	bft/statecollector.go:58	Node 2 handling state response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:36:25.852Z	DEBUG	bft/statecollector.go:93	Node 2 collected a response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:36:25.883Z	DEBUG	bft/statecollector.go:58	Node 3 handling state response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:36:25.883Z	DEBUG	bft/statecollector.go:93	Node 3 collected a response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:36:26.737Z	INFO	bft/statecollector.go:90	Node 2 reached the state collector timeout
+node2-1  | 2025-05-09T12:36:26.737Z	INFO	bft/controller.go:672	Fetching state failed
+node2-1  | 2025-05-09T12:36:26.737Z	DEBUG	bft/controller.go:545	view and seq is zero
+node2-1  | 2025-05-09T12:36:26.737Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | 2025-05-09T12:36:26.782Z	INFO	bft/statecollector.go:90	Node 3 reached the state collector timeout
+node3-1  | 2025-05-09T12:36:26.782Z	INFO	bft/controller.go:672	Fetching state failed
+node3-1  | 2025-05-09T12:36:26.782Z	DEBUG	bft/controller.go:545	view and seq is zero
+node3-1  | 2025-05-09T12:36:26.782Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node2-1  | 2025-05-09T12:36:28.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:36:28.784Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:36:28.784Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:36:28.784Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:36:30.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:36:30.833Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:36:30.833Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:36:30.833Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:36:34.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:36:34.783Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:36:34.783Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:36:34.783Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:36:36.771Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:36:36.817Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:36:36.817Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:36:36.817Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:36:40.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:36:40.789Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:36:40.789Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:36:40.789Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:36:41.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:36:41.828Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:36:41.828Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:36:41.828Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:36:44.731Z	DEBUG	bft/viewchanger.go:264	Node 2 got a view change timeout, the current view is 0
+node2-1  | 2025-05-09T12:36:44.731Z	DEBUG	bft/viewchanger.go:268	Node 2 is calling sync because it got a view change timeout
+node2-1  | 2025-05-09T12:36:44.731Z	DEBUG	bft/viewchanger.go:373	Node 2 has already started view change with last view 0
+node2-1  | 2025-05-09T12:36:44.731Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node2-1  | Node 2: Sync called
+node2-1  | Trying to get seq 0 in sync
+node2-1  | Node 2: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 3
+node3-1  | Node 2 called sync
+node4-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node2-1  | Returning from sync seq 0
+node2-1  | 2025-05-09T12:36:44.732Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node2-1  | 2025-05-09T12:36:44.732Z	DEBUG	bft/statecollector.go:83	Node 2 started collecting state responses
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:36:44.846Z	DEBUG	bft/statecollector.go:58	Node 2 handling state response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:36:44.847Z	DEBUG	bft/statecollector.go:93	Node 2 collected a response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:36:45.733Z	INFO	bft/statecollector.go:90	Node 2 reached the state collector timeout
+node2-1  | 2025-05-09T12:36:45.733Z	INFO	bft/controller.go:672	Fetching state failed
+node2-1  | 2025-05-09T12:36:45.733Z	DEBUG	bft/controller.go:545	view and seq is zero
+node2-1  | 2025-05-09T12:36:45.733Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | 2025-05-09T12:36:45.770Z	DEBUG	bft/viewchanger.go:264	Node 3 got a view change timeout, the current view is 0
+node3-1  | 2025-05-09T12:36:45.770Z	DEBUG	bft/viewchanger.go:268	Node 3 is calling sync because it got a view change timeout
+node3-1  | 2025-05-09T12:36:45.770Z	DEBUG	bft/viewchanger.go:373	Node 3 has already started view change with last view 0
+node3-1  | 2025-05-09T12:36:45.770Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node3-1  | Node 3: Sync called
+node3-1  | Trying to get seq 0 in sync
+node3-1  | Node 3: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 2
+node4-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node3-1  | Returning from sync seq 0
+node3-1  | 2025-05-09T12:36:45.781Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node3-1  | 2025-05-09T12:36:45.781Z	DEBUG	bft/statecollector.go:83	Node 3 started collecting state responses
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:36:45.892Z	DEBUG	bft/statecollector.go:58	Node 3 handling state response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:36:45.892Z	DEBUG	bft/statecollector.go:93	Node 3 collected a response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:36:46.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:36:46.782Z	INFO	bft/statecollector.go:90	Node 3 reached the state collector timeout
+node3-1  | 2025-05-09T12:36:46.782Z	INFO	bft/controller.go:672	Fetching state failed
+node3-1  | 2025-05-09T12:36:46.783Z	DEBUG	bft/controller.go:545	view and seq is zero
+node3-1  | 2025-05-09T12:36:46.783Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | 2025-05-09T12:36:46.788Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:36:46.788Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:36:46.788Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:36:47.771Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:36:47.833Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:36:47.833Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:36:47.833Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:36:51.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node3-1  | 2025-05-09T12:36:51.781Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:36:51.781Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:36:51.781Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:36:53.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:36:53.822Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:36:53.822Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:36:53.822Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:36:57.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:36:57.792Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:36:57.792Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:36:57.792Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:36:58.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node2-1  | 2025-05-09T12:36:58.827Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:36:58.827Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:36:58.827Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:37:02.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:37:02.779Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:37:02.780Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:37:02.780Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:37:04.731Z	DEBUG	bft/viewchanger.go:264	Node 2 got a view change timeout, the current view is 0
+node2-1  | 2025-05-09T12:37:04.731Z	DEBUG	bft/viewchanger.go:268	Node 2 is calling sync because it got a view change timeout
+node2-1  | 2025-05-09T12:37:04.731Z	DEBUG	bft/viewchanger.go:373	Node 2 has already started view change with last view 0
+node2-1  | 2025-05-09T12:37:04.731Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node2-1  | Node 2: Sync called
+node2-1  | Trying to get seq 0 in sync
+node2-1  | Node 2: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 3
+node3-1  | Node 2 called sync
+node4-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node2-1  | Returning from sync seq 0
+node2-1  | 2025-05-09T12:37:04.738Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node2-1  | 2025-05-09T12:37:04.738Z	DEBUG	bft/statecollector.go:83	Node 2 started collecting state responses
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:37:04.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:37:04.815Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:37:04.815Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:37:04.815Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:37:04.859Z	DEBUG	bft/statecollector.go:58	Node 2 handling state response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:37:04.859Z	DEBUG	bft/statecollector.go:93	Node 2 collected a response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:37:05.739Z	INFO	bft/statecollector.go:90	Node 2 reached the state collector timeout
+node2-1  | 2025-05-09T12:37:05.739Z	INFO	bft/controller.go:672	Fetching state failed
+node2-1  | 2025-05-09T12:37:05.739Z	DEBUG	bft/controller.go:545	view and seq is zero
+node2-1  | 2025-05-09T12:37:05.739Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | 2025-05-09T12:37:05.770Z	DEBUG	bft/viewchanger.go:264	Node 3 got a view change timeout, the current view is 0
+node3-1  | Node 3: Sync called
+node3-1  | Trying to get seq 0 in sync
+node3-1  | Node 3: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:37:05.770Z	DEBUG	bft/viewchanger.go:268	Node 3 is calling sync because it got a view change timeout
+node3-1  | 2025-05-09T12:37:05.770Z	DEBUG	bft/viewchanger.go:373	Node 3 has already started view change with last view 0
+node3-1  | 2025-05-09T12:37:05.770Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node4-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node2-1  | Node 3 called sync
+node3-1  | 2025-05-09T12:37:05.775Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node3-1  | 2025-05-09T12:37:05.775Z	DEBUG	bft/statecollector.go:83	Node 3 started collecting state responses
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 2
+node3-1  | Returning from sync seq 0
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:37:05.881Z	DEBUG	bft/statecollector.go:58	Node 3 handling state response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:37:05.881Z	DEBUG	bft/statecollector.go:93	Node 3 collected a response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:37:06.776Z	INFO	bft/statecollector.go:90	Node 3 reached the state collector timeout
+node3-1  | 2025-05-09T12:37:06.776Z	INFO	bft/controller.go:672	Fetching state failed
+node3-1  | 2025-05-09T12:37:06.776Z	DEBUG	bft/controller.go:545	view and seq is zero
+node3-1  | 2025-05-09T12:37:06.776Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node2-1  | 2025-05-09T12:37:07.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:37:07.784Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:37:07.784Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:37:07.784Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:37:09.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node2-1  | 2025-05-09T12:37:09.820Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:37:09.820Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:37:09.820Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:37:13.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:37:13.794Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:37:13.794Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:37:13.794Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | 2025-05-09T12:37:15.771Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:37:15.827Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:37:15.827Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:37:15.827Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:37:18.731Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:37:18.791Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:37:18.791Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:37:18.791Z	DEBUG	bft/viewchanger.go:403	case 2
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:37:21.771Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node2-1  | 2025-05-09T12:37:21.828Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:37:21.828Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:37:21.828Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | Node 2: Sync called
+node2-1  | Trying to get seq 0 in sync
+node2-1  | 2025-05-09T12:37:24.730Z	DEBUG	bft/viewchanger.go:251	Node 2 resent a view change message with next view 1
+node2-1  | 2025-05-09T12:37:24.730Z	DEBUG	bft/viewchanger.go:264	Node 2 got a view change timeout, the current view is 0
+node2-1  | 2025-05-09T12:37:24.730Z	DEBUG	bft/viewchanger.go:268	Node 2 is calling sync because it got a view change timeout
+node2-1  | 2025-05-09T12:37:24.730Z	DEBUG	bft/viewchanger.go:373	Node 2 has already started view change with last view 0
+node2-1  | 2025-05-09T12:37:24.730Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node2-1  | Node 2: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node4-1  | Node 2 called sync
+node3-1  | Node 2 called sync
+node2-1  | Got sync proposal for seq 0, has_proposal false from node 3
+node2-1  | Returning from sync seq 0
+node2-1  | 2025-05-09T12:37:24.742Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node2-1  | 2025-05-09T12:37:24.742Z	DEBUG	bft/statecollector.go:83	Node 2 started collecting state responses
+node2-1  | Node 2: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:37:24.770Z	DEBUG	bft/viewchanger.go:264	Node 3 got a view change timeout, the current view is 0
+node3-1  | 2025-05-09T12:37:24.770Z	DEBUG	bft/viewchanger.go:268	Node 3 is calling sync because it got a view change timeout
+node3-1  | 2025-05-09T12:37:24.770Z	DEBUG	bft/viewchanger.go:373	Node 3 has already started view change with last view 0
+node3-1  | 2025-05-09T12:37:24.770Z	DEBUG	bft/controller.go:539	get msg from syncChan
+node3-1  | Node 3: Sync called
+node3-1  | Trying to get seq 0 in sync
+node3-1  | Node 3: ошибка отправки транзакции узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 2
+node4-1  | Node 3 called sync
+node3-1  | Got sync proposal for seq 0, has_proposal false from node 4
+node3-1  | Returning from sync seq 0
+node3-1  | 2025-05-09T12:37:24.784Z	INFO	bft/controller.go:637	Synchronizer returned with an empty proposal metadata
+node3-1  | 2025-05-09T12:37:24.784Z	DEBUG	bft/statecollector.go:83	Node 3 started collecting state responses
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node3-1  | 2025-05-09T12:37:24.790Z	DEBUG	bft/viewchanger.go:277	Node 3 is processing a view change message view_change:{next_view:1} from 2 with next view 1
+node3-1  | 2025-05-09T12:37:24.790Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node3-1  | 
+node3-1  | 2025-05-09T12:37:24.790Z	DEBUG	bft/viewchanger.go:403	case 2
+node2-1  | 2025-05-09T12:37:24.864Z	DEBUG	bft/statecollector.go:58	Node 2 handling state response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:37:24.864Z	DEBUG	bft/statecollector.go:93	Node 2 collected a response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:37:24.893Z	DEBUG	bft/statecollector.go:58	Node 3 handling state response: state_transfer_response:{sequence:1}
+node3-1  | 2025-05-09T12:37:24.893Z	DEBUG	bft/statecollector.go:93	Node 3 collected a response: state_transfer_response:{sequence:1}
+node2-1  | 2025-05-09T12:37:25.743Z	INFO	bft/statecollector.go:90	Node 2 reached the state collector timeout
+node2-1  | 2025-05-09T12:37:25.743Z	INFO	bft/controller.go:672	Fetching state failed
+node2-1  | 2025-05-09T12:37:25.743Z	DEBUG	bft/controller.go:545	view and seq is zero
+node2-1  | 2025-05-09T12:37:25.743Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | 2025-05-09T12:37:25.785Z	INFO	bft/statecollector.go:90	Node 3 reached the state collector timeout
+node3-1  | 2025-05-09T12:37:25.785Z	INFO	bft/controller.go:672	Fetching state failed
+node3-1  | 2025-05-09T12:37:25.785Z	DEBUG	bft/controller.go:545	view and seq is zero
+node3-1  | 2025-05-09T12:37:25.785Z	DEBUG	bft/controller.go:436	Got view change to 0 but view is already running
+node3-1  | 2025-05-09T12:37:26.770Z	DEBUG	bft/viewchanger.go:251	Node 3 resent a view change message with next view 1
+node3-1  | Node 3: ошибка отправки сообщения узлу 1: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 172.20.0.2:7050: connect: no route to host"
+node2-1  | 2025-05-09T12:37:26.834Z	DEBUG	bft/viewchanger.go:277	Node 2 is processing a view change message view_change:{next_view:1} from 3 with next view 1
+node2-1  | 2025-05-09T12:37:26.834Z	DEBUG	bft/viewchanger.go:397	view change voted 1 false
+node2-1  | 
+node2-1  | 2025-05-09T12:37:26.834Z	DEBUG	bft/viewchanger.go:403	case 2

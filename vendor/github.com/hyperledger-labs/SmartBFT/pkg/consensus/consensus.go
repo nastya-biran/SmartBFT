@@ -438,7 +438,7 @@ func (c *Consensus) createComponents() {
 		Collector:          c.collector,
 		State:              c.state,
 		InFlight:           c.inFlight,
-		MetricsView:        c.Metrics.MetricsView,
+		MetricsView:        c.Metrics.MetricsView
 	}
 	c.Controller.Deliver = &algorithm.MutuallyExclusiveDeliver{C: c.Controller}
 

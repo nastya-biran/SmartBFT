@@ -608,7 +608,7 @@ func (requests *Requests) Add(sender uint64, payload []byte) (bool, error) {
 		}
 	}
 	if index == -1 {
-		return false, fmt.Errorf("Sender %d not found in nodes list", sender)
+		return false, fmt.Errorf("Sender %d not found in nodes list %v", sender, requests.nodesList)
 	}
 	targetChan := requests.requests[index]
 	if targetChan == nil {

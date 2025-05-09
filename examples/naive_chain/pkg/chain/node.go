@@ -400,7 +400,7 @@ func NewNode(id uint64, nodeAddresses map[uint64]string, deliverChan chan<- *Blo
 			},
 		}
 		if err = node.consensus.Start(); err != nil {
-			panic("error on consensus start")
+			panic(fmt.Sprintf("error on consensus start %s", err))
 		}
 	}
 
@@ -469,6 +469,7 @@ func (n *Node) Nodes() []uint64 {
 	for id := range n.nodeAddresses {
 		nodes = append(nodes, id)
 	}
+	fmt.Println("Nodes: %v", nodes)
 	return nodes
 }
 

@@ -827,6 +827,7 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64,
 		multiplexedRequests: make(chan RequestData, uint64(c.RequestPool.Capacity()) * c.N),
 		activitySignal:  make(chan struct{}),
 		logger: c.Logger,
+		nodesList: c.NodesList,
 	}
 	for i := uint64(0); i < c.N; i++ {
 		c.requests.requests[i] = make(chan []byte, c.RequestPool.Capacity())

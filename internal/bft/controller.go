@@ -247,7 +247,7 @@ func (c *Controller) HandleRequest(sender uint64, req []byte) {
 		//c.Logger.Warnf("Got request from %d but the leader is %d, dropping request", sender, leaderID)
 		return
 	}
-	_, err := c.requests.Add(int(sender) - 1, req)
+	_, err := c.requests.Add(sender, req)
 	if err != nil {
 		c.Logger.Infof("Can not handle request from %d: %v", sender, err)
 		return
@@ -256,10 +256,10 @@ func (c *Controller) HandleRequest(sender uint64, req []byte) {
 }
 
 func (c *Controller) ProcessRequest(requestData RequestData) {
-	c.Logger.Infof("Processing request from %d id %s", requestData.SourceIndex, c.RequestInspector.RequestID(requestData.Payload).ID)
+	c.Logger.Infof("Processing request from %d id %s", requestData.Sender, c.RequestInspector.RequestID(requestData.Payload).ID)
 	iAm, leaderID := c.iAmTheLeader()
 	if !iAm {
-		c.Logger.Warnf("Got request from %d but the leader is %d, dropping request", requestData.SourceIndex, leaderID)
+		c.Logger.Warnf("Got request from %d but the leader is %d, dropping request", requestData.Sender, leaderID)
 		return
 	}
 

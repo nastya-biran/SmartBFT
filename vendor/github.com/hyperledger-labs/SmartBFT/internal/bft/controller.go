@@ -52,6 +52,7 @@ type RequestPool interface {
 	StopTimers()
 	RestartTimers()
 	Close()
+	Capacity() int
 }
 
 // LeaderMonitor monitors the heartbeat from the current leader
@@ -820,14 +821,15 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64,
 	c.viewChange = make(chan viewInfo, 1)
 	c.abortViewChan = make(chan uint64, 1)
 
+	c.Logger.Debugf("Request Pool size %d", c.RequestPool.Capacity())
 	c.requests = Requests{
 		requests: make([]chan []byte, c.N),
-		multiplexedRequests: make(chan RequestData, uint64(c.RequestPool.Size()) * c.N),
+		multiplexedRequests: make(chan RequestData, uint64(c.RequestPool.Capacity()) * c.N),
 		activitySignal:  make(chan struct{}),
 		logger: c.Logger,
 	}
 	for i := uint64(0); i < c.N; i++ {
-		c.requests.requests[i] = make(chan []byte, c.RequestPool.Size())
+		c.requests.requests[i] = make(chan []byte, c.RequestPool.Capacity())
 	}
 
 	Q, F := computeQuorum(c.N)

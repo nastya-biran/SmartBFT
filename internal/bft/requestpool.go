@@ -124,6 +124,7 @@ func NewPool(log api.Logger, inspector api.RequestInspector, th RequestTimeoutHa
 		submittedChan:  submittedChan,
 		delMap:         make(map[types.RequestInfo]struct{}),
 		delSlice:       make([]types.RequestInfo, 0, defaultSizeOfDelElements),
+		capacity: 		int(options.QueueSize),
 	}
 
 	go func() {

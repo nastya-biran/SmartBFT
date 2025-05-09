@@ -67,6 +67,7 @@ type Pool struct {
 	sizeBytes      uint64
 	delMap         map[types.RequestInfo]struct{}
 	delSlice       []types.RequestInfo
+	capacity       int
 }
 
 // requestItem captures request related information
@@ -289,6 +290,11 @@ func (rp *Pool) Size() int {
 	defer rp.lock.Unlock()
 
 	return len(rp.existMap)
+}
+
+// Capacity returns the capacity of the pool
+func (rp *Pool) Capacity() int {
+	return rp.capacity
 }
 
 // NextRequests returns the next requests to be batched.

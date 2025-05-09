@@ -822,7 +822,7 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64,
 
 	c.requests = Requests{
 		requests: make([]chan []byte, c.N),
-		multiplexedRequests: make(chan RequestData, 4),
+		multiplexedRequests: make(chan RequestData, 400),
 		activitySignal:  make(chan struct{}),
 		logger: c.Logger,
 	}

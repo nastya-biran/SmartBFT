@@ -9,7 +9,7 @@ def merge_csv_files():
     current_dir = os.path.abspath("/home/nastbir/SmartBFT/experiments")
     
     # Определяем префикс директорий, которые нужно искать
-    prefix = "results"
+    prefix = "fixed"
     
     # Находим все директории, начинающиеся с prefix
     result_dirs = [d for d in os.listdir(current_dir) if os.path.isdir(os.path.join(current_dir, d)) and d.startswith(prefix)]
@@ -39,7 +39,7 @@ def merge_csv_files():
             csv_files_map[file_name].append(csv_file)
     
     # Создаем директорию для объединенных файлов, если она не существует
-    merged_dir = os.path.join(current_dir, "merged_csv")
+    merged_dir = os.path.join(current_dir, "merged_fixed_csv")
     os.makedirs(merged_dir, exist_ok=True)
     
     # Обрабатываем каждое имя файла
@@ -68,7 +68,7 @@ def merge_csv_files():
                 merged_df = pd.concat(dfs, ignore_index=True)
                 
                 # Сохраняем объединенный файл
-                output_path = os.path.join(merged_dir, file_name)
+                output_path = os.path.join(merged_dir, file_name.replace(".csv", "_fixed.csv"))
                 merged_df.to_csv(output_path, index=False)
                 print(f"Сохранен объединенный файл: {output_path}")
             else:
@@ -82,7 +82,7 @@ def merge_csv_files():
                 dir_name = os.path.basename(os.path.dirname(file_paths[0]))
                 df['source_directory'] = dir_name
                 
-                output_path = os.path.join(merged_dir, file_name)
+                output_path = os.path.join(merged_dir, file_name.replace(".csv", "_fixed.csv"))
                 df.to_csv(output_path, index=False)
                 print(f"Скопирован файл: {output_path}")
             except Exception as e:

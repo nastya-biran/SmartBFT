@@ -259,7 +259,7 @@ func (c *Controller) ProcessRequest(requestData RequestData) {
 	c.Logger.Infof("Processing request from %d id %s", requestData.Sender, c.RequestInspector.RequestID(requestData.Payload).ID)
 	iAm, leaderID := c.iAmTheLeader()
 	if !iAm {
-		c.Logger.Warnf("Got request from %d but the leader is %d, dropping request", requestData.Sender, leaderID)
+		c.Logger.Infof("Got request from %d but the leader is %d, dropping request", requestData.Sender, leaderID)
 		return
 	}
 

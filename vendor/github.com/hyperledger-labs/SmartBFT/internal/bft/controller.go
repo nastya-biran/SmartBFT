@@ -52,7 +52,6 @@ type RequestPool interface {
 	StopTimers()
 	RestartTimers()
 	Close()
-	Capacity() int
 }
 
 // LeaderMonitor monitors the heartbeat from the current leader
@@ -142,8 +141,6 @@ type Controller struct {
 
 	StartedWG *sync.WaitGroup
 	syncLock  sync.Mutex
-
-	requests Requests
 }
 
 func (c *Controller) blacklist() []uint64 {
@@ -247,29 +244,13 @@ func (c *Controller) HandleRequest(sender uint64, req []byte) {
 		//c.Logger.Warnf("Got request from %d but the leader is %d, dropping request", sender, leaderID)
 		return
 	}
-	_, err := c.requests.Add(sender, req)
+	reqInfo, err := c.Verifier.VerifyRequest(req)
 	if err != nil {
-		c.Logger.Infof("Can not handle request from %d: %v", sender, err)
-		return
-	}
-	c.Logger.Debugf("Handled Request from %d id %s", sender, c.RequestInspector.RequestID(req).ID)
-}
-
-func (c *Controller) ProcessRequest(requestData RequestData) {
-	c.Logger.Infof("Processing request from %d id %s", requestData.Sender, c.RequestInspector.RequestID(requestData.Payload).ID)
-	iAm, leaderID := c.iAmTheLeader()
-	if !iAm {
-		c.Logger.Warnf("Got request from %d but the leader is %d, dropping request", requestData.Sender, leaderID)
-		return
-	}
-
-	reqInfo, err := c.Verifier.VerifyRequest(requestData.Payload)
-	if err != nil {
-		//c.Logger.Warnf("Got bad request from %d: %v", requestData.SourceIndex, err)
+		//c.Logger.Warnf("Got bad request from %d: %v", sender, err)
 		return
 	}
 	//c.Logger.Debugf("Got request from %d", sender)
-	c.addRequest(reqInfo, requestData.Payload)
+	c.addRequest(reqInfo, req)
 }
 
 // SubmitRequest Submits a request to go through consensus.
@@ -521,8 +502,6 @@ func (c *Controller) run() {
 		c.CurrView.Abort()
 	}()
 
-	go c.requests.pollRequests()
-
 	for {
 		select {
 		case d := <-c.decisionChan:
@@ -550,8 +529,6 @@ func (c *Controller) run() {
 				}
 				c.changeView(c.GetCurrentViewNumber(), vs.(ViewSequence).ProposalSeq, c.getCurrentDecisionsInView())
 			}
-		case requestData := <-c.requests.multiplexedRequests:
-			c.ProcessRequest(requestData)
 		}
 	}
 }
@@ -820,17 +797,6 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64,
 	c.deliverChan = make(chan struct{})
 	c.viewChange = make(chan viewInfo, 1)
 	c.abortViewChan = make(chan uint64, 1)
-
-	c.Logger.Debugf("Request Pool size %d", c.RequestPool.Capacity())
-	c.requests = Requests{
-		requests: make([]chan []byte, c.N),
-		multiplexedRequests: make(chan RequestData, uint64(c.RequestPool.Capacity()) * c.N),
-		activitySignal:  make(chan struct{}),
-		logger: c.Logger,
-	}
-	for i := uint64(0); i < c.N; i++ {
-		c.requests.requests[i] = make(chan []byte, c.RequestPool.Capacity())
-	}
 
 	Q, F := computeQuorum(c.N)
 	c.Logger.Debugf("The number of nodes (N) is %d, F is %d, and the quorum size is %d", c.N, F, Q)

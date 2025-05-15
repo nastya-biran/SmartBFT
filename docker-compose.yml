@@ -14,7 +14,7 @@ services:
       - IS_BYZANTINE=false
     volumes:
       - ./data/node1:/app/data
-      - ./metrics:/app/metrics
+      - ./experiments/end_time:/app/metrics
     networks:
       smartbft-net:
         ipv4_address: 172.20.0.2
@@ -32,7 +32,7 @@ services:
       - IS_BYZANTINE=false
     volumes:
       - ./data/node2:/app/data
-      - ./metrics:/app/metrics
+      - ./experiments/end_time:/app/metrics
     networks:
       smartbft-net:
         ipv4_address: 172.20.0.3
@@ -50,7 +50,7 @@ services:
       - IS_BYZANTINE=false
     volumes:
       - ./data/node3:/app/data
-      - ./metrics:/app/metrics
+      - ./experiments/end_time:/app/metrics
     networks:
       smartbft-net:
         ipv4_address: 172.20.0.4
@@ -70,7 +70,7 @@ services:
       - SPAM_MESSAGE_COUNT=100
     volumes:
       - ./data/node4:/app/data
-      - ./metrics:/app/metrics
+      - ./experiments/end_time:/app/metrics
     networks:
       smartbft-net:
         ipv4_address: 172.20.0.5

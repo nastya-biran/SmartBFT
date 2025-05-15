@@ -17,10 +17,10 @@
 # Build artifacts
 .build
 
-*metrics
 *logs*
 *myenv
 *results
 *.csv
 *start_time
+*end_time
 

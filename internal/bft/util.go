@@ -631,7 +631,10 @@ func (processor *PartitionedProcessor) Add(sender uint64, payload []byte) (bool,
 }
 
 func (processor *PartitionedProcessor) processRequest(channelIndex int) {
-	defer processor.wg.Done()
+	defer func () {
+		processor.wg.Done()
+		processor.logger.Debugf("Finished Request %d", channelIndex)
+	} ()
 
 	processor.logger.Debugf("Process Request %d", channelIndex)
 
@@ -693,6 +696,7 @@ func (processor *PartitionedProcessor) Start() {
 			}
 
 			processor.wg.Wait()
+			processor.logger.Debugf("Finished processing iteration")
 		}
 	}
 }

@@ -46,11 +46,8 @@ type Node struct {
 	deliverChan chan<- *Block
 	consensus   *smartbft.Consensus
 
-	// gRPC клиенты для других нод
-	clients map[uint64]pb.ConsensusServiceClient
-	// gRPC сервер
-	grpcServer *grpc.Server
-	// Адреса нод
+	clients       map[uint64]pb.ConsensusServiceClient
+	grpcServer    *grpc.Server
 	nodeAddresses map[uint64]string
 
 	delivered_proposals  map[int64]bft.Proposal
@@ -59,7 +56,6 @@ type Node struct {
 	isByzantine bool
 }
 
-// ConsensusServiceServer реализация gRPC сервера
 type consensusServer struct {
 	pb.UnimplementedConsensusServiceServer
 	node *Node
@@ -94,15 +90,10 @@ const VerifyProposalLatency = 10
 
 func Delay(count int) int {
 	start := time.Now()
-	//fmt.Printf("Start Delay %d %s\n", count, start.Format("2006-01-02 15:04:05.000"))
-	// Активный цикл ожидания
 	i := 0
 	for time.Since(start).Milliseconds() < int64(count) {
 		i++
 	}
-	//fmt.Printf("Finish Delay %d %d %s\n", i, count, time.Now().Format("2006-01-02 15:04:05.000"))
-
-	//fmt.Println("Sleeping")
 	return i
 }
 
@@ -160,7 +151,6 @@ func (*Node) RequestsFromProposal(proposal bft.Proposal) []bft.RequestInfo {
 
 func (*Node) VerifyRequest(val []byte) (bft.RequestInfo, error) {
 	txn := TransactionFromBytes(val)
-	//fmt.Printf("Verifying request from client %s with ID %s\n", txn.ClientID, txn.ID)
 	Delay(VerifyProposalLatency)
 	if txn.ClientID == "" || txn.ID == "" {
 		return bft.RequestInfo{}, fmt.Errorf("invalid transaction: missing ClientID or ID")
@@ -180,11 +170,10 @@ func (*Node) VerifyConsenterSig(sig bft.Signature, proposal bft.Proposal) ([]byt
 	if sig.ID > 0 {
 		header := BlockHeaderFromBytes(proposal.Header)
 		fmt.Printf("Signature verified for proposal with sequence %d\n", header.Sequence)
-		// Create a PreparesFrom message and encode it as protobuf
 		prpf := &smartbftprotos.PreparesFrom{
-			Ids: []uint64{sig.ID}, // Wrap the ID in a repeated field
+			Ids: []uint64{sig.ID},
 		}
-		aux, err := proto.Marshal(prpf) // Serialize to protobuf binary
+		aux, err := proto.Marshal(prpf)
 		if err != nil {
 			return nil, fmt.Errorf("failed to marshal PreparesFrom: %w", err)
 		}
@@ -253,7 +242,6 @@ func (n *Node) AssembleProposal(metadata []byte, requests [][]byte) bft.Proposal
 }
 
 func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {
-	//fmt.Printf("Node %d пытается отправить сообщение узлу %d типа %T\n", n.id, targetID, message.GetContent())
 
 	go func() {
 		client, ok := n.clients[targetID]
@@ -273,18 +261,12 @@ func (n *Node) SendConsensus(targetID uint64, message *smartbftprotos.Message) {
 		_, err := client.SendConsensusMessage(ctx, req)
 		if err != nil {
 			fmt.Printf("Node %d: ошибка отправки сообщения узлу %d: %v\n", n.id, targetID, err)
-			//os.Exit(123)
 			return
 		}
 	}()
-	//fmt.Printf("Node %d успешно отправил сообщение узлу %d типа %T\n", n.id, targetID, message.GetContent())
-
-	//fmt.Printf("Node %d успешно отправил сообщение узлу %d\n", n.id, targetID)
 }
 
 func (n *Node) SendTransaction(targetID uint64, request []byte) {
-	//fmt.Printf("Node %d пытается отправить транзакцию узлу %d\n",  n.id, targetID)
-
 	client, ok := n.clients[targetID]
 	if !ok {
 		fmt.Printf("Node %d: клиент для узла %d не найден\n", n.id, targetID)
@@ -305,11 +287,9 @@ func (n *Node) SendTransaction(targetID uint64, request []byte) {
 		_, err := client.SendTransaction(ctx, req)
 		if err != nil {
 			fmt.Printf("Node %d: ошибка отправки транзакции узлу %d: %v\n", n.id, targetID, err)
-			//os.Exit(123)
 			return
 		}
 	}()
-	//fmt.Printf("Node %d успешно отправил транзакцию узлу %d %s\n", n.id, targetID, n.RequestID(request))
 }
 
 func (n *Node) MembershipChange() bool {
@@ -405,24 +385,21 @@ func NewNode(id uint64, nodeAddresses map[uint64]string, deliverChan chan<- *Blo
 	return node
 }
 
-// InitializeClients инициализирует gRPC клиенты для связи с другими нодами
 func (n *Node) InitializeClients() error {
-	// Создаем клиенты для других нод
 	for targetID, addr := range n.nodeAddresses {
 		if targetID == n.id {
 			continue
 		}
 
-		// Пытаемся подключиться с повторами
 		var conn *grpc.ClientConn
 		var err error
-		for i := 0; i < 5; i++ { // 5 попыток
+		for i := 0; i < 5; i++ {
 			conn, err = grpc.Dial(addr, grpc.WithInsecure(), grpc.WithBlock(),
 				grpc.WithTimeout(5*time.Second))
 			if err == nil {
 				break
 			}
-			time.Sleep(2 * time.Second) // Ждем 2 секунды между попытками
+			time.Sleep(2 * time.Second)
 		}
 		if err != nil {
 			return fmt.Errorf("failed to connect to node %d after retries: %v", targetID, err)
@@ -446,12 +423,10 @@ func (n *Node) Stop() {
 	n.clock.Stop()
 	n.secondClock.Stop()
 
-	// Останавливаем gRPC сервер
 	if n.grpcServer != nil {
 		n.grpcServer.GracefulStop()
 	}
 
-	// Закрываем все клиентские соединения
 	for _, client := range n.clients {
 		if conn, ok := client.(interface{ Close() error }); ok {
 			conn.Close()
@@ -477,41 +452,13 @@ func computeDigest(rawBytes []byte) string {
 }
 
 func (n *Node) HandleMessage(fromNode uint64, msg *smartbftprotos.Message) error {
-	/*fmt.Printf("Node %d обрабатывает сообщение от %d типа %T\n",
-	n.id, fromNode, msg.GetContent())*/
-
-	// Передаем сообщение в консенсус
 	n.consensus.HandleMessage(fromNode, msg)
 	return nil
 }
 
 func (n *Node) HandleRequest(fromNode uint64, req []byte) error {
-	/*fmt.Printf("Node %d обрабатывает сообщение от %d типа %T\n",
-	n.id, fromNode, msg.GetContent())*/
-
-	// Передаем сообщение в консенсус
 	n.consensus.HandleRequest(fromNode, req)
 	return nil
-}
-
-func (n *Node) StartViewChange(view uint64) {
-	fmt.Printf("Node %d initiating view change to view %d\n", n.id, view)
-
-	viewChange := &smartbftprotos.Message{
-		Content: &smartbftprotos.Message_ViewChange{
-			ViewChange: &smartbftprotos.ViewChange{
-				NextView: view,
-			},
-		},
-	}
-
-	// Отправляем ViewChange всем узлам
-	for nodeID := range n.nodeAddresses {
-		if nodeID == n.id {
-			continue
-		}
-		n.SendConsensus(nodeID, viewChange)
-	}
 }
 
 func (n *Node) Sync() bft.SyncResponse {
@@ -549,7 +496,6 @@ func (n *Node) Sync() bft.SyncResponse {
 				proposal, err := client.Sync(ctx, syncMsg)
 				if err != nil {
 					fmt.Printf("Node %d: ошибка отправки транзакции узлу %d: %v\n", n.id, nodeID, err)
-					//os.Exit(123)
 					return
 				}
 				fmt.Printf("Got sync proposal for seq %d, has_proposal %t from node %d\n", proposal.Sequence, proposal.HasProposal, nodeID)
@@ -567,7 +513,6 @@ func (n *Node) Sync() bft.SyncResponse {
 				}
 				proposalForSeq = proposal_tmp
 				lock.Unlock()
-				//fmt.Printf("Node %d успешно отправил транзакцию узлу %d %s\n", n.id, targetID, n.RequestID(request))
 			}()
 		}
 		wg.Wait()
@@ -593,66 +538,24 @@ func (n *Node) Sync() bft.SyncResponse {
 
 }
 
-// Исправляем метод AuxiliaryData для интерфейса api.Verifier
 func (*Node) AuxiliaryData(bytes []byte) []byte {
-	return nil // Возвращаем nil, так как у нас нет дополнительных данных
+	return nil
 }
 
 func (n *Node) BroadcastSpamMessage(count uint64, round uint64) {
-	//fmt.Printf("Spam %d %d \n", n.consensus.Controller.GetCurrentViewNumber(), n.consensus.Controller.GetCurrentSequence() + 1)
-
-	/*for i := uint64(1); i <= count; i++ {
-		for nodeID := range n.nodeAddresses {
-			if nodeID == n.id {
-				continue
-			}
-			msg :=  &pb.TransactionRequest{
-				FromNode: n.id,
-				ToNode: nodeID,
-				Tx: &pb.Transaction{
-					ClientId: "faulty",
-					Id: fmt.Sprintf("%d-%d", i, round),
-				},
-			}
-			client, ok := n.clients[nodeID]
-			if !ok {
-				fmt.Printf("Node %d: клиент для узла %d не найден\n", n.id, nodeID)
-				return
-			}
-
-			go func() {
-				ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-				defer cancel()
-
-
-				_, err := client.SendTransaction(ctx, msg)
-				if err != nil {
-					//fmt.Printf("Node %d: ошибка отправки транзакции узлу %d: %v\n", n.id, nodeID, err)
-					//os.Exit(123)
-					return
-				}
-			}()
-		}
-	}*/
 
 	for i := uint64(1); i <= count; i++ {
 		for nodeID := range n.nodeAddresses {
 			if nodeID == n.id {
 				continue
 			}
-			msg := &pb.ConsensusMessageRequest{
-				Message: &smartbftprotos.Message{
-					Content: &smartbftprotos.Message_Prepare{
-						Prepare: &smartbftprotos.Prepare{
-							View:   1,
-							Seq:    1,
-							Assist: false,
-							Digest: "",
-						},
-					},
-				},
+			msg := &pb.TransactionRequest{
 				FromNode: n.id,
 				ToNode:   nodeID,
+				Tx: &pb.Transaction{
+					ClientId: "faulty",
+					Id:       fmt.Sprintf("%d-%d", i, round),
+				},
 			}
 			client, ok := n.clients[nodeID]
 			if !ok {
@@ -664,10 +567,8 @@ func (n *Node) BroadcastSpamMessage(count uint64, round uint64) {
 				ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 				defer cancel()
 
-				_, err := client.SendConsensusMessage(ctx, msg)
+				_, err := client.SendTransaction(ctx, msg)
 				if err != nil {
-					//fmt.Printf("Node %d: ошибка отправки транзакции узлу %d: %v\n", n.id, nodeID, err)
-					//os.Exit(123)
 					return
 				}
 			}()

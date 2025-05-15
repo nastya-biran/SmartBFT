@@ -52,18 +52,18 @@ func (c *Chain) InitializeClients() error {
 		return fmt.Errorf("node is not initialized")
 	}
 	return c.node.InitializeClients()
-} 
+}
 
 func (c *Chain) BroadcastSpamMessage(count uint64, round uint64) {
 	c.node.BroadcastSpamMessage(count, round)
 }
 
 func (c *Chain) GetCurrentSequence() uint64 {
-	return c.node.consensus.Controller.GetCurrentSequence();
+	return c.node.consensus.Controller.GetCurrentSequence()
 }
 
 func (c *Chain) GetCurrentViewNumber() uint64 {
-	return c.node.consensus.Controller.GetCurrentViewNumber();
+	return c.node.consensus.Controller.GetCurrentViewNumber()
 }
 
 func (c *Chain) GetDeliveredProposal(seq int64) (*smartbftprotos.Proposal, error) {
@@ -73,13 +73,12 @@ func (c *Chain) GetDeliveredProposal(seq int64) (*smartbftprotos.Proposal, error
 	}
 
 	return &smartbftprotos.Proposal{
-		Header: proposal.Header,
+		Header:   proposal.Header,
 		Metadata: proposal.Metadata,
-		Payload: proposal.Payload,
+		Payload:  proposal.Payload,
 	}, nil
 }
 
 func (c *Chain) IsByzantine() bool {
-	return c.node.isByzantine;
+	return c.node.isByzantine
 }
-

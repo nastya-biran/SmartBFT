@@ -588,29 +588,32 @@ type IntDoubleBytes struct {
 }
 
 type RequestData struct {
-	Payload    []byte 
-	Sender uint64
+	Payload []byte
+	Sender  uint64
 }
 
-type Requests struct {
+type PartitionedProcessor struct {
+	channels  []chan []byte
+	nodesList []uint64
+	handler   func(RequestData)
+
 	activitySignal chan struct{}
-	requests            []chan []byte
-	multiplexedRequests chan RequestData
-	nodesList          []uint64
-	logger             api.Logger
+	wg             sync.WaitGroup
+
+	logger api.Logger
 }
 
-func (requests *Requests) Add(sender uint64, payload []byte) (bool, error) {
+func (processor *PartitionedProcessor) Add(sender uint64, payload []byte) (bool, error) {
 	index := -1
-	for i, node := range requests.nodesList {
+	for i, node := range processor.nodesList {
 		if node == sender {
 			index = i
 		}
 	}
 	if index == -1 {
-		return false, fmt.Errorf("Sender %d not found in nodes list %v", sender, requests.nodesList)
+		return false, fmt.Errorf("Sender %d not found in nodes list %v", sender, processor.nodesList)
 	}
-	targetChan := requests.requests[index]
+	targetChan := processor.channels[index]
 	if targetChan == nil {
 		return false, fmt.Errorf("Request channel %d is nil (possibly closed and nilled)", index)
 	}
@@ -618,7 +621,7 @@ func (requests *Requests) Add(sender uint64, payload []byte) (bool, error) {
 	select {
 	case targetChan <- payload:
 		select {
-		case requests.activitySignal<- struct {}{}:
+		case processor.activitySignal <- struct{}{}:
 		default:
 		}
 		return true, nil
@@ -627,78 +630,59 @@ func (requests *Requests) Add(sender uint64, payload []byte) (bool, error) {
 	}
 }
 
-func (requests *Requests) tryReadFromChannel(channelIndex int, isChannelClosed []bool) (processed bool) {
-	if channelIndex < 0 || channelIndex >= len(requests.requests) || isChannelClosed[channelIndex] {
-		return false
-	}
+func (processor *PartitionedProcessor) processRequest(channelIndex int) {
+	defer processor.wg.Done()
 
-	reqChan := requests.requests[channelIndex]
+	reqChan := processor.channels[channelIndex]
 	if reqChan == nil {
-		if !isChannelClosed[channelIndex] {
-			requests.logger.Debugf("Request channel (original index %d) found nil during tryRead.", channelIndex)
-			isChannelClosed[channelIndex] = true
-		}
-		return true
+		return
 	}
-
 
 	select {
 	case payload, ok := <-reqChan:
 		if !ok {
-			if !isChannelClosed[channelIndex] {
-				requests.logger.Debugf("Request channel (original index %d) closed during tryRead.", channelIndex)
-				isChannelClosed[channelIndex] = true
-			}
-			return false
-		}
-
-		select {
-		case requests.multiplexedRequests <- RequestData{Payload: payload, Sender: requests.nodesList[channelIndex]}:
-		default:
-			requests.logger.Warnf("MultiplexedRequests is full during tryRead for req[%d]. Message dropped.", channelIndex)
-		}
-		return true
-	default:
-		return false
-	}
-}
-
-func (requests *Requests) pollRequests() {
-	defer func() {
-		requests.logger.Debugf("Indexed-signal request polling goroutine stopped. Closing multiplexedRequests.")
-		close(requests.multiplexedRequests)
-	}()
-
-	if len(requests.requests) == 0 {
-		requests.logger.Debugf("No request channels to poll.")
-		return
-	}
-
-	isChannelClosed := make([]bool, len(requests.requests))
-	activeChannelsCount := len(requests.requests)
-
-	for {
-		if activeChannelsCount == 0 {
-			requests.logger.Debugf("All request channels are closed. Indexed-signal polling stopped.")
 			return
 		}
 
+		processor.handler(RequestData{
+			Payload: payload,
+			Sender:  processor.nodesList[channelIndex],
+		},
+		)
+	default:
+	}
+}
+
+func (processor *PartitionedProcessor) Start() {
+	defer func() {
+		for i := 0; i < len(processor.channels); i++ {
+			close(processor.channels[i])
+		}
+	}()
+
+	if len(processor.channels) == 0 {
+		processor.logger.Debugf("No request channels to poll.")
+		return
+	}
+
+	for {
+
 		select {
-		case _, ok := <-requests.activitySignal:
+		case _, ok := <-processor.activitySignal:
 			if !ok {
-				requests.logger.Errorf("activitySignalWithIndex channel was closed unexpectedly. Exiting poller.")
+				processor.logger.Errorf("activitySignalWithIndex channel was closed unexpectedly. Exiting poller.")
 				return
 			}
-    
-		for i := 0; i < len(requests.requests); i++ {
-			if requests.tryReadFromChannel(i, isChannelClosed) {
-				if isChannelClosed[i] && requests.requests[i] != nil {
-					activeChannelsCount--
-					requests.requests[i] = nil
-				}
+
+			processor.wg.Add(len(processor.channels))
+
+			for i := 0; i < len(processor.channels); i++ {
+				go func () {
+					processor.processRequest(i)
+				} ()
 			}
+
+			processor.wg.Wait()
 		}
 	}
 }
-}
-

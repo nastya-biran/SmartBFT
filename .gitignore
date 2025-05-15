@@ -21,4 +21,6 @@
 *logs*
 *myenv
 *results
+*.csv
+*.txt
 

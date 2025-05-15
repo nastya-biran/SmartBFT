@@ -143,7 +143,7 @@ type Controller struct {
 	StartedWG *sync.WaitGroup
 	syncLock  sync.Mutex
 
-	requests Requests
+	client_requests PartitionedProcessor
 }
 
 func (c *Controller) blacklist() []uint64 {
@@ -247,7 +247,7 @@ func (c *Controller) HandleRequest(sender uint64, req []byte) {
 		//c.Logger.Warnf("Got request from %d but the leader is %d, dropping request", sender, leaderID)
 		return
 	}
-	_, err := c.requests.Add(sender, req)
+	_, err := c.client_requests.Add(sender, req)
 	if err != nil {
 		c.Logger.Infof("Can not handle request from %d: %v", sender, err)
 		return
@@ -521,7 +521,7 @@ func (c *Controller) run() {
 		c.CurrView.Abort()
 	}()
 
-	go c.requests.pollRequests()
+	go c.client_requests.Start()
 
 	for {
 		select {
@@ -550,8 +550,6 @@ func (c *Controller) run() {
 				}
 				c.changeView(c.GetCurrentViewNumber(), vs.(ViewSequence).ProposalSeq, c.getCurrentDecisionsInView())
 			}
-		case requestData := <-c.requests.multiplexedRequests:
-			c.ProcessRequest(requestData)
 		}
 	}
 }
@@ -822,15 +820,15 @@ func (c *Controller) Start(startViewNumber uint64, startProposalSequence uint64,
 	c.abortViewChan = make(chan uint64, 1)
 
 	c.Logger.Debugf("Request Pool size %d", c.RequestPool.Capacity())
-	c.requests = Requests{
-		requests: make([]chan []byte, c.N),
-		multiplexedRequests: make(chan RequestData, uint64(c.RequestPool.Capacity()) * c.N),
-		activitySignal:  make(chan struct{}),
-		logger: c.Logger,
-		nodesList: c.NodesList,
+	c.client_requests = PartitionedProcessor{
+		channels:       make([]chan []byte, c.N),
+		nodesList:      c.NodesList,
+		handler:        c.ProcessRequest,
+		activitySignal: make(chan struct{}),
+		logger:         c.Logger,
 	}
 	for i := uint64(0); i < c.N; i++ {
-		c.requests.requests[i] = make(chan []byte, c.RequestPool.Capacity())
+		c.client_requests.channels[i] = make(chan []byte, c.RequestPool.Capacity())
 	}
 
 	Q, F := computeQuorum(c.N)

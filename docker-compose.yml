@@ -66,8 +66,8 @@ services:
       - NODE_ADDRESS=0.0.0.0:7050
       - NODE_ADDRESSES=172.20.0.2:7050,172.20.0.3:7050,172.20.0.4:7050,172.20.0.5:7050
       - IS_BYZANTINE=True
-      - SPAM_MESSAGE_PERIOD=5
-      - SPAM_MESSAGE_COUNT=10
+      - SPAM_MESSAGE_PERIOD=50
+      - SPAM_MESSAGE_COUNT=100
     volumes:
       - ./data/node4:/app/data
       - ./metrics:/app/metrics

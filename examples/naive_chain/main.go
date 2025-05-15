@@ -3,12 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
+	"math/rand"
 	"net"
 	"os"
 	"strconv"
 	"strings"
 	"time"
-	"math/rand"
 
 	smart "github.com/hyperledger-labs/SmartBFT/pkg/api"
 	"github.com/hyperledger-labs/SmartBFT/pkg/metrics/disabled"
@@ -35,7 +35,7 @@ const CryptoLatency = 3
 const VerifyProposalLatency = 10
 
 func (s *consensusServer) SendConsensusMessage(ctx context.Context, req *pb.ConsensusMessageRequest) (*pb.ConsensusMessageResponse, error) {
-	time.Sleep(time.Duration(CryptoLatency + NetworkLatency +  rand.Intn(21) - 10) * time.Millisecond)
+	time.Sleep(time.Duration(CryptoLatency+NetworkLatency+rand.Intn(21)-10) * time.Millisecond)
 
 	if !s.chain.IsByzantine() {
 		err := s.chain.HandleMessage(req.FromNode, req.Message)
@@ -46,20 +46,18 @@ func (s *consensusServer) SendConsensusMessage(ctx context.Context, req *pb.Cons
 			}, nil
 		}
 	}
-	
-	
+
 	return &pb.ConsensusMessageResponse{
 		Success: true,
 	}, nil
 }
 
 func (s *consensusServer) SendTransaction(ctx context.Context, req *pb.TransactionRequest) (*pb.TransactionResponse, error) {
-	// Пока просто пересылаем транзакцию в цепочку
-	time.Sleep(time.Duration(CryptoLatency + NetworkLatency + rand.Intn(21) - 10) * time.Millisecond)
+	time.Sleep(time.Duration(CryptoLatency+NetworkLatency+rand.Intn(21)-10) * time.Millisecond)
 
-	tx := chain.Transaction {
+	tx := chain.Transaction{
 		ClientID: req.Tx.ClientId,
-		ID: req.Tx.Id,
+		ID:       req.Tx.Id,
 	}
 
 	if !s.chain.IsByzantine() {
@@ -78,11 +76,10 @@ func (s *consensusServer) SendTransaction(ctx context.Context, req *pb.Transacti
 }
 
 func (s *consensusServer) Sync(ctx context.Context, req *pb.SyncRequest) (*pb.SyncResponse, error) {
-	// Пока просто пересылаем транзакцию в цепочку
-	time.Sleep(time.Duration(CryptoLatency +  + rand.Intn(21) - 10) * time.Millisecond)
+	time.Sleep(time.Duration(CryptoLatency + +rand.Intn(21) - 10) * time.Millisecond)
 	fmt.Printf("Node %d called sync\n", req.FromNode)
 
-	if s.chain.IsByzantine() || req.Sequence > s.chain.GetCurrentSequence()  {
+	if s.chain.IsByzantine() || req.Sequence > s.chain.GetCurrentSequence() {
 		return &pb.SyncResponse{
 			Sequence:    req.Sequence,
 			HasProposal: false,
@@ -98,16 +95,15 @@ func (s *consensusServer) Sync(ctx context.Context, req *pb.SyncRequest) (*pb.Sy
 	}
 
 	return &pb.SyncResponse{
-		Sequence: req.Sequence,
+		Sequence:    req.Sequence,
 		HasProposal: true,
-		Proposal: proposal,
-		Signatures: nil,
+		Proposal:    proposal,
+		Signatures:  nil,
 	}, nil
-	
+
 }
 
 func (s *transactionServer) SubmitTransaction(ctx context.Context, req *pb.ClientTransactionRequest) (*pb.TransactionResponse, error) {
-	// Пока просто пересылаем транзакцию в цепочку
 	if !s.chain.IsByzantine() {
 		err := s.chain.Order(chain.Transaction{
 			ClientID: req.Tx.ClientId,
@@ -115,16 +111,12 @@ func (s *transactionServer) SubmitTransaction(ctx context.Context, req *pb.Clien
 		})
 
 		if err != nil {
-			//fmt.Printf("Error submitting: %s", err)
 			return &pb.TransactionResponse{
 				Success: false,
 				Error:   err.Error(),
 			}, nil
 		}
 	}
-
-	/*block := <-s.chain.Listen()
-	fmt.Printf("Node received block: %+v", block.Transactions)*/
 
 	return &pb.TransactionResponse{
 		Success: true,
@@ -133,7 +125,6 @@ func (s *transactionServer) SubmitTransaction(ctx context.Context, req *pb.Clien
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	// Получаем ID ноды и общее количество нод из переменных окружения
 	nodeID, err := strconv.ParseUint(os.Getenv("NODE_ID"), 10, 64)
 	if err != nil {
 		panic(fmt.Sprintf("Invalid NODE_ID: %v", err))
@@ -144,13 +135,11 @@ func main() {
 		panic(fmt.Sprintf("Invalid TOTAL_NODES: %v", err))
 	}
 
-	// Получаем адреса нод
 	nodeAddressesStr := os.Getenv("NODE_ADDRESSES")
 	if nodeAddressesStr == "" {
 		panic("NODE_ADDRESSES environment variable is not set")
 	}
 
-	// Парсим адреса нод
 	nodeAddresses := make(map[uint64]string)
 	addresses := strings.Split(nodeAddressesStr, ",")
 	if len(addresses) != totalNodes {
@@ -161,37 +150,31 @@ func main() {
 		nodeAddresses[uint64(i+1)] = addr
 	}
 
-	// Получаем адрес ноды
 	nodeAddress := os.Getenv("NODE_ADDRESS")
 	if nodeAddress == "" {
 		panic("NODE_ADDRESS environment variable is not set")
 	}
 
-	// Настраиваем логгер
 	logConfig := zap.NewDevelopmentConfig()
-	logConfig.Level = zap.NewAtomicLevelAt(zap.InfoLevel)
+	logConfig.Level = zap.NewAtomicLevelAt(zap.DebugLevel)
 	logger, _ := logConfig.Build()
 	sugar := logger.Sugar()
 
-	// Создаем метрики
 	met := &disabled.Provider{}
 	walMet := wal.NewMetrics(met, "node")
 	bftMet := smart.NewMetrics(met, "node")
 
-	// Создаем директорию для WAL
 	dataDir := "/app/data"
 	if err := os.MkdirAll(dataDir, 0755); err != nil {
 		panic(fmt.Sprintf("Failed to create data directory: %v", err))
 	}
 
-	// Настраиваем опции сети
 	opts := chain.NetworkOptions{
 		NumNodes:     totalNodes,
 		BatchSize:    1,
 		BatchTimeout: 10 * time.Second,
 	}
 
-	// Создаем и запускаем цепочку
 	is_byzantine, err := strconv.ParseBool(os.Getenv("IS_BYZANTINE"))
 	if err != nil {
 		panic(fmt.Sprintf("Invalid IS_BYZANTINE: %v", err))
@@ -207,12 +190,10 @@ func main() {
 		is_byzantine,
 	)
 
-	// Создаем gRPC сервер для транзакций
 	txServer := grpc.NewServer()
 	pb.RegisterTransactionServiceServer(txServer, &transactionServer{chain: c})
 	reflection.Register(txServer)
 
-	// Запускаем gRPC сервер для транзакций на порту 7051
 	txLis, err := net.Listen("tcp", ":7051")
 	if err != nil {
 		sugar.Fatalf("Failed to listen on transaction port: %v", err)
@@ -224,12 +205,10 @@ func main() {
 		}
 	}()
 
-	// Создаем gRPC сервер для консенсуса
 	consensusSrv := grpc.NewServer()
 	pb.RegisterConsensusServiceServer(consensusSrv, &consensusServer{chain: c})
 	reflection.Register(consensusSrv)
 
-	// Запускаем gRPC сервер для консенсуса на порту 7050
 	consensusLis, err := net.Listen("tcp", ":7050")
 	if err != nil {
 		sugar.Fatalf("Failed to listen on consensus port: %v", err)
@@ -243,15 +222,12 @@ func main() {
 
 	sugar.Infof("Node %d started successfully", nodeID)
 
-	// Инициализируем клиенты для связи с другими нодами
-	// Даем время на запуск всех серверов
 	time.Sleep(5 * time.Second)
 	if err := c.InitializeClients(); err != nil {
 		sugar.Fatalf("Failed to initialize clients: %v", err)
 	}
 	sugar.Info("Successfully connected to other nodes")
 
-	
 	if is_byzantine {
 		round := uint64(1)
 		period, err := strconv.ParseUint(os.Getenv("SPAM_MESSAGE_PERIOD"), 10, 64)
@@ -268,15 +244,12 @@ func main() {
 
 		for {
 			select {
-			case block := <-c.Listen():
-				sugar.Infof("Node %d received block: %+v", nodeID, block)
 			case <-ticker.C:
 				round++
 				c.BroadcastSpamMessage(count, round)
 			}
 		}
 	} else {
-		// Слушаем блоки
 		for {
 			block := <-c.Listen()
 			sugar.Infof("Node %d received block: %+v", nodeID, block)

@@ -215,7 +215,7 @@ func (v *View) processMsg(sender uint64, m *protos.Message) {
 	if v.Stopped() {
 		return
 	}
-	v.Logger.Debugf("%d got message from %d: %s", v.SelfID, sender, MsgToString(m))
+	//v.Logger.Debugf("%d got message from %d: %s", v.SelfID, sender, MsgToString(m))
 	// Ensure view number is equal to our view
 	msgViewNum := viewNumber(m)
 	msgProposalSeq := proposalSequence(m)

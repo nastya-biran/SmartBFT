@@ -23,4 +23,4 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace github.com/hyperledger-labs/SmartBFT => github.com/nastya-biran/SmartBFT v0.0.0-20250515213337-cc1f25ca96e5
+replace github.com/hyperledger-labs/SmartBFT => github.com/nastya-biran/SmartBFT v0.0.0-20250515214145-4d21090266f4

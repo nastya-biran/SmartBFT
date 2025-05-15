@@ -586,3 +586,103 @@ type IntDoubleByte struct {
 type IntDoubleBytes struct {
 	A []IntDoubleByte
 }
+
+type RequestData struct {
+	Payload []byte
+	Sender  uint64
+}
+
+type PartitionedProcessor struct {
+	channels  []chan []byte
+	nodesList []uint64
+	handler   func(RequestData)
+
+	activitySignal chan struct{}
+	wg             sync.WaitGroup
+
+	logger api.Logger
+}
+
+func (processor *PartitionedProcessor) Add(sender uint64, payload []byte) (bool, error) {
+	index := -1
+	for i, node := range processor.nodesList {
+		if node == sender {
+			index = i
+		}
+	}
+	if index == -1 {
+		return false, fmt.Errorf("Sender %d not found in nodes list %v", sender, processor.nodesList)
+	}
+	targetChan := processor.channels[index]
+	if targetChan == nil {
+		return false, fmt.Errorf("Request channel %d is nil (possibly closed and nilled)", index)
+	}
+
+	select {
+	case targetChan <- payload:
+		select {
+		case processor.activitySignal <- struct{}{}:
+		default:
+		}
+		return true, nil
+	default:
+		return false, fmt.Errorf("Could not submit request to channel %d, channel is full", index)
+	}
+}
+
+func (processor *PartitionedProcessor) processRequest(channelIndex int) {
+	defer processor.wg.Done()
+
+	reqChan := processor.channels[channelIndex]
+	if reqChan == nil {
+		return
+	}
+
+	select {
+	case payload, ok := <-reqChan:
+		if !ok {
+			return
+		}
+
+		processor.handler(RequestData{
+			Payload: payload,
+			Sender:  processor.nodesList[channelIndex],
+		},
+		)
+	default:
+	}
+}
+
+func (processor *PartitionedProcessor) Start() {
+	defer func() {
+		for i := 0; i < len(processor.channels); i++ {
+			close(processor.channels[i])
+		}
+	}()
+
+	if len(processor.channels) == 0 {
+		processor.logger.Debugf("No request channels to poll.")
+		return
+	}
+
+	for {
+
+		select {
+		case _, ok := <-processor.activitySignal:
+			if !ok {
+				processor.logger.Errorf("activitySignalWithIndex channel was closed unexpectedly. Exiting poller.")
+				return
+			}
+
+			processor.wg.Add(len(processor.channels))
+
+			for i := 0; i < len(processor.channels); i++ {
+				go func () {
+					processor.processRequest(i)
+				} ()
+			}
+
+			processor.wg.Wait()
+		}
+	}
+}

@@ -4,7 +4,7 @@ for j in $(seq 0 3); do
   rm "experiments/start_time/$(($j + 1)).txt"
 done
 
-for i in $(seq -f "%03g" 1 50); do
+for i in $(seq -f "%03g" 1 5); do
   echo "Executing request with transaction ID: txn-$i"
   
   for j in $(seq 0 3); do

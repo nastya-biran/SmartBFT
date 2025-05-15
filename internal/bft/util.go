@@ -633,14 +633,18 @@ func (processor *PartitionedProcessor) Add(sender uint64, payload []byte) (bool,
 func (processor *PartitionedProcessor) processRequest(channelIndex int) {
 	defer processor.wg.Done()
 
+	processor.logger.Debugf("Process Request %d", channelIndex)
+
 	reqChan := processor.channels[channelIndex]
 	if reqChan == nil {
+		processor.logger.Debugf("Cant get reqChan")
 		return
 	}
 
 	select {
 	case payload, ok := <-reqChan:
 		if !ok {
+			processor.logger.Debugf("Get from reqChan not ok")
 			return
 		}
 
@@ -684,6 +688,7 @@ func (processor *PartitionedProcessor) Start() {
 			processor.wg.Add(len(processor.channels))
 
 			for i := 0; i < len(processor.channels); i++ {
+				processor.logger.Debugf("Launching processing of %d", i)
 				go processor.processRequest(i)
 			}
 

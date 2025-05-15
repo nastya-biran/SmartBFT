@@ -644,10 +644,17 @@ func (processor *PartitionedProcessor) processRequest(channelIndex int) {
 			return
 		}
 
-		processor.handler(RequestData{
-			Payload: payload,
-			Sender:  processor.nodesList[channelIndex],
-		},
+		if processor.handler == nil {
+			panic("Nil handler")
+		}
+
+		processor.logger.Debugf("Start handling")
+
+		processor.handler(
+			RequestData{
+				Payload: payload,
+				Sender:  processor.nodesList[channelIndex],
+			},
 		)
 	default:
 	}
@@ -677,9 +684,7 @@ func (processor *PartitionedProcessor) Start() {
 			processor.wg.Add(len(processor.channels))
 
 			for i := 0; i < len(processor.channels); i++ {
-				go func () {
-					processor.processRequest(i)
-				} ()
+				go processor.processRequest(i)
 			}
 
 			processor.wg.Wait()
